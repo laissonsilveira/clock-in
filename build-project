@@ -1,0 +1,2 @@
+#!/bin/bash
+git add . && git commit -am 'Update project heroku' && git push heroku master
