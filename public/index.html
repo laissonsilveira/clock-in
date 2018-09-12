@@ -26,8 +26,8 @@
 	</style>
 </head>
 
-<body ng-controller="CollectedDataController" style="padding-top: 50px" ng-show="isLogged">
-	<div class="container-fluid">
+<body ng-controller="CollectedDataController" style="padding-top: 50px">
+	<div class="container-fluid" ng-show="isLogged">
 		<h1 class="text-center">Horas Extras - Laisson R. Silveira</h1>
 		<strong>INITIAL BALANCE: <span class="negative">-1 hours, 35 minutes</span></strong><br>
 		<strong>TOTAL BALANCE: <span ng-class="{'negative': balance < 0, 'positive': balance >= 0}">{{ balanceLabel }}</span></strong>
