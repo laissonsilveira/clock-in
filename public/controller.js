@@ -2,6 +2,7 @@ angular.module('clockInApp', []).controller('CollectedDataController', ($scope, 
 
     const INITIAL_BALANCE = -95;
     const keyStr = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/=';
+    $scope.isLogged = false;
 
     const totalBalanceCalc = (items) => {
         if (items) {
@@ -52,7 +53,7 @@ angular.module('clockInApp', []).controller('CollectedDataController', ($scope, 
         // $http.get('http://localhost:3000/documents')
             .then(response => {
                 $('#modal_login').modal('hide');
-                $scope.initialBalance = '-1 hours, 35 minutes';
+                $scope.isLogged = true;
                 $scope.items = response.data;
                 totalBalanceCalc($scope.items);
             })
