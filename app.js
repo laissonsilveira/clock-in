@@ -108,7 +108,7 @@ app.get('/documents', (req, res, next) => {
                     });
     
                     if (o.divergences.length > 1) {
-                        o.totalMinutes = o.divergences.reduce((previousVal, currentVal) => previousVal.minutes + currentVal.minutes);
+                        o.totalMinutes = o.divergences.reduce((previousVal, currentVal) => previousVal + currentVal.minutes, 0);
                     } else {
                         o.totalMinutes = o.divergences[0].minutes;
                     }

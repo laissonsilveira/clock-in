@@ -30,7 +30,7 @@
 	<div class="container-fluid" ng-show="isLogged">
 		<h1 class="text-center">Horas Extras - Laisson R. Silveira</h1>
 		<strong>INITIAL BALANCE: <span class="negative">-1 hours, 35 minutes</span></strong><br>
-		<strong>TOTAL BALANCE: <span ng-class="{'negative': balance < 0, 'positive': balance >= 0}">{{ balanceLabel }}</span></strong>
+		<strong>TOTAL BALANCE: <span ng-class="{'negative': balance < 0, 'positive': balance > 0}">{{ balanceLabel }}</span></strong>
 		<hr>
 		<div class="table-responsive">
 			<table class="table table-hover">
@@ -39,11 +39,10 @@
 						<th colspan="2"></th>
 						<th scope="col">
 							<div class="form-group row">
-								<label class="col-md-1 col-form-label col-form-label">Date Filter</label>
 								<div class="col-md-10">
-									<input class="form-control" ng-model="query" name="daterange">
+									<input class="form-control" ng-model="query" name="daterange" placeholder="Date Filter">
 								</div>
-								<div class="col-md-1">
+								<div class="col-md-2">
 									<button class="form-control btn btn-secondary" ng-click="query='';search=''">X</button>
 								</div>
 							</div>
@@ -51,22 +50,22 @@
 					</tr>
 					<tr>
 						<th scope="col">Created Date</th>
-						<th scope="col">Balance</th>
+						<th scope="col">Total Balance</th>
 						<th scope="col">Divergences</th>
 					</tr>
 				</thead>
 				<tbody>
 					<tr scope="row" ng-repeat="item in items | orderBy:'date_created':1 | filter:search as itemsFiltered">
 						<td>{{ item.date_created }}</td>
-						<td ng-class="{'negative': item.totalMinutes < 0, 'positive': item.totalMinutes >= 0}">
+						<td ng-class="{'negative': item.totalMinutes < 0, 'positive': item.totalMinutes > 0}">
 							{{ item.totalMinutesFormated }}</td>
 						<td>
 							<table class="table table-bordered table-warning table-sm">
 								<thead class="thead-dark">
 									<tr>
 										<th scope="col">Date</th>
+										<th scope="col">Day Balance</th>
 										<th scope="col">Hours</th>
-										<th scope="col">Course</th>
 										<th scope="col">Negative</th>
 										<th scope="col">Positive</th>
 									</tr>
@@ -74,8 +73,8 @@
 								<tbody>
 									<tr scope="row" ng-repeat="divergence in item.divergences">
 										<td>{{ divergence.date | date: 'fullDate' }}</td>
+										<td ng-class="{'negative': divergence.minutes < 0, 'positive': divergence.minutes > 0}">{{ divergence.minutesFormated }}</td>
 										<td>{{ divergence.hours }}</td>
-										<td>{{ divergence.course.join(' ') }}</td>
 										<td>{{ divergence.negative.join(' ') }}</td>
 										<td>{{ divergence.positive.join(' ') }}</td>
 									</tr>
