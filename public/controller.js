@@ -11,6 +11,8 @@ angular.module('clockInApp', []).controller('CollectedDataController', ($scope, 
             
             $scope.extraBalance = items.reduce((previousVal, currentVal) => previousVal + currentVal.totalExtra, 0);
             $scope.extraBalanceLabel = moment.duration($scope.extraBalance, 'minutes').format('h [hours], m [minutes]');
+            const resultPercent = $scope.extraBalance * 100 / 15360;
+            $scope.extraPercent = Number(resultPercent).toFixed(parseInt(resultPercent) === 0 ? 1 : 0);//8*5*4*8=1280*20%=256hrs = 15360min
         }
     };
 
@@ -52,8 +54,8 @@ angular.module('clockInApp', []).controller('CollectedDataController', ($scope, 
         const authData = encode(`${auth.user}:${auth.password}`);
         $http.defaults.headers.common['Authorization'] = 'Basic ' + authData;
 
-        $http.get('https://clock-in-dgt.herokuapp.com/documents')
-        // $http.get('http://localhost:3000/documents')
+        // $http.get('https://clock-in-dgt.herokuapp.com/documents')
+        $http.get('http://localhost:3000/documents')
             .then(response => {
                 $('#modal_login').modal('hide');
                 $scope.isLogged = true;
