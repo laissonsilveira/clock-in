@@ -105,7 +105,12 @@ app.get('/documents', (req, res, next) => {
                                 const h06 = normalizeHour(hours[5]);
 
                                 const duration03 = getDuration(h06, h05);
-                                minutes += duration03;
+                                if(Array.isArray(dv.extra) && dv.extra.length > 0) {
+                                    dv.extraHour = duration03;
+                                    dv.extraHourFormated = formatMinutes(duration03);
+                                } else {
+                                    minutes += duration03;
+                                }
                             }
 
                             //480 = 8hours
@@ -117,11 +122,14 @@ app.get('/documents', (req, res, next) => {
                     });
 
                     if (o.divergences.length > 1) {
-                        o.totalMinutes = o.divergences.reduce((previousVal, currentVal) => previousVal + currentVal.minutes, 0);
+                        o.totalMinutes = o.divergences.reduce((previousVal, currentVal) => previousVal + (currentVal.minutes || 0), 0);
+                        o.totalExtra = o.divergences.reduce((previousVal, currentVal) => previousVal + (currentVal.extraHour || 0), 0);
                     } else {
-                        o.totalMinutes = o.divergences[0].minutes;
+                        o.totalMinutes = o.divergences[0].minutes || 0;
+                        o.totalExtra = o.divergences[0].extraHour || 0;
                     }
                     o.totalMinutesFormated = formatMinutes(o.totalMinutes);
+                    o.totalExtraFormated = formatMinutes(o.totalExtra);
                 });
             }
             res.json(body);

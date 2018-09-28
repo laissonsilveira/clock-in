@@ -30,13 +30,14 @@
 	<div class="container-fluid" ng-show="isLogged">
 		<h1 class="text-center">Horas Extras - Laisson R. Silveira</h1>
 		<strong>INITIAL BALANCE: <span class="negative">-1 hours, 35 minutes</span></strong><br>
+		<strong>TOTAL EXTRA: <span ng-class="{'negative': extraBalance < 0, 'positive': extraBalance > 0}">{{ extraBalanceLabel }}</span></strong><br>
 		<strong>TOTAL BALANCE: <span ng-class="{'negative': balance < 0, 'positive': balance > 0}">{{ balanceLabel }}</span></strong>
 		<hr>
 		<div class="table-responsive">
 			<table class="table table-hover">
 				<thead class="thead-dark">
 					<tr scope="row">
-						<th colspan="2"></th>
+						<th colspan="3"></th>
 						<th scope="col">
 							<div class="form-group row">
 								<div class="col-md-10">
@@ -51,6 +52,7 @@
 					<tr>
 						<th scope="col">Created Date</th>
 						<th scope="col">Total Balance</th>
+						<th scope="col">Total Extra Hour</th>
 						<th scope="col">Divergences</th>
 					</tr>
 				</thead>
@@ -59,24 +61,30 @@
 						<td>{{ item.date_created }}</td>
 						<td ng-class="{'negative': item.totalMinutes < 0, 'positive': item.totalMinutes > 0}">
 							{{ item.totalMinutesFormated }}</td>
+						<td ng-class="{'negative': item.totalExtra < 0, 'positive': item.totalExtra > 0}">
+							{{ item.totalExtraFormated }}</td>
 						<td>
 							<table class="table table-bordered table-warning table-sm">
 								<thead class="thead-dark">
 									<tr>
 										<th scope="col">Date</th>
 										<th scope="col">Day Balance</th>
+										<th scope="col">Extra Balance</th>
 										<th scope="col">Hours</th>
 										<th scope="col">Negative</th>
 										<th scope="col">Positive</th>
+										<th scope="col">Extra Hours</th>
 									</tr>
 								</thead>
 								<tbody>
 									<tr scope="row" ng-repeat="divergence in item.divergences">
 										<td>{{ divergence.date | date: 'fullDate' }}</td>
 										<td ng-class="{'negative': divergence.minutes < 0, 'positive': divergence.minutes > 0}">{{ divergence.minutesFormated }}</td>
+										<td ng-class="{'negative': divergence.extraHour < 0, 'positive': divergence.extraHour > 0}">{{ divergence.extraHourFormated }}</td>
 										<td>{{ divergence.hours }}</td>
 										<td>{{ divergence.negative.join(' ') }}</td>
 										<td>{{ divergence.positive.join(' ') }}</td>
+										<td>{{ divergence.extra.join(' ') }}</td>
 									</tr>
 								</tbody>
 							</table>

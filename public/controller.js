@@ -8,6 +8,9 @@ angular.module('clockInApp', []).controller('CollectedDataController', ($scope, 
         if (items) {
             $scope.balance = items.reduce((previousVal, currentVal) => previousVal + currentVal.totalMinutes, 0);
             $scope.balanceLabel = moment.duration($scope.balance + INITIAL_BALANCE, 'minutes').format('h [hours], m [minutes]');
+            
+            $scope.extraBalance = items.reduce((previousVal, currentVal) => previousVal + currentVal.totalExtra, 0);
+            $scope.extraBalanceLabel = moment.duration($scope.extraBalance, 'minutes').format('h [hours], m [minutes]');
         }
     };
 
