@@ -31,7 +31,7 @@
 	<div class="container-fluid" ng-show="isLogged">
 		<h1 class="text-center">Horas Extras - Laisson R. Silveira</h1>
 		<!-- <strong>INITIAL BALANCE: <span class="negative">-1 hours, 35 minutes</span></strong><br> -->
-		<strong>TOTAL EXTRA: <span ng-class="{'negative': extraBalance < 0, 'positive': extraBalance > 0}">{{ extraBalanceLabel }}</span>&nbsp;({{ extraPercent }}%)</strong><br>
+		<strong>TOTAL EXTRA: <span ng-class="{'negative': extraBalance < 0, 'positive': extraBalance > 0}">{{ extraBalanceLabel }}</span>&nbsp;(<i>{{ extraPercent }}%</i>)</strong><br>
 		<strong>TOTAL BANCO: <span ng-class="{'negative': balance < 0, 'positive': balance > 0}">{{ balanceLabel }}</span></strong>
 		<hr>
 		<div class="table-responsive">
@@ -51,7 +51,7 @@
 						</th>
 					</tr>
 					<tr>
-						<th scope="col">Created Date</th>
+						<th scope="col">Hours worked</th>
 						<th scope="col">Total Balance</th>
 						<th scope="col">Total Extra Hour</th>
 						<th scope="col">Divergences</th>
@@ -59,7 +59,9 @@
 				</thead>
 				<tbody>
 					<tr scope="row" ng-repeat="item in items | orderBy:'date_created':1 | filter:search as itemsFiltered">
-						<td>{{ item.date_created }}</td>
+						<td ng-class="{'negative': (item.totalMinutes + item.totalExtra) < 0, 'positive': (item.totalMinutes + item.totalExtra) > 0}">
+							<strong>{{ item.hoursWorked }}</strong>
+						</td>
 						<td ng-class="{'negative': item.totalMinutes < 0, 'positive': item.totalMinutes > 0}">
 							{{ item.totalMinutesFormated }}</td>
 						<td ng-class="{'negative': item.totalExtra < 0, 'positive': item.totalExtra > 0}">

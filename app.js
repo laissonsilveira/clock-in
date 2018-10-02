@@ -128,6 +128,7 @@ app.get('/documents', (req, res, next) => {
                         o.totalMinutes = o.divergences[0].minutes || 0;
                         o.totalExtra = o.divergences[0].extraHour || 0;
                     }
+                    o.hoursWorked = formatMinutes(o.totalMinutes + o.totalExtra + 480);
                     o.totalMinutesFormated = formatMinutes(o.totalMinutes);
                     o.totalExtraFormated = formatMinutes(o.totalExtra);
                 });
