@@ -115,6 +115,7 @@ app.get('/documents', (req, res, next) => {
 
                             //480 = 8hours
                             dv.minutes = minutes - 480;
+                            dv.hoursWorked = formatMinutes(dv.minutes + (dv.extraHour ? dv.extraHour : 0) + 480);
                         }
                         
                         dv.minutesFormated = formatMinutes(dv.minutes);
@@ -128,7 +129,6 @@ app.get('/documents', (req, res, next) => {
                         o.totalMinutes = o.divergences[0].minutes || 0;
                         o.totalExtra = o.divergences[0].extraHour || 0;
                     }
-                    o.hoursWorked = formatMinutes(o.totalMinutes + o.totalExtra + 480);
                     o.totalMinutesFormated = formatMinutes(o.totalMinutes);
                     o.totalExtraFormated = formatMinutes(o.totalExtra);
                 });
