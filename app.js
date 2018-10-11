@@ -105,20 +105,30 @@ app.get('/documents', (req, res, next) => {
                                 const h06 = normalizeHour(hours[5]);
 
                                 const duration03 = getDuration(h06, h05);
-                                if(Array.isArray(dv.extra) && dv.extra.length > 0) {
+                                if (Array.isArray(dv.extra) && dv.extra.length > 0) {
                                     dv.extraHour = duration03;
                                     dv.extraHourFormated = formatMinutes(duration03);
                                 } else {
                                     minutes += duration03;
                                 }
+                            } else {
+                                //480 = 8hours
+                                if (Array.isArray(dv.extra) && dv.extra.length > 0) {
+                                    dv.extraHour = minutes - 480;
+                                    dv.extraHourFormated = formatMinutes(dv.extraHour);
+                                    dv.hoursWorked = formatMinutes(dv.extraHour + 480);
+                                }
+
+                                if (dv.positive.length > 0 || dv.negative.length > 0) {
+                                    dv.minutes = minutes - 480;
+                                    dv.minutesFormated = formatMinutes(dv.minutes);
+                                    dv.hoursWorked = formatMinutes(dv.minutes + (dv.extraHour ? dv.extraHour : 0) + 480);
+                                }
                             }
 
-                            //480 = 8hours
-                            dv.minutes = minutes - 480;
-                            dv.hoursWorked = formatMinutes(dv.minutes + (dv.extraHour ? dv.extraHour : 0) + 480);
+
                         }
-                        
-                        dv.minutesFormated = formatMinutes(dv.minutes);
+
                         dv.date = moment(dv.date.split(',')[1], ['DD-MM-YYYY']);
                     });
 
