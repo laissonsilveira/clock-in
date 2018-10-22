@@ -88,7 +88,11 @@ app.get('/documents', (req, res, next) => {
                             const h01 = normalizeHour(hours[0]);
                             const h02 = normalizeHour(hours[1]);
 
-                            dv.minutes = getDuration(h02, h01) * 2;
+                            if (Array.isArray(dv.extra) && dv.extra.length > 0) {
+                                dv.extraHour = getDuration(h02, h01) * 2;
+                            } else {
+                                dv.minutes = getDuration(h02, h01) * 2;
+                            }
                         } else {
                             const h01 = normalizeHour(hours[0]);
                             const h02 = normalizeHour(hours[1]);
@@ -105,7 +109,7 @@ app.get('/documents', (req, res, next) => {
                                 const h06 = normalizeHour(hours[5]);
 
                                 const duration03 = getDuration(h06, h05);
-                                if(Array.isArray(dv.extra) && dv.extra.length > 0) {
+                                if (Array.isArray(dv.extra) && dv.extra.length > 0) {
                                     dv.extraHour = duration03;
                                     dv.extraHourFormated = formatMinutes(duration03);
                                 } else {
@@ -116,7 +120,7 @@ app.get('/documents', (req, res, next) => {
                             //480 = 8hours
                             dv.minutes = minutes - 480;
                         }
-                        
+
                         dv.minutesFormated = formatMinutes(dv.minutes);
                         dv.date = moment(dv.date.split(',')[1], ['DD-MM-YYYY']);
                     });
