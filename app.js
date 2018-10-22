@@ -115,13 +115,24 @@ app.get('/documents', (req, res, next) => {
                                 } else {
                                     minutes += duration03;
                                 }
+                            } else {
+                                //480 = 8hours
+                                if (Array.isArray(dv.extra) && dv.extra.length > 0) {
+                                    dv.extraHour = minutes - 480;
+                                    dv.extraHourFormated = formatMinutes(dv.extraHour);
+                                    dv.hoursWorked = formatMinutes(dv.extraHour + 480);
+                                }
+
+                                if (dv.positive.length > 0 || dv.negative.length > 0) {
+                                    dv.minutes = minutes - 480;
+                                    dv.minutesFormated = formatMinutes(dv.minutes);
+                                    dv.hoursWorked = formatMinutes(dv.minutes + (dv.extraHour ? dv.extraHour : 0) + 480);
+                                }
                             }
 
-                            //480 = 8hours
-                            dv.minutes = minutes - 480;
+
                         }
 
-                        dv.minutesFormated = formatMinutes(dv.minutes);
                         dv.date = moment(dv.date.split(',')[1], ['DD-MM-YYYY']);
                     });
 
@@ -132,7 +143,6 @@ app.get('/documents', (req, res, next) => {
                         o.totalMinutes = o.divergences[0].minutes || 0;
                         o.totalExtra = o.divergences[0].extraHour || 0;
                     }
-                    o.hoursWorked = formatMinutes(o.totalMinutes + o.totalExtra + 480);
                     o.totalMinutesFormated = formatMinutes(o.totalMinutes);
                     o.totalExtraFormated = formatMinutes(o.totalExtra);
                 });

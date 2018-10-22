@@ -33,7 +33,7 @@
 			<table class="table table-hover">
 				<thead class="thead-dark">
 					<tr scope="row">
-						<th colspan="3"></th>
+						<th colspan="2"></th>
 						<th scope="col">
 							<div class="form-group row">
 								<div class="col-md-10">
@@ -46,7 +46,6 @@
 						</th>
 					</tr>
 					<tr>
-						<th scope="col">Hours worked</th>
 						<th scope="col">Total Balance</th>
 						<th scope="col">Total Extra Hour</th>
 						<th scope="col">Divergences</th>
@@ -54,18 +53,18 @@
 				</thead>
 				<tbody>
 					<tr scope="row" ng-repeat="item in items | orderBy:'date_created':1 | filter:search as itemsFiltered">
-						<td ng-class="{'negative': (item.totalMinutes + item.totalExtra) < 0, 'positive': (item.totalMinutes + item.totalExtra) > 0}">
-							<strong>{{ item.hoursWorked }}</strong>
-						</td>
 						<td ng-class="{'negative': item.totalMinutes < 0, 'positive': item.totalMinutes > 0}">
-							{{ item.totalMinutesFormated }}</td>
+							<strong>{{ item.totalMinutesFormated }}</strong>
+						</td>
 						<td ng-class="{'negative': item.totalExtra < 0, 'positive': item.totalExtra > 0}">
-							{{ item.totalExtraFormated }}</td>
+							<strong>{{ item.totalExtraFormated }}</strong>
+						</td>
 						<td>
 							<table class="table table-bordered table-warning table-sm">
 								<thead class="thead-dark">
 									<tr>
 										<th scope="col">Date</th>
+										<th scope="col">Hours worked</th>
 										<th scope="col">Day Balance</th>
 										<th scope="col">Extra Balance</th>
 										<th scope="col">Hours</th>
@@ -75,14 +74,17 @@
 									</tr>
 								</thead>
 								<tbody>
-									<tr scope="row" ng-repeat="divergence in item.divergences">
-										<td>{{ divergence.date | date: 'fullDate' }}</td>
-										<td ng-class="{'negative': divergence.minutes < 0, 'positive': divergence.minutes > 0}">{{ divergence.minutesFormated }}</td>
-										<td ng-class="{'negative': divergence.extraHour < 0, 'positive': divergence.extraHour > 0}">{{ divergence.extraHourFormated }}</td>
-										<td>{{ divergence.hours }}</td>
-										<td>{{ divergence.negative.join(' ') }}</td>
-										<td>{{ divergence.positive.join(' ') }}</td>
-										<td>{{ divergence.extra.join(' ') }}</td>
+									<tr scope="row" ng-repeat="div in item.divergences">
+										<td>{{ div.date | date: 'fullDate' }}</td>
+										<td ng-class="{'negative': (div.minutes + div.extraHour) < 0, 'positive': (div.minutes + div.extraHour) > 0}">
+											<strong>{{ div.hoursWorked }}</strong>
+										</td>
+										<td ng-class="{'negative': div.minutes < 0, 'positive': div.minutes > 0}">{{ div.minutesFormated }}</td>
+										<td ng-class="{'negative': div.extraHour < 0, 'positive': div.extraHour > 0}">{{ div.extraHourFormated }}</td>
+										<td>{{ div.hours }}</td>
+										<td>{{ div.negative.join(' ') }}</td>
+										<td>{{ div.positive.join(' ') }}</td>
+										<td>{{ div.extra.join(' ') }}</td>
 									</tr>
 								</tbody>
 							</table>
