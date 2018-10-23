@@ -63,12 +63,26 @@ function normalizeHour(hour) {
     return hrs;
 }
 
-function getDuration(h_2, h_1) {
-    return moment({ hour: h_2[0], minute: h_2[1] }).diff(moment({ hour: h_1[0], minute: h_1[1] }), 'm');
+function getDuration(h_2, h_1, isFind) {
+    return moment({ hour: h_2[0], minute: h_2[1] })
+        .diff(moment({ hour: h_1[0], minute: h_1[1] }), 'm') * (isFind ? 2 : 1);
 }
 
 function formatMinutes(minutes) {
     return moment.duration(minutes, 'minutes').format('HH:mm', { trim: false });
+}
+
+function totalCalc(o) {
+    if (o.divergences.length > 1) {
+        o.totalMinutes = o.divergences.reduce((previousVal, currentVal) => previousVal + (currentVal.minutes || 0), 0);
+        o.totalExtra = o.divergences.reduce((previousVal, currentVal) => previousVal + (currentVal.extraHour || 0), 0);
+    }
+    else {
+        o.totalMinutes = o.divergences[0].minutes || 0;
+        o.totalExtra = o.divergences[0].extraHour || 0;
+    }
+    o.totalMinutesFormated = formatMinutes(o.totalMinutes);
+    o.totalExtraFormated = formatMinutes(o.totalExtra);
 }
 
 app.get('/documents', (req, res, next) => {
@@ -83,15 +97,16 @@ app.get('/documents', (req, res, next) => {
                 body.forEach(o => {
                     o.divergences.forEach(dv => {
                         const hours = dv.hours.split(' ');
+                        const isFind = dv.date.indexOf('Sábado') > -1 || dv.date.indexOf('Domingo') > -1;
 
-                        if (hours.length === 2) {
+                        if (hours.length === 2) {//Geralmente final de semana, com 2 batidas
                             const h01 = normalizeHour(hours[0]);
                             const h02 = normalizeHour(hours[1]);
-
+                            const minutes = getDuration(h02, h01, isFind);
                             if (Array.isArray(dv.extra) && dv.extra.length > 0) {
-                                dv.extraHour = getDuration(h02, h01) * 2;
+                                dv.extraHour = minutes;
                             } else {
-                                dv.minutes = getDuration(h02, h01) * 2;
+                                dv.minutes = minutes;
                             }
                         } else {
                             const h01 = normalizeHour(hours[0]);
@@ -99,21 +114,21 @@ app.get('/documents', (req, res, next) => {
                             const h03 = normalizeHour(hours[2]);
                             const h04 = normalizeHour(hours[3]);
 
-                            const duration01 = getDuration(h02, h01);
-                            const duration02 = getDuration(h04, h03);
-
+                            const duration01 = getDuration(h02, h01, isFind);
+                            const duration02 = getDuration(h04, h03, isFind);
                             let minutes = duration01 + duration02;
 
-                            if (hours.length > 4) {
+                            if (hours.length > 4) {//Criado para o caso da Aceleração
                                 const h05 = normalizeHour(hours[4]);
                                 const h06 = normalizeHour(hours[5]);
+                                const duration03 = getDuration(h06, h05, isFind);
 
-                                const duration03 = getDuration(h06, h05);
                                 if (Array.isArray(dv.extra) && dv.extra.length > 0) {
                                     dv.extraHour = duration03;
                                     dv.extraHourFormated = formatMinutes(duration03);
                                 } else {
                                     minutes += duration03;
+                                    dv.minutes = minutes - 480;
                                 }
                             } else {
                                 //480 = 8hours
@@ -121,30 +136,28 @@ app.get('/documents', (req, res, next) => {
                                     dv.extraHour = minutes - 480;
                                     dv.extraHourFormated = formatMinutes(dv.extraHour);
                                     dv.hoursWorked = formatMinutes(dv.extraHour + 480);
-                                }
-
-                                if (dv.positive.length > 0 || dv.negative.length > 0) {
+                                } else {
                                     dv.minutes = minutes - 480;
-                                    dv.minutesFormated = formatMinutes(dv.minutes);
-                                    dv.hoursWorked = formatMinutes(dv.minutes + (dv.extraHour ? dv.extraHour : 0) + 480);
                                 }
                             }
-
-
                         }
 
+                        if (dv.positive.length > 0 || dv.negative.length > 0) {
+                            dv.minutesFormated = formatMinutes(dv.minutes);
+                        }
+
+                        dv.hoursWorked = formatMinutes(
+                            (
+                                (dv.minutes ? dv.minutes : 0) +
+                                (dv.extraHour ? dv.extraHour : 0) +
+                                (isFind ? 0 : 480)
+                            ) /
+                            (isFind ? 2 : 1)
+                        );
                         dv.date = moment(dv.date.split(',')[1], ['DD-MM-YYYY']);
                     });
 
-                    if (o.divergences.length > 1) {
-                        o.totalMinutes = o.divergences.reduce((previousVal, currentVal) => previousVal + (currentVal.minutes || 0), 0);
-                        o.totalExtra = o.divergences.reduce((previousVal, currentVal) => previousVal + (currentVal.extraHour || 0), 0);
-                    } else {
-                        o.totalMinutes = o.divergences[0].minutes || 0;
-                        o.totalExtra = o.divergences[0].extraHour || 0;
-                    }
-                    o.totalMinutesFormated = formatMinutes(o.totalMinutes);
-                    o.totalExtraFormated = formatMinutes(o.totalExtra);
+                    totalCalc(o);
                 });
             }
             res.json(body);
