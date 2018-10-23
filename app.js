@@ -98,12 +98,16 @@ app.get('/documents', (req, res, next) => {
                     o.divergences.forEach(dv => {
                         const hours = dv.hours.split(' ');
                         const isFind = dv.date.indexOf('Sábado') > -1 || dv.date.indexOf('Domingo') > -1;
+                        const isClockIn = dv.positive.length > 0 || dv.negative.length > 0;
+                        const isExtraHour = Array.isArray(dv.extra) && dv.extra.length > 0;
+                        let minutes;
+                        //480 = 8hours
 
                         if (hours.length === 2) {//Geralmente final de semana, com 2 batidas
                             const h01 = normalizeHour(hours[0]);
                             const h02 = normalizeHour(hours[1]);
-                            const minutes = getDuration(h02, h01, isFind);
-                            if (Array.isArray(dv.extra) && dv.extra.length > 0) {
+                            minutes = getDuration(h02, h01, isFind);
+                            if (isExtraHour) {
                                 dv.extraHour = minutes;
                             } else {
                                 dv.minutes = minutes;
@@ -116,35 +120,31 @@ app.get('/documents', (req, res, next) => {
 
                             const duration01 = getDuration(h02, h01, isFind);
                             const duration02 = getDuration(h04, h03, isFind);
-                            let minutes = duration01 + duration02;
+                            minutes = duration01 + duration02;
 
                             if (hours.length > 4) {//Criado para o caso da Aceleração
                                 const h05 = normalizeHour(hours[4]);
                                 const h06 = normalizeHour(hours[5]);
                                 const duration03 = getDuration(h06, h05, isFind);
 
-                                if (Array.isArray(dv.extra) && dv.extra.length > 0) {
+                                if (isExtraHour) {
                                     dv.extraHour = duration03;
                                     dv.extraHourFormated = formatMinutes(duration03);
                                 } else {
                                     minutes += duration03;
-                                    dv.minutes = minutes - 480;
                                 }
                             } else {
-                                //480 = 8hours
-                                if (Array.isArray(dv.extra) && dv.extra.length > 0) {
+                                if (isExtraHour) {
                                     dv.extraHour = minutes - 480;
                                     dv.extraHourFormated = formatMinutes(dv.extraHour);
                                     dv.hoursWorked = formatMinutes(dv.extraHour + 480);
-                                } else {
-                                    dv.minutes = minutes - 480;
                                 }
                             }
                         }
 
-                        if (dv.positive.length > 0 || dv.negative.length > 0) {
-                            dv.minutesFormated = formatMinutes(dv.minutes);
-                        }
+                        if (!dv.minutes && !isFind && isClockIn) dv.minutes = minutes - 480;
+                       
+                        if (isClockIn) dv.minutesFormated = formatMinutes(dv.minutes);
 
                         dv.hoursWorked = formatMinutes(
                             (
