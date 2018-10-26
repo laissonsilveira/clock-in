@@ -1,18 +1,22 @@
 angular.module('clockInApp', []).controller('CollectedDataController', ($scope, $http, $filter) => {
 
     const INITIAL_BALANCE = -95;
+    $scope.initialBalance = moment.duration(INITIAL_BALANCE, 'minutes').format('h [hours], m [minutes]');
     const keyStr = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/=';
     $scope.isLogged = false;
 
     const totalBalanceCalc = (items) => {
         if (items) {
-            $scope.balance = items.reduce((previousVal, currentVal) => previousVal + currentVal.totalMinutes, 0);
+            $scope.balance = items.reduce((previousVal, currentVal) => previousVal + currentVal.totalMinutes, 0) + INITIAL_BALANCE;
             $scope.balanceLabel = moment.duration($scope.balance + INITIAL_BALANCE, 'minutes').format('h [hours], m [minutes]');
+            
+            $scope.balanceFilter = $scope.balance - INITIAL_BALANCE;
+            $scope.balanceFilterLabel = moment.duration($scope.balanceFilter, 'minutes').format('h [hours], m [minutes]');
             
             $scope.extraBalance = items.reduce((previousVal, currentVal) => previousVal + currentVal.totalExtra, 0);
             $scope.extraBalanceLabel = moment.duration($scope.extraBalance, 'minutes').format('h [hours], m [minutes]');
-            const resultPercent = $scope.extraBalance * 100 / 15360;
-            $scope.extraPercent = Number(resultPercent).toFixed(parseInt(resultPercent) === 0 ? 1 : 0);//8*5*4*8=1280*20%=256hrs = 15360min
+            const resultPercent = $scope.extraBalance * 100 / 15360;//8*5*4*8=1280*20%=256hrs = 15360min
+            $scope.extraPercent = Number(resultPercent).toFixed(parseInt(resultPercent) === 0 ? 1 : 0);
         }
     };
 

@@ -6,7 +6,7 @@
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<title>clock-in</title>
 	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<link rel="shortcut icon" type="image/png" href="favicon.png"/>
+	<link rel="shortcut icon" type="image/png" href="favicon.png" />
 	<link rel="stylesheet" href="lib/bootstrap/bootstrap.min.css">
 	<link rel="stylesheet" href="lib/datarangepicker/daterangepicker.min.css">
 	<script src="lib/jquery.min.js"></script>
@@ -25,9 +25,13 @@
 <body ng-controller="CollectedDataController" style="padding-top: 50px">
 	<div class="container-fluid" ng-show="isLogged">
 		<h1 class="text-center">Horas Extras - Laisson R. Silveira</h1>
-		<!-- <strong>INITIAL BALANCE: <span class="negative">-1 hours, 35 minutes</span></strong><br> -->
-		<strong>TOTAL EXTRA: <span ng-class="{'negative': extraBalance < 0, 'positive': extraBalance > 0}">{{ extraBalanceLabel }}</span>&nbsp;(<i>{{ extraPercent }}%</i>)</strong><br>
+		<strong>Saldo inicial (19/08/2018): <span class="negative">{{ initialBalance }}</span></strong><br>
+		<hr>
+		<strong>TOTAL FILTRO: <span ng-class="{'negative': balanceFilter < 0, 'positive': balanceFilter > 0}">{{ balanceFilterLabel }}</span></strong><br>
 		<strong>TOTAL BANCO: <span ng-class="{'negative': balance < 0, 'positive': balance > 0}">{{ balanceLabel }}</span></strong>
+		<hr>
+		<strong>TOTAL EXTRA: <span ng-class="{'negative': extraBalance < 0, 'positive': extraBalance > 0}">{{
+				extraBalanceLabel }}</span>&nbsp;(<i>{{ extraPercent }}%</i>)</strong><br>
 		<hr>
 		<div class="table-responsive">
 			<table class="table table-hover">
