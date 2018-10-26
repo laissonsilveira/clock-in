@@ -63,6 +63,12 @@ function normalizeHour(hour) {
     return hrs;
 }
 
+function getType(dv, hour) {
+    if (dv.extra && (dv.extra.includes(hour) || dv.extra.includes(`${hour}\t`))) return 'E';
+    if (dv.positive.includes(hour) || dv.positive.includes(`${hour}\t`)
+        || dv.negative.includes(hour) || dv.negative.includes(`${hour}\t`)) return 'P';
+}
+
 function getDuration(h_2, h_1, isFind) {
     return moment({ hour: h_2[0], minute: h_2[1] })
         .diff(moment({ hour: h_1[0], minute: h_1[1] }), 'm') * (isFind ? 2 : 1);
@@ -70,6 +76,10 @@ function getDuration(h_2, h_1, isFind) {
 
 function formatMinutes(minutes) {
     return moment.duration(minutes, 'minutes').format('HH:mm', { trim: false });
+}
+
+function getHours(balanceHours, type) {
+    return balanceHours.filter(h => h.type === type).reduce((sum, h) => sum + h.sum, 0);
 }
 
 function totalCalc(o) {
@@ -98,62 +108,64 @@ app.get('/documents', (req, res, next) => {
                     o.divergences.forEach(dv => {
                         const hours = dv.hours.split(' ');
                         const isFind = dv.date.indexOf('Sábado') > -1 || dv.date.indexOf('Domingo') > -1;
-                        const isClockIn = dv.positive.length > 0 || dv.negative.length > 0;
                         const isExtraHour = Array.isArray(dv.extra) && dv.extra.length > 0;
-                        let minutes;
-                        //480 = 8hours
+                        const balanceHours = [];
 
-                        if (hours.length === 2) {//Geralmente final de semana, com 2 batidas
+                        if (hours.length === 2) {
                             const h01 = normalizeHour(hours[0]);
                             const h02 = normalizeHour(hours[1]);
-                            minutes = getDuration(h02, h01, isFind);
-                            if (isExtraHour) {
-                                dv.extraHour = minutes;
-                            } else {
-                                dv.minutes = minutes;
-                            }
+                            balanceHours.push({
+                                sum: getDuration(h02, h01, isFind),
+                                type: isExtraHour ? 'E' : 'P'
+                            });
                         } else {
                             const h01 = normalizeHour(hours[0]);
                             const h02 = normalizeHour(hours[1]);
                             const h03 = normalizeHour(hours[2]);
                             const h04 = normalizeHour(hours[3]);
 
-                            const duration01 = getDuration(h02, h01, isFind);
-                            const duration02 = getDuration(h04, h03, isFind);
-                            minutes = duration01 + duration02;
+                            balanceHours.push({
+                                sum: getDuration(['08', '00'], h01),
+                                type: getType(dv, hours[0])
+                            });
+                            balanceHours.push({
+                                sum: getDuration(h02, ['12', '00']),
+                                type: getType(dv, hours[1])
+                            });
+                            balanceHours.push({
+                                sum: getDuration(['13', '30'], h03),
+                                type: getType(dv, hours[2])
+                            });
+                            balanceHours.push({
+                                sum: getDuration(h04, ['17', '30']),
+                                type: getType(dv, hours[3])
+                            });
 
-                            if (hours.length > 4) {//Criado para o caso da Aceleração
+                            if (hours.length > 4) {
                                 const h05 = normalizeHour(hours[4]);
                                 const h06 = normalizeHour(hours[5]);
-                                const duration03 = getDuration(h06, h05, isFind);
-
-                                if (isExtraHour) {
-                                    dv.extraHour = duration03;
-                                    dv.extraHourFormated = formatMinutes(duration03);
-                                } else {
-                                    minutes += duration03;
-                                }
-                            } else {
-                                if (isExtraHour) {
-                                    dv.extraHour = minutes - 480;
-                                    dv.extraHourFormated = formatMinutes(dv.extraHour);
-                                    dv.hoursWorked = formatMinutes(dv.extraHour + 480);
-                                }
+                                balanceHours.push({
+                                    sum: getDuration(h06, h05, isFind),
+                                    type: getType(dv, hours[5])
+                                });
                             }
                         }
 
-                        if (!dv.minutes && !isFind && isClockIn) dv.minutes = minutes - 480;
-                       
-                        if (isClockIn) dv.minutesFormated = formatMinutes(dv.minutes);
+                        dv.extraHour = getHours(balanceHours, 'E');
+                        dv.minutes = getHours(balanceHours, 'P');
+
+                        dv.minutesFormated = formatMinutes(dv.minutes);
+                        dv.extraHourFormated = formatMinutes(dv.extraHour);
 
                         dv.hoursWorked = formatMinutes(
                             (
-                                (dv.minutes ? dv.minutes : 0) +
-                                (dv.extraHour ? dv.extraHour : 0) +
+                                dv.extraHour +
+                                dv.minutes +
                                 (isFind ? 0 : 480)
                             ) /
                             (isFind ? 2 : 1)
                         );
+
                         dv.date = moment(dv.date.split(',')[1], ['DD-MM-YYYY']);
                     });
 
