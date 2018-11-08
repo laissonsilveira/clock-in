@@ -58,8 +58,7 @@ angular.module('clockInApp', []).controller('CollectedDataController', ($scope, 
         const authData = encode(`${auth.user}:${auth.password}`);
         $http.defaults.headers.common['Authorization'] = 'Basic ' + authData;
 
-        $http.get('https://clock-in-dgt.herokuapp.com/documents')
-        // $http.get('http://localhost:3000/documents')
+        $http.get('documents')
             .then(response => {
                 $('#modal_login').modal('hide');
                 $scope.isLogged = true;
