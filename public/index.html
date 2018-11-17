@@ -9,13 +9,15 @@
 	<link rel="shortcut icon" type="image/png" href="favicon.png" />
 	<link rel="stylesheet" href="lib/bootstrap/bootstrap.min.css">
 	<link rel="stylesheet" href="lib/datarangepicker/daterangepicker.min.css">
-	<script src="lib/jquery.min.js"></script>
-	<script src="lib/angular.min.js"></script>
-	<script src="lib/moment.min.js"></script>
-	<script src="lib/datarangepicker/daterangepicker.min.js"></script>
-	<script src="lib/bootstrap/bootstrap.min.js"></script>
-	<script src="lib/moment-duration-format.js"></script>
-	<script src="controller.js"></script>
+	<link rel='stylesheet' href='lib/angular-loading/loading-bar.min.css' media='all' />
+	<script src="lib/jquery.min.js" type='text/javascript' ></script>
+	<script src="lib/angular.min.js" type='text/javascript' ></script>
+	<script src="lib/moment.min.js" type='text/javascript' ></script>
+	<script src="lib/datarangepicker/daterangepicker.min.js" type='text/javascript' ></script>
+	<script src="lib/bootstrap/bootstrap.min.js" type='text/javascript' ></script>
+	<script src="lib/moment-duration-format.js" type='text/javascript' ></script>
+	<script src='lib/angular-loading/loading-bar.min.js' type='text/javascript' ></script>
+	<script src="controller.js" type='text/javascript' ></script>
 	<style>
 		.negative {color: red}
 		.positive {color: blue}
@@ -27,17 +29,31 @@
 		<h1 class="text-center">Horas Extras - Laisson R. Silveira</h1>
 		<strong>Saldo inicial (19/08/2018): <span class="negative">{{ initialBalance }}</span></strong><br>
 		<hr>
-		<strong>TOTAL FILTRO: <span ng-class="{'negative': balanceFilter < 0, 'positive': balanceFilter > 0}">{{ balanceFilterLabel }}</span></strong><br>
-		<strong>TOTAL BANCO: <span ng-class="{'negative': balance < 0, 'positive': balance > 0}">{{ balanceLabel }}</span></strong>
-		<hr>
-		<strong>TOTAL EXTRA: <span ng-class="{'negative': extraBalance < 0, 'positive': extraBalance > 0}">{{
-				extraBalanceLabel }}</span>&nbsp;(<i>{{ extraPercent }}%</i>)</strong><br>
+		<div class="row">
+			<div class="col-md-12 text-center">
+				<h3>TOTAIS</h3>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-md-3">
+				<strong>FILTRO: <span ng-class="{'negative': balanceFilter < 0, 'positive': balanceFilter > 0}">{{ balanceFilterLabel }}</span></strong>
+			</div>
+			<div class="col-md-3">
+				<strong>BANCO: <span ng-class="{'negative': balance < 0, 'positive': balance > 0}">{{ balanceLabel }}</span></strong>
+			</div>
+			<div class="col-md-3">
+				<strong>EXTRA: <span ng-class="{'negative': extraBalance < 0, 'positive': extraBalance > 0}">{{ extraBalanceLabel }}</span></strong>
+			</div>
+			<div class="col-md-3">
+				<strong>ACELERAÇÃO: <span ng-class="{'negative': extraAcelerationBalance < 0, 'positive': extraAcelerationBalance > 0}">{{ extraAcelerationBalanceLabel }}</span>&nbsp;(<i>{{ extraPercent }}%</i>)</strong>
+			</div>
+		</div>
 		<hr>
 		<div class="table-responsive">
 			<table class="table table-hover">
 				<thead class="thead-dark">
 					<tr scope="row">
-						<th colspan="2"></th>
+						<th colspan="3"></th>
 						<th scope="col">
 							<div class="form-group row">
 								<div class="col-md-11">
@@ -51,7 +67,8 @@
 					</tr>
 					<tr>
 						<th scope="col">Total Balance</th>
-						<th scope="col">Total Extra Hour</th>
+						<th scope="col">Total Extra</th>
+						<th scope="col">Total Aceleration</th>
 						<th scope="col">Divergences</th>
 					</tr>
 				</thead>
@@ -63,6 +80,9 @@
 						<td ng-class="{'negative': item.totalExtra < 0, 'positive': item.totalExtra > 0}">
 							<strong>{{ item.totalExtraFormated }}</strong>
 						</td>
+						<td ng-class="{'negative': item.totalExtraAceleration < 0, 'positive': item.totalExtraAceleration > 0}">
+							<strong>{{ item.totalExtraAcelerationFormated }}</strong>
+						</td>
 						<td>
 							<table class="table table-bordered table-warning table-sm">
 								<thead class="thead-dark">
@@ -71,24 +91,28 @@
 										<th scope="col">Hours worked</th>
 										<th scope="col">Day Balance</th>
 										<th scope="col">Extra Balance</th>
+										<th scope="col">Aceleration Balance</th>
 										<th scope="col">Hours</th>
 										<th scope="col">Negative</th>
 										<th scope="col">Positive</th>
 										<th scope="col">Extra Hours</th>
+										<th scope="col">Extra Aceleration</th>
 									</tr>
 								</thead>
 								<tbody>
 									<tr scope="row" ng-repeat="div in item.divergences">
 										<td>{{ div.date | date: 'fullDate' }}</td>
-										<td ng-class="{'negative': (div.minutes + div.extraHour) < 0, 'positive': (div.minutes + div.extraHour) > 0}">
+										<td ng-class="{'negative': (div.minutes + div.extraHour + div.extraHourAceleration) < 0, 'positive': (div.minutes + div.extraHour + div.extraHourAceleration) > 0}">
 											<strong>{{ div.hoursWorked }}</strong>
 										</td>
 										<td ng-class="{'negative': div.minutes < 0, 'positive': div.minutes > 0}">{{ div.minutesFormated }}</td>
 										<td ng-class="{'negative': div.extraHour < 0, 'positive': div.extraHour > 0}">{{ div.extraHourFormated }}</td>
+										<td ng-class="{'negative': div.extraHourAceleration < 0, 'positive': div.extraHourAceleration > 0}">{{ div.extraHourAcelerationFormated }}</td>
 										<td>{{ div.hours }}</td>
 										<td>{{ div.negative.join(' ') }}</td>
 										<td>{{ div.positive.join(' ') }}</td>
 										<td>{{ div.extra.join(' ') }}</td>
+										<td>{{ div.extraAceleration.join(' ') }}</td>
 									</tr>
 								</tbody>
 							</table>

@@ -1,22 +1,27 @@
-angular.module('clockInApp', []).controller('CollectedDataController', ($scope, $http, $filter) => {
+angular.module('clockInApp', ['angular-loading-bar']).controller('CollectedDataController', ($scope, $http, $filter) => {
 
     const INITIAL_BALANCE = -95;
-    $scope.initialBalance = moment.duration(INITIAL_BALANCE, 'minutes').format('h [hours], m [minutes]');
     const keyStr = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/=';
     $scope.isLogged = false;
 
     const totalBalanceCalc = (items) => {
         if (items) {
+            $scope.initialBalance = moment.duration(INITIAL_BALANCE, 'minutes').format('h [hours], m [minutes]');
+
             $scope.balance = items.reduce((previousVal, currentVal) => previousVal + currentVal.totalMinutes, 0) + INITIAL_BALANCE;
             $scope.balanceLabel = moment.duration($scope.balance + INITIAL_BALANCE, 'minutes').format('h [hours], m [minutes]');
-            
+
             $scope.balanceFilter = $scope.balance - INITIAL_BALANCE;
             $scope.balanceFilterLabel = moment.duration($scope.balanceFilter, 'minutes').format('h [hours], m [minutes]');
-            
+
+            $scope.extraAcelerationBalance = items.reduce((previousVal, currentVal) => previousVal + currentVal.totalExtraAceleration, 0);
+            $scope.extraAcelerationBalanceLabel = moment.duration($scope.extraAcelerationBalance, 'minutes').format('h [hours], m [minutes]');
+            //8(hrs)*5(dias)*4(semanas)*8(meses)=1280(hrs)*20%=256(hrs) = 15360min[20%] -> 76800min[100%]
+            const resultPercent = $scope.extraAcelerationBalance * 100 / 76800;
+            $scope.extraPercent = Number(resultPercent).toFixed(parseInt(resultPercent) === 0 ? 1 : 0);
+
             $scope.extraBalance = items.reduce((previousVal, currentVal) => previousVal + currentVal.totalExtra, 0);
             $scope.extraBalanceLabel = moment.duration($scope.extraBalance, 'minutes').format('h [hours], m [minutes]');
-            const resultPercent = $scope.extraBalance * 100 / 15360;//8*5*4*8=1280*20%=256hrs = 15360min
-            $scope.extraPercent = Number(resultPercent).toFixed(parseInt(resultPercent) === 0 ? 1 : 0);
         }
     };
 
@@ -57,15 +62,22 @@ angular.module('clockInApp', []).controller('CollectedDataController', ($scope, 
     $scope.login = auth => {
         const authData = encode(`${auth.user}:${auth.password}`);
         $http.defaults.headers.common['Authorization'] = 'Basic ' + authData;
-
         $http.get('clocks')
             .then(response => {
+                sessionStorage.user = auth.user;
+                sessionStorage.password = auth.password;
                 $('#modal_login').modal('hide');
                 $scope.isLogged = true;
                 $scope.items = response.data;
                 totalBalanceCalc($scope.items);
             })
-            .catch(console.error);//eslint-disable-line
+            .catch(err => {
+                let msg = 'Erro interno, consulte o log ;)';
+                if (err.status === 403) msg = `Usuário '${auth.user}' não tem acesso`;
+                alert(msg);
+                console.error(err);//eslint-disable-line
+                $('#modal_login').modal('show');
+            });
     };
 
     const encode = input => {
@@ -102,5 +114,7 @@ angular.module('clockInApp', []).controller('CollectedDataController', ($scope, 
         return output;
     };
 
-    $('#modal_login').modal('show');
-});
+    sessionStorage.user ? $scope.login({ user: sessionStorage.user, password: sessionStorage.password }) : $('#modal_login').modal('show');
+}).config(['cfpLoadingBarProvider', (cfpLoadingBarProvider) => {
+    cfpLoadingBarProvider.includeSpinner = false;
+}]);
