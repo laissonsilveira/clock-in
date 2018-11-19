@@ -9,7 +9,7 @@ angular.module('clockInApp', ['angular-loading-bar']).controller('CollectedDataC
             $scope.initialBalance = moment.duration(INITIAL_BALANCE, 'minutes').format('h [hours], m [minutes]');
 
             $scope.balance = items.reduce((previousVal, currentVal) => previousVal + currentVal.totalMinutes, 0) + INITIAL_BALANCE;
-            $scope.balanceLabel = moment.duration($scope.balance + INITIAL_BALANCE, 'minutes').format('h [hours], m [minutes]');
+            $scope.balanceLabel = moment.duration($scope.balance, 'minutes').format('h [hours], m [minutes]');
 
             $scope.balanceFilter = $scope.balance - INITIAL_BALANCE;
             $scope.balanceFilterLabel = moment.duration($scope.balanceFilter, 'minutes').format('h [hours], m [minutes]');
