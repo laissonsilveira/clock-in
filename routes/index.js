@@ -82,6 +82,13 @@ router.get('/clocks', (req, res, next) => {
                                 type: 'P'
                             });
                         }
+                        
+                        if (dv.middayOff) {
+                            balanceHours.push({
+                                sum: -240,
+                                type: 'P'
+                            });
+                        }
 
                         dv.extraHour = getHours(balanceHours, 'E');
                         dv.extraHourAceleration = getHours(balanceHours, 'A');
@@ -116,6 +123,59 @@ router.get('/clocks', (req, res, next) => {
 
 });
 
+function normalizeHour(hour) {
+    const hrs = hour.split(':');
+    if ((hrs[0] === '07' && Number(hrs[1]) >= 55) || (hrs[0] === '08' && Number(hrs[1]) <= 5)) {
+        hrs[0] = '08';
+        hrs[1] = '00';
+    } else if ((hrs[0] === '11' && Number(hrs[1]) >= 55) || (hrs[0] === '12' && Number(hrs[1]) <= 5)) {
+        hrs[0] = '12';
+        hrs[1] = '00';
+    } else if (hrs[0] === '13' && Number(hrs[1]) >= 25 && Number(hrs[1]) <= 35) {
+        hrs[0] = '13';
+        hrs[1] = '30';
+    } else if (hrs[0] === '17' && Number(hrs[1]) >= 25 && Number(hrs[1]) <= 35) {
+        hrs[0] = '17';
+        hrs[1] = '30';
+    }
+    return hrs;
+}
+
+function getType(dv, hour) {
+    if (dv.extra && dv.extra.includes(hour)) return 'E';
+    if (dv.extraAceleration && dv.extraAceleration.includes(hour)) return 'A';
+    if (dv.positive.includes(hour) || dv.negative.includes(hour)) return 'P';
+}
+
+function getDuration(h_2, h_1, isFind) {
+    return moment({ hour: h_2[0], minute: h_2[1] })
+        .diff(moment({ hour: h_1[0], minute: h_1[1] }), 'm') * (isFind ? 2 : 1);
+}
+
+function formatMinutes(minutes) {
+    return moment.duration(minutes, 'minutes').format('HH:mm', { trim: false });
+}
+
+function getHours(balanceHours, type) {
+    return balanceHours.filter(h => h.type === type).reduce((sum, h) => sum + h.sum, 0);
+}
+
+function totalCalc(o) {
+    if (o.divergences.length > 1) {
+        o.totalMinutes = o.divergences.reduce((previousVal, currentVal) => previousVal + (currentVal.minutes || 0), 0);
+        o.totalExtra = o.divergences.reduce((previousVal, currentVal) => previousVal + (currentVal.extraHour || 0), 0);
+        o.totalExtraAceleration = o.divergences.reduce((previousVal, currentVal) => previousVal + (currentVal.extraHourAceleration || 0), 0);
+    }
+    else {
+        o.totalMinutes = o.divergences[0].minutes || 0;
+        o.totalExtra = o.divergences[0].extraHour || 0;
+        o.totalExtraAceleration = o.divergences[0].extraHourAceleration || 0;
+    }
+    o.totalMinutesFormated = formatMinutes(o.totalMinutes);
+    o.totalExtraFormated = formatMinutes(o.totalExtra);
+    o.totalExtraAcelerationFormated = formatMinutes(o.totalExtraAceleration);
+}
+
 function decode(input) {
     let output = '';
     let chr1, chr2, chr3 = '';
@@ -149,60 +209,6 @@ function decode(input) {
     } while (i < input.length);
 
     return output;
-}
-
-function normalizeHour(hour) {
-    const hrs = hour.split(':');
-    if ((hrs[0] === '07' && Number(hrs[1]) >= 55) || (hrs[0] === '08' && Number(hrs[1]) <= 5)) {
-        hrs[0] = '08';
-        hrs[1] = '00';
-    } else if ((hrs[0] === '11' && Number(hrs[1]) >= 55) || (hrs[0] === '12' && Number(hrs[1]) <= 5)) {
-        hrs[0] = '12';
-        hrs[1] = '00';
-    } else if (hrs[0] === '13' && Number(hrs[1]) >= 25 && Number(hrs[1]) <= 35) {
-        hrs[0] = '13';
-        hrs[1] = '30';
-    } else if (hrs[0] === '17' && Number(hrs[1]) >= 25 && Number(hrs[1]) <= 35) {
-        hrs[0] = '17';
-        hrs[1] = '30';
-    }
-    return hrs;
-}
-
-function getType(dv, hour) {
-    if (dv.extra && (dv.extra.includes(hour) || dv.extra.includes(`${hour}\t`))) return 'E';
-    if (dv.extraAceleration && (dv.extraAceleration.includes(hour) || dv.extraAceleration.includes(`${hour}\t`))) return 'A';
-    if (dv.positive.includes(hour) || dv.positive.includes(`${hour}\t`)
-        || dv.negative.includes(hour) || dv.negative.includes(`${hour}\t`)) return 'P';
-}
-
-function getDuration(h_2, h_1, isFind) {
-    return moment({ hour: h_2[0], minute: h_2[1] })
-        .diff(moment({ hour: h_1[0], minute: h_1[1] }), 'm') * (isFind ? 2 : 1);
-}
-
-function formatMinutes(minutes) {
-    return moment.duration(minutes, 'minutes').format('HH:mm', { trim: false });
-}
-
-function getHours(balanceHours, type) {
-    return balanceHours.filter(h => h.type === type).reduce((sum, h) => sum + h.sum, 0);
-}
-
-function totalCalc(o) {
-    if (o.divergences.length > 1) {
-        o.totalMinutes = o.divergences.reduce((previousVal, currentVal) => previousVal + (currentVal.minutes || 0), 0);
-        o.totalExtra = o.divergences.reduce((previousVal, currentVal) => previousVal + (currentVal.extraHour || 0), 0);
-        o.totalExtraAceleration = o.divergences.reduce((previousVal, currentVal) => previousVal + (currentVal.extraHourAceleration || 0), 0);
-    }
-    else {
-        o.totalMinutes = o.divergences[0].minutes || 0;
-        o.totalExtra = o.divergences[0].extraHour || 0;
-        o.totalExtraAceleration = o.divergences[0].extraHourAceleration || 0;
-    }
-    o.totalMinutesFormated = formatMinutes(o.totalMinutes);
-    o.totalExtraFormated = formatMinutes(o.totalExtra);
-    o.totalExtraAcelerationFormated = formatMinutes(o.totalExtraAceleration);
 }
 
 module.exports = router;

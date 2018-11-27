@@ -10,61 +10,57 @@
 	<link rel="stylesheet" href="lib/bootstrap/bootstrap.min.css">
 	<link rel="stylesheet" href="lib/datarangepicker/daterangepicker.min.css">
 	<link rel='stylesheet' href='lib/angular-loading/loading-bar.min.css' media='all' />
-	<script src="lib/jquery.min.js" type='text/javascript' ></script>
-	<script src="lib/angular.min.js" type='text/javascript' ></script>
-	<script src="lib/moment.min.js" type='text/javascript' ></script>
-	<script src="lib/datarangepicker/daterangepicker.min.js" type='text/javascript' ></script>
-	<script src="lib/bootstrap/bootstrap.min.js" type='text/javascript' ></script>
-	<script src="lib/moment-duration-format.js" type='text/javascript' ></script>
-	<script src='lib/angular-loading/loading-bar.min.js' type='text/javascript' ></script>
-	<script src="controller.js" type='text/javascript' ></script>
+	<script src="lib/jquery.min.js" type='text/javascript'></script>
+	<script src="lib/angular.min.js" type='text/javascript'></script>
+	<script src="lib/moment.min.js" type='text/javascript'></script>
+	<script src="lib/datarangepicker/daterangepicker.min.js" type='text/javascript'></script>
+	<script src="lib/bootstrap/bootstrap.min.js" type='text/javascript'></script>
+	<script src="lib/moment-duration-format.js" type='text/javascript'></script>
+	<script src='lib/angular-loading/loading-bar.min.js' type='text/javascript'></script>
+	<script src="controller.js" type='text/javascript'></script>
 	<style>
 		.negative {color: red}
 		.positive {color: blue}
 	</style>
 </head>
 
-<body ng-controller="CollectedDataController" style="padding-top: 50px">
+<body ng-controller="CollectedDataController">
 	<div class="container-fluid" ng-show="isLogged">
-		<h1 class="text-center">Horas Extras - Laisson R. Silveira</h1>
-		<strong>Saldo inicial (19/08/2018): <span class="negative">{{ initialBalance }}</span></strong><br>
+		<h3 class="text-center">Horas Extras - Laisson R. Silveira</h1>
 		<hr>
 		<div class="row">
-			<div class="col-md-12 text-center">
-				<h3>TOTAIS</h3>
+			<div class="col-md-6">
+				<strong>Saldo inicial (19/08/2018): <span class="negative">{{ initialBalance }}</span></strong><br>
+			</div>
+			<div class="col-md-4">
+				<input class="form-control" ng-model="query" name="daterange" placeholder="Date Filter">
+			</div>
+			<div class="col-md-2">
+				<button class="form-control btn btn-secondary" ng-click="query='';search=''">Limpar Filtro</button>
 			</div>
 		</div>
+		<hr>
 		<div class="row">
 			<div class="col-md-3">
-				<strong>FILTRO: <span ng-class="{'negative': balanceFilter < 0, 'positive': balanceFilter > 0}">{{ balanceFilterLabel }}</span></strong>
+				<strong>FILTRO: <span ng-class="{'negative': balanceFilter < 0, 'positive': balanceFilter > 0}">{{
+						balanceFilterLabel }}</span></strong>
 			</div>
 			<div class="col-md-3">
 				<strong>BANCO: <span ng-class="{'negative': balance < 0, 'positive': balance > 0}">{{ balanceLabel }}</span></strong>
 			</div>
 			<div class="col-md-3">
-				<strong>EXTRA: <span ng-class="{'negative': extraBalance < 0, 'positive': extraBalance > 0}">{{ extraBalanceLabel }}</span></strong>
+				<strong>EXTRA: <span ng-class="{'negative': extraBalance < 0, 'positive': extraBalance > 0}">{{ extraBalanceLabel
+						}}</span></strong>
 			</div>
 			<div class="col-md-3">
-				<strong>ACELERAÇÃO: <span ng-class="{'negative': extraAcelerationBalance < 0, 'positive': extraAcelerationBalance > 0}">{{ extraAcelerationBalanceLabel }}</span>&nbsp;(<i>{{ extraPercent }}%</i>)</strong>
+				<strong>ACELERAÇÃO: <span ng-class="{'negative': extraAcelerationBalance < 0, 'positive': extraAcelerationBalance > 0}">{{
+						extraAcelerationBalanceLabel }}</span>&nbsp;(<i>{{ extraPercent }}%</i>)</strong>
 			</div>
 		</div>
 		<hr>
 		<div class="table-responsive">
 			<table class="table table-hover">
 				<thead class="thead-dark">
-					<tr scope="row">
-						<th colspan="3"></th>
-						<th scope="col">
-							<div class="form-group row">
-								<div class="col-md-11">
-									<input class="form-control" ng-model="query" name="daterange" placeholder="Date Filter">
-								</div>
-								<div class="col-md-1">
-									<button class="form-control btn btn-secondary" ng-click="query='';search=''" style="width: 50px">X</button>
-								</div>
-							</div>
-						</th>
-					</tr>
 					<tr>
 						<th scope="col">Total Balance</th>
 						<th scope="col">Total Extra</th>
@@ -107,7 +103,8 @@
 										</td>
 										<td ng-class="{'negative': div.minutes < 0, 'positive': div.minutes > 0}">{{ div.minutesFormated }}</td>
 										<td ng-class="{'negative': div.extraHour < 0, 'positive': div.extraHour > 0}">{{ div.extraHourFormated }}</td>
-										<td ng-class="{'negative': div.extraHourAceleration < 0, 'positive': div.extraHourAceleration > 0}">{{ div.extraHourAcelerationFormated }}</td>
+										<td ng-class="{'negative': div.extraHourAceleration < 0, 'positive': div.extraHourAceleration > 0}">{{
+											div.extraHourAcelerationFormated }}</td>
 										<td>{{ div.hours }}</td>
 										<td>{{ div.negative.join(' ') }}</td>
 										<td>{{ div.positive.join(' ') }}</td>
