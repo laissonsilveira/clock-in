@@ -1,0 +1,2072 @@
+[
+    {
+        "_id": {
+            "$oid": "5b7efa545d0e653eccd6deaa"
+        },
+        "status": "OK",
+        "date_created": "2018-08-23 15:17:15",
+        "divergences": [
+            {
+                "date": "Quarta, 22/08/2018",
+                "hours": "8:31 12:02 13:29 17:55",
+                "negative": [
+                    "8:31"
+                ],
+                "positive": [
+                    "17:55"
+                ]
+            }
+        ]
+    },
+    {
+        "_id": {
+            "$oid": "5b7c2b0f1f6e4f0b47ad338d"
+        },
+        "status": "OK",
+        "date_created": "2018-08-21 09:58:48",
+        "divergences": [
+            {
+                "date": "Segunda, 20/08/2018",
+                "hours": "8:21 12:09 12:32 17:42",
+                "negative": [
+                    "8:21"
+                ],
+                "positive": [
+                    "12:09",
+                    "12:32",
+                    "17:42"
+                ]
+            }
+        ]
+    },
+    {
+        "_id": {
+            "$oid": "5b7d5dcd5d0e657f28d08279"
+        },
+        "status": "OK",
+        "date_created": "2018-08-22 09:56:57",
+        "divergences": [
+            {
+                "date": "Terça, 21/08/2018",
+                "hours": "9:42 12:13 13:01 18:47",
+                "negative": [
+                    "9:42"
+                ],
+                "positive": [
+                    "12:13",
+                    "13:01",
+                    "18:47"
+                ]
+            }
+        ]
+    },
+    {
+        "_id": {
+            "$oid": "5b869d4d1f6e4f79c185f004"
+        },
+        "status": "OK",
+        "date_created": "2018-08-29 10:18:22",
+        "divergences": [
+            {
+                "date": "Terça, 28/08/2018",
+                "hours": "8:53 12:04 12:35 18:08",
+                "negative": [
+                    "8:53"
+                ],
+                "positive": [
+                    "12:35",
+                    "18:08"
+                ]
+            }
+        ]
+    },
+    {
+        "_id": {
+            "$oid": "5b87ff5b5d0e653f4a19797c"
+        },
+        "status": "OK",
+        "date_created": "2018-08-30 11:28:57",
+        "divergences": [
+            {
+                "date": "Quarta, 29/08/2018",
+                "hours": "9:30 12:00 13:01 17:33",
+                "negative": [
+                    "9:30"
+                ],
+                "positive": [
+                    "13:01"
+                ]
+            }
+        ],
+        "message": "- Divergência(s) salva(s) com sucesso!"
+    },
+    {
+        "_id": {
+            "$oid": "5b8943671f6e4f0502f00b6c"
+        },
+        "status": "OK",
+        "date_created": "2018-08-31 10:31:33",
+        "divergences": [
+            {
+                "date": "Quinta, 30/08/2018",
+                "hours": "8:40 11:55 12:20 17:58",
+                "negative": [
+                    "8:40"
+                ],
+                "positive": [
+                    "12:20",
+                    "17:58"
+                ]
+            }
+        ],
+        "message": "- Divergência(s) salva(s) com sucesso!"
+    },
+    {
+        "_id": {
+            "$oid": "5b8d2b7c5d0e656b667aa98d"
+        },
+        "status": "OK",
+        "date_created": "2018-09-03 09:39:08",
+        "divergences": [
+            {
+                "date": "Sexta, 31/08/2018",
+                "hours": "8:57 11:55 12:48 15:28 16:00 19:00",
+                "negative": [
+                    "8:57",
+                    "15:28",
+                    "16:00"
+                ],
+                "positive": [
+                    "12:48",
+                    "19:00"
+                ]
+            }
+        ],
+        "message": "- Divergência(s) salva(s) com sucesso!"
+    },
+    {
+        "_id": {
+            "$oid": "5b8fdf465d0e656b668de580"
+        },
+        "status": "OK",
+        "date_created": "2018-09-05 10:49:42",
+        "divergences": [
+            {
+                "date": "Segunda, 03/09/2018",
+                "hours": "8:30 13:00 14:00 18:40",
+                "negative": [
+                    "8:30",
+                    "14:00"
+                ],
+                "positive": [
+                    "13:00",
+                    "18:40"
+                ]
+            }
+        ],
+        "message": "- Divergência(s) salva(s) com sucesso!"
+    },
+    {
+        "_id": {
+            "$oid": "5b9902ae5d0e6545957234b1"
+        },
+        "status": "OK",
+        "date_created": "2018-09-12 09:12:14",
+        "divergences": [
+            {
+                "date": "Terça, 04/09/2018",
+                "hours": "8:49 12:07 13:01 17:58",
+                "negative": [
+                    "8:49"
+                ],
+                "positive": [
+                    "12:07",
+                    "13:01",
+                    "17:58"
+                ]
+            },
+            {
+                "date": "Quarta, 05/09/2018",
+                "hours": "9:03 12:00 13:10 17:59",
+                "negative": [
+                    "9:03"
+                ],
+                "positive": [
+                    "13:10",
+                    "17:59"
+                ]
+            },
+            {
+                "date": "Quinta, 06/09/2018",
+                "hours": "9:10 12:06 12:41 18:02",
+                "negative": [
+                    "9:10"
+                ],
+                "positive": [
+                    "12:06",
+                    "12:41",
+                    "18:02"
+                ]
+            },
+            {
+                "date": "Segunda, 10/09/2018",
+                "hours": "8:40 12:00 13:05 18:20",
+                "negative": [
+                    "8:40"
+                ],
+                "positive": [
+                    "13:05",
+                    "18:20"
+                ]
+            }
+        ],
+        "message": "- Divergência(s) salva(s) com sucesso!"
+    },
+    {
+        "_id": {
+            "$oid": "5b996e385d0e65459573643e"
+        },
+        "status": "OK",
+        "date_created": "2018-09-12 16:51:07",
+        "divergences": [
+            {
+                "date": "Terça, 11/09/2018",
+                "hours": "8:56 12:16 13:02 17:30",
+                "negative": [
+                    "8:56"
+                ],
+                "positive": [
+                    "12:16",
+                    "13:02"
+                ]
+            }
+        ],
+        "message": "- Divergência(s) salva(s) com sucesso!"
+    },
+    {
+        "_id": {
+            "$oid": "5b9a56915d0e654595769ef2"
+        },
+        "status": "OK",
+        "date_created": "2018-09-13 09:22:24",
+        "divergences": [
+            {
+                "date": "Quarta, 12/09/2018",
+                "hours": "9:08 12:04 13:04 18:13",
+                "negative": [
+                    "9:08"
+                ],
+                "positive": [
+                    "13:04",
+                    "18:13"
+                ]
+            }
+        ],
+        "message": "- Divergência(s) salva(s) com sucesso!"
+    },
+    {
+        "_id": {
+            "$oid": "5b9bc4c21f6e4f0610ffb49a"
+        },
+        "status": "OK",
+        "date_created": "2018-09-14 11:24:50",
+        "divergences": [
+            {
+                "date": "Quinta, 13/09/2018",
+                "hours": "8:42 11:01 12:56 17:37",
+                "negative": [
+                    "8:42",
+                    "11:01"
+                ],
+                "positive": [
+                    "12:56",
+                    "17:37"
+                ]
+            }
+        ],
+        "message": "- Divergência(s) salva(s) com sucesso!"
+    },
+    {
+        "_id": {
+            "$oid": "5ba054771f6e4f38ace60d1a"
+        },
+        "status": "OK",
+        "date_created": "2018-09-17 22:27:03",
+        "divergences": [
+            {
+                "date": "Sexta, 14/09/2018",
+                "hours": "8:42 12:06 12:41 18:17",
+                "negative": [
+                    "8:42"
+                ],
+                "positive": [
+                    "12:06",
+                    "12:41",
+                    "18:17"
+                ]
+            },
+            {
+                "date": "Sábado, 15/09/2018",
+                "hours": "14:00 17:00",
+                "negative": [],
+                "positive": [
+                    "14:00",
+                    "17:00"
+                ]
+            }
+        ],
+        "message": "- Divergência(s) salva(s) com sucesso!"
+    },
+    {
+        "_id": {
+            "$oid": "5bcdf8a6e7179a437700a002"
+        },
+        "status": "OK",
+        "date_created": "2018-10-22 13:16:49",
+        "divergences": [
+            {
+                "date": "Domingo, 21/10/2018",
+                "extraAceleration": [
+                    "16:10",
+                    "20:30"
+                ],
+                "hours": "16:10 20:30",
+                "negative": [],
+                "positive": []
+            }
+        ]
+    },
+    {
+        "_id": {
+            "$oid": "5bd9daa1e7179a1b53008ec2"
+        },
+        "status": "OK",
+        "date_created": "2018-08-27 09:23:09",
+        "divergences": [
+            {
+                "date": "Quinta, 23/08/2018",
+                "hours": "9:07 12:05 12:26 17:32",
+                "negative": [
+                    "9:07"
+                ],
+                "positive": [
+                    "12:26"
+                ]
+            }
+        ]
+    },
+    {
+        "_id": {
+            "$oid": "5bdaf065fb6fc074abb46a65"
+        },
+        "status": "OK",
+        "date_created": "2018-11-01 09:23:00",
+        "divergences": [
+            {
+                "date": "Quarta, 31/10/2018",
+                "extra": [],
+                "hours": "8:20 12:30 13:30 18:10",
+                "negative": [
+                    "8:20"
+                ],
+                "positive": [
+                    "12:30",
+                    "18:10"
+                ]
+            }
+        ],
+        "message": "- Divergência(s) salva(s) com sucesso!"
+    },
+    {
+        "_id": {
+            "$oid": "5b8542865d0e653eccf035da"
+        },
+        "status": "OK",
+        "date_created": "2018-08-28 09:38:45",
+        "divergences": [
+            {
+                "date": "Segunda, 27/08/2018",
+                "hours": "8:39 12:46 13:11 18:19",
+                "negative": [
+                    "8:39"
+                ],
+                "positive": [
+                    "12:46",
+                    "13:11",
+                    "18:19"
+                ]
+            }
+        ]
+    },
+    {
+        "_id": {
+            "$oid": "5ba119875d0e656b6da598ef"
+        },
+        "status": "OK",
+        "date_created": "2018-09-18 12:27:52",
+        "divergences": [
+            {
+                "date": "Segunda, 17/09/2018",
+                "hours": "10:40 13:29 13:44 20:54",
+                "negative": [
+                    "10:40",
+                    "13:29",
+                    "13:44"
+                ],
+                "positive": [
+                    "20:54"
+                ]
+            }
+        ],
+        "message": "- Divergência(s) salva(s) com sucesso!"
+    },
+    {
+        "_id": {
+            "$oid": "5ba24ab45d0e655098949e0f"
+        },
+        "status": "OK",
+        "date_created": "2018-09-19 10:09:53",
+        "divergences": [
+            {
+                "date": "Terça, 18/09/2018",
+                "hours": "9:22 12:03 12:58 19:08",
+                "negative": [
+                    "9:22"
+                ],
+                "positive": [
+                    "12:58",
+                    "19:08"
+                ]
+            }
+        ],
+        "message": "- Divergência(s) salva(s) com sucesso!"
+    },
+    {
+        "_id": {
+            "$oid": "5ba38f7a1f6e4f39ecb421a4"
+        },
+        "status": "OK",
+        "date_created": "2018-09-20 09:15:38",
+        "divergences": [
+            {
+                "date": "Quarta, 19/09/2018",
+                "hours": "9:20 12:32 12:56 18:05",
+                "negative": [
+                    "9:20"
+                ],
+                "positive": [
+                    "12:32",
+                    "12:56",
+                    "18:05"
+                ]
+            }
+        ],
+        "message": "- Divergência(s) salva(s) com sucesso!"
+    },
+    {
+        "_id": {
+            "$oid": "5ba4e5615d0e6525a8d5da1b"
+        },
+        "status": "OK",
+        "date_created": "2018-09-21 09:34:21",
+        "divergences": [
+            {
+                "date": "Quinta, 20/09/2018",
+                "hours": "8:36 11:59 13:06 18:05",
+                "negative": [
+                    "8:36"
+                ],
+                "positive": [
+                    "13:06",
+                    "18:05"
+                ]
+            }
+        ],
+        "message": "- Divergência(s) salva(s) com sucesso!"
+    },
+    {
+        "_id": {
+            "$oid": "5ba8fc1a5d0e654f94e79b63"
+        },
+        "status": "OK",
+        "date_created": "2018-09-24 12:00:25",
+        "divergences": [
+            {
+                "date": "Sexta, 21/09/2018",
+                "hours": "8:14 12:04 13:01 17:41",
+                "negative": [
+                    "8:14"
+                ],
+                "positive": [
+                    "13:01",
+                    "17:41"
+                ]
+            }
+        ],
+        "message": "- Divergência(s) salva(s) com sucesso!"
+    },
+    {
+        "_id": {
+            "$oid": "5baa27225d0e654f94f4b97a"
+        },
+        "status": "OK",
+        "date_created": "2018-09-25 09:16:17",
+        "divergences": [
+            {
+                "date": "Segunda, 24/09/2018",
+                "hours": "9:30 12:10 13:02 18:28",
+                "negative": [
+                    "9:30"
+                ],
+                "positive": [
+                    "12:10",
+                    "13:02",
+                    "18:28"
+                ]
+            }
+        ],
+        "message": "- Divergência(s) salva(s) com sucesso!"
+    },
+    {
+        "_id": {
+            "$oid": "5bab79471f6e4f1b9fa7db53"
+        },
+        "status": "OK",
+        "date_created": "2018-09-26 09:19:01",
+        "divergences": [
+            {
+                "date": "Terça, 25/09/2018",
+                "hours": "9:08 12:06 13:03 18:10",
+                "negative": [
+                    "9:08"
+                ],
+                "positive": [
+                    "12:06",
+                    "13:03",
+                    "18:10"
+                ]
+            }
+        ],
+        "message": "- Divergência(s) salva(s) com sucesso!"
+    },
+    {
+        "_id": {
+            "$oid": "5bad972e5d0e6562dbf169ae"
+        },
+        "status": "OK",
+        "date_created": "2018-09-27 23:51:12",
+        "divergences": [
+            {
+                "date": "Quarta, 26/09/2018",
+                "extraAceleration": [
+                    "17:33",
+                    "18:59"
+                ],
+                "hours": "9:12 12:31 12:51 17:32 17:33 18:59",
+                "negative": [
+                    "9:12"
+                ],
+                "positive": [
+                    "12:31",
+                    "12:51",
+                    "17:32"
+                ]
+            }
+        ],
+        "message": "- Divergência(s) salva(s) com sucesso!"
+    },
+    {
+        "_id": {
+            "$oid": "5bae167c1f6e4f1b9fdab432"
+        },
+        "status": "OK",
+        "date_created": "2018-09-28 08:54:18",
+        "divergences": [
+            {
+                "date": "Quinta, 27/09/2018",
+                "extra": [],
+                "hours": "9:17 12:02 13:07 17:56",
+                "negative": [
+                    "9:17"
+                ],
+                "positive": [
+                    "13:07",
+                    "17:56"
+                ]
+            }
+        ],
+        "message": "- Divergência(s) salva(s) com sucesso!"
+    },
+    {
+        "_id": {
+            "$oid": "5bb21def5d0e6562db106d11"
+        },
+        "status": "OK",
+        "date_created": "2018-10-01 10:15:02",
+        "divergences": [
+            {
+                "date": "Sexta, 28/09/2018",
+                "extra": [],
+                "hours": "8:42 12:52 13:32 17:33",
+                "negative": [
+                    "8:42"
+                ],
+                "positive": [
+                    "12:52"
+                ]
+            }
+        ],
+        "message": "- Divergência(s) salva(s) com sucesso!"
+    },
+    {
+        "_id": {
+            "$oid": "5bb367d85d0e654b29974cae"
+        },
+        "status": "OK",
+        "date_created": "2018-10-02 09:42:48",
+        "divergences": [
+            {
+                "date": "Segunda, 01/10/2018",
+                "extra": [],
+                "hours": "8:25 12:15 13:16 17:43",
+                "negative": [
+                    "8:25"
+                ],
+                "positive": [
+                    "12:15",
+                    "13:16",
+                    "17:43"
+                ]
+            }
+        ],
+        "message": "- Divergência(s) salva(s) com sucesso!"
+    },
+    {
+        "_id": {
+            "$oid": "5bb4c4105d0e654b299de327"
+        },
+        "status": "OK",
+        "date_created": "2018-10-03 10:28:30",
+        "divergences": [
+            {
+                "date": "Terça, 02/10/2018",
+                "extra": [],
+                "hours": "8:37 11:59 13:01 17:23",
+                "negative": [
+                    "8:37",
+                    "17:23"
+                ],
+                "positive": [
+                    "13:01"
+                ]
+            }
+        ],
+        "message": "- Divergência(s) salva(s) com sucesso!"
+    },
+    {
+        "_id": {
+            "$oid": "5bb7c6161f6e4f0840961271"
+        },
+        "status": "OK",
+        "date_created": "2018-10-05 17:13:55",
+        "divergences": [
+            {
+                "date": "Quarta, 03/10/2018",
+                "extraAceleration": [
+                    "17:45",
+                    "18:29"
+                ],
+                "hours": "8:47 12:06 13:03 17:44 17:45 18:29",
+                "negative": [
+                    "8:47"
+                ],
+                "positive": [
+                    "12:06",
+                    "13:03",
+                    "17:44"
+                ]
+            },
+            {
+                "date": "Quinta, 04/10/2018",
+                "extraAceleration": [
+                    "18:11",
+                    "19:00"
+                ],
+                "hours": "8:58 11:57 13:12 18:10 18:11 19:00",
+                "negative": [
+                    "8:58"
+                ],
+                "positive": [
+                    "13:12",
+                    "18:10"
+                ]
+            }
+        ],
+        "message": "- Divergência(s) salva(s) com sucesso!"
+    },
+    {
+        "_id": {
+            "$oid": "5bbb5b001f6e4f08409f195d"
+        },
+        "status": "OK",
+        "date_created": "2018-10-08 10:26:08",
+        "divergences": [
+            {
+                "date": "Sexta, 05/10/2018",
+                "extra": [],
+                "hours": "9:44 12:54 13:33 17:37",
+                "negative": [
+                    "9:44"
+                ],
+                "positive": [
+                    "12:54",
+                    "17:37"
+                ]
+            }
+        ],
+        "message": "- Divergência(s) salva(s) com sucesso!"
+    },
+    {
+        "_id": {
+            "$oid": "5bbcbb171f6e4f0840a1ca7b"
+        },
+        "status": "OK",
+        "date_created": "2018-10-09 11:28:21",
+        "divergences": [
+            {
+                "date": "Segunda, 08/10/2018",
+                "extra": [],
+                "hours": "8:44 12:16 13:08 18:38",
+                "negative": [
+                    "8:44"
+                ],
+                "positive": [
+                    "12:16",
+                    "13:08",
+                    "18:38"
+                ]
+            }
+        ],
+        "message": "- Divergência(s) salva(s) com sucesso!"
+    },
+    {
+        "_id": {
+            "$oid": "5bbe5a8d5d0e6550859c0523"
+        },
+        "status": "OK",
+        "date_created": "2018-10-10 17:01:01",
+        "divergences": [
+            {
+                "date": "Terça, 09/10/2018",
+                "extraAceleration": [
+                    "8:00",
+                    "12:50",
+                    "13:17",
+                    "17:36"
+                ],
+                "hours": "8:00 12:50 13:17 17:36",
+                "negative": [],
+                "positive": []
+            }
+        ],
+        "message": "- Divergência(s) salva(s) com sucesso!"
+    },
+    {
+        "_id": {
+            "$oid": "5bbfb3ec5d0e6550859e8638"
+        },
+        "status": "OK",
+        "date_created": "2018-10-11 17:34:31",
+        "divergences": [
+            {
+                "date": "Quarta, 10/10/2018",
+                "extra": [],
+                "hours": "9:08 12:13 13:05 18:09",
+                "negative": [
+                    "9:08"
+                ],
+                "positive": [
+                    "12:13",
+                    "13:05",
+                    "18:09"
+                ]
+            }
+        ],
+        "message": "- Divergência(s) salva(s) com sucesso!"
+    },
+    {
+        "_id": {
+            "$oid": "5bc496f21f6e4f34af5e8a82"
+        },
+        "status": "OK",
+        "date_created": "2018-10-15 10:32:16",
+        "divergences": [
+            {
+                "date": "Quinta, 11/10/2018",
+                "extra": [],
+                "hours": "9:01 12:05 13:06 18:39",
+                "negative": [
+                    "9:01"
+                ],
+                "positive": [
+                    "13:06",
+                    "18:39"
+                ]
+            }
+        ],
+        "message": "- Divergência(s) salva(s) com sucesso!"
+    },
+    {
+        "_id": {
+            "$oid": "5bc5f1155d0e651b2e53ff85"
+        },
+        "status": "OK",
+        "date_created": "2018-10-16 11:09:08",
+        "divergences": [
+            {
+                "date": "Segunda, 15/10/2018",
+                "extra": [],
+                "hours": "9:15 12:02 13:06 18:05",
+                "negative": [
+                    "9:15"
+                ],
+                "positive": [
+                    "13:06",
+                    "18:05"
+                ]
+            }
+        ],
+        "message": "- Divergência(s) salva(s) com sucesso!"
+    },
+    {
+        "_id": {
+            "$oid": "5bc73bfc5d0e651b2e57c1cd"
+        },
+        "status": "OK",
+        "date_created": "2018-10-17 10:40:54",
+        "divergences": [
+            {
+                "date": "Terça, 16/10/2018",
+                "extra": [],
+                "hours": "10:15 12:48 13:14 18:23",
+                "negative": [
+                    "10:15"
+                ],
+                "positive": [
+                    "12:48",
+                    "13:14",
+                    "18:23"
+                ]
+            }
+        ],
+        "message": "- Divergência(s) salva(s) com sucesso!"
+    },
+    {
+        "_id": {
+            "$oid": "5bc8bbfc1f6e4f34af6c02fe"
+        },
+        "status": "OK",
+        "date_created": "2018-10-18 13:59:18",
+        "divergences": [
+            {
+                "date": "Quarta, 17/10/2018",
+                "extra": [],
+                "hours": "9:27 12:22 12:39 17:53",
+                "negative": [
+                    "9:27"
+                ],
+                "positive": [
+                    "12:22",
+                    "12:39",
+                    "17:53"
+                ]
+            }
+        ],
+        "message": "- Divergência(s) salva(s) com sucesso!"
+    },
+    {
+        "_id": {
+            "$oid": "5bc9cea55d0e651b2e5fd979"
+        },
+        "status": "OK",
+        "date_created": "2018-10-19 09:31:19",
+        "divergences": [
+            {
+                "date": "Quinta, 18/10/2018",
+                "extra": [],
+                "hours": "8:50 12:05 12:44 17:31",
+                "negative": [
+                    "8:50"
+                ],
+                "positive": [
+                    "12:44"
+                ]
+            }
+        ],
+        "message": "- Divergência(s) salva(s) com sucesso!"
+    },
+    {
+        "_id": {
+            "$oid": "5bcdf7185d0e653d7ea70fa5"
+        },
+        "status": "OK",
+        "date_created": "2018-10-22 13:12:29",
+        "divergences": [
+            {
+                "date": "Sexta, 19/10/2018",
+                "extra": [],
+                "hours": "9:25 11:58 12:58 19:11",
+                "negative": [
+                    "9:25"
+                ],
+                "positive": [
+                    "12:58",
+                    "19:11"
+                ]
+            }
+        ],
+        "message": "- Divergência(s) salva(s) com sucesso!"
+    },
+    {
+        "_id": {
+            "$oid": "5bcf4cf91f6e4f69781d1561"
+        },
+        "status": "OK",
+        "date_created": "2018-10-23 13:31:09",
+        "divergences": [
+            {
+                "date": "Segunda, 22/10/2018",
+                "extraAceleration": [
+                    "17:31",
+                    "18:23"
+                ],
+                "hours": "8:20 11:52 12:23 17:30 17:31 18:23",
+                "negative": [
+                    "8:20",
+                    "11:52"
+                ],
+                "positive": [
+                    "12:23",
+                    "17:30"
+                ]
+            }
+        ],
+        "message": "- Divergência(s) salva(s) com sucesso!"
+    },
+    {
+        "_id": {
+            "$oid": "5bd0980f5d0e65315c6ad0f1"
+        },
+        "status": "OK",
+        "date_created": "2018-10-24 13:04:17",
+        "divergences": [
+            {
+                "date": "Terça, 23/10/2018",
+                "extra": [],
+                "hours": "8:48 12:43 13:31 17:47",
+                "negative": [
+                    "8:48"
+                ],
+                "positive": [
+                    "12:43",
+                    "17:47"
+                ]
+            }
+        ],
+        "message": "- Divergência(s) salva(s) com sucesso!"
+    },
+    {
+        "_id": {
+            "$oid": "5bd1f636fb6fc017d2e679ca"
+        },
+        "status": "OK",
+        "date_created": "2018-10-25 13:54:00",
+        "divergences": [
+            {
+                "date": "Quarta, 24/10/2018",
+                "extraAceleration": [
+                    "12:26",
+                    "13:03",
+                    "18:40"
+                ],
+                "hours": "9:41 12:26 13:03 18:40",
+                "negative": [
+                    "9:41"
+                ],
+                "positive": []
+            }
+        ],
+        "message": "- Divergência(s) salva(s) com sucesso!"
+    },
+    {
+        "_id": {
+            "$oid": "5bd31670fb6fc074abb041bc"
+        },
+        "status": "OK",
+        "date_created": "2018-10-26 10:25:00",
+        "divergences": [
+            {
+                "date": "Quinta, 25/10/2018",
+                "extraAceleration": [
+                    "13:08",
+                    "18:07"
+                ],
+                "hours": "8:36 12:45 13:08 18:07",
+                "negative": [
+                    "8:36"
+                ],
+                "positive": [
+                    "12:45"
+                ]
+            }
+        ],
+        "message": "- Divergência(s) salva(s) com sucesso!"
+    },
+    {
+        "_id": {
+            "$oid": "5bd720d65d0e65692ee6eea4"
+        },
+        "status": "OK",
+        "date_created": "2018-10-29 12:01:23",
+        "divergences": [
+            {
+                "date": "Sexta, 26/10/2018",
+                "extra": [],
+                "hours": "8:50 12:19 13:16 17:05",
+                "negative": [
+                    "8:50",
+                    "17:05"
+                ],
+                "positive": [
+                    "12:19",
+                    "13:16"
+                ]
+            }
+        ],
+        "message": "- Divergência(s) salva(s) com sucesso!"
+    },
+    {
+        "_id": {
+            "$oid": "5bd72d9e5d0e65692ee70d3c"
+        },
+        "status": "OK",
+        "date_created": "2018-10-29 12:55:54",
+        "divergences": [
+            {
+                "date": "Sábado, 27/10/2018",
+                "extraAceleration": [
+                    "14:00",
+                    "15:00"
+                ],
+                "hours": "14:00 15:00",
+                "negative": [],
+                "positive": []
+            },
+            {
+                "date": "Domingo, 28/10/2018",
+                "extraAceleration": [
+                    "16:00",
+                    "18:30"
+                ],
+                "hours": "16:00 18:30",
+                "negative": [],
+                "positive": []
+            }
+        ],
+        "message": "- Divergência(s) salva(s) com sucesso!"
+    },
+    {
+        "_id": {
+            "$oid": "5bd88b385d0e65692eeac1ce"
+        },
+        "status": "OK",
+        "date_created": "2018-10-31 13:22:19",
+        "divergences": [
+            {
+                "date": "Terça, 30/10/2018",
+                "extra": [],
+                "hours": "8:46 12:31 13:19 17:28 18:45 21:00",
+                "negative": [
+                    "8:46"
+                ],
+                "positive": [
+                    "12:31",
+                    "13:19",
+                    "17:28",
+                    "18:45",
+                    "21:00"
+                ]
+            }
+        ],
+        "message": "- Divergência(s) salva(s) com sucesso!"
+    },
+    {
+        "_id": {
+            "$oid": "5bd9d9b3e7179a1b53008e1d"
+        },
+        "status": "OK",
+        "date_created": "2018-10-30 13:47:19",
+        "divergences": [
+            {
+                "date": "Segunda, 29/10/2018",
+                "extra": [],
+                "hours": "8:36 12:58 13:28 17:31",
+                "negative": [
+                    "8:36"
+                ],
+                "positive": [
+                    "12:58"
+                ]
+            }
+        ],
+        "message": "- Divergência(s) salva(s) com sucesso!"
+    },
+    {
+        "_id": {
+            "$oid": "5be05b691f6e4f68d4a87410"
+        },
+        "status": "OK",
+        "date_created": "2018-11-05 13:01:39",
+        "divergences": [
+            {
+                "date": "Quinta, 01/11/2018",
+                "extra": [],
+                "hours": "9:05 11:55 12:42 17:40",
+                "negative": [
+                    "9:05"
+                ],
+                "positive": [
+                    "12:42",
+                    "17:40"
+                ]
+            }
+        ],
+        "message": "- Divergência(s) salva(s) com sucesso!"
+    },
+    {
+        "_id": {
+            "$oid": "5be05fbafb6fc074abb78695"
+        },
+        "status": "OK",
+        "date_created": "2018-11-05 13:13:00",
+        "isHoliday": true,
+        "divergences": [
+            {
+                "date": "Sexta, 02/11/2018",
+                "extra": [
+                    "14:00",
+                    "18:30"
+                ],
+                "hours": "14:00 18:30",
+                "negative": [],
+                "positive": []
+            },
+            {
+                "date": "Sábado, 03/11/2018",
+                "extra": [
+                    "9:30",
+                    "12:20",
+                    "13:30",
+                    "16:00",
+                    "19:00",
+                    "22:30"
+                ],
+                "hours": "9:30 12:20 13:30 16:00 19:00 22:30",
+                "negative": [],
+                "positive": []
+            },
+            {
+                "date": "Domingo, 04/11/2018",
+                "extra": [
+                    "15:00",
+                    "18:30"
+                ],
+                "hours": "15:00 18:30",
+                "negative": [],
+                "positive": []
+            }
+        ],
+        "message": "- Divergência(s) salva(s) com sucesso!"
+    },
+    {
+        "_id": {
+            "$oid": "5be1a639fb6fc061430f51b3"
+        },
+        "status": "OK",
+        "date_created": "2018-11-06 12:20:00",
+        "divergences": [
+            {
+                "date": "Segunda, 05/11/2018",
+                "hours": "8:52 12:35 12:58 17:43 18:00 19:00",
+                "negative": [
+                    "8:52"
+                ],
+                "positive": [
+                    "12:35",
+                    "12:58",
+                    "17:43"
+                ],
+                "extra": [
+                    "18:00",
+                    "19:00"
+                ]
+            }
+        ],
+        "message": "- Divergência(s) salva(s) com sucesso!"
+    },
+    {
+        "_id": {
+            "$oid": "5be312ed1f6e4f6c96452524"
+        },
+        "status": "OK",
+        "date_created": "2018-11-07 14:29:07",
+        "divergences": [
+            {
+                "date": "Terça, 06/11/2018",
+                "extra": [],
+                "hours": "9:44 11:59 12:25 17:55",
+                "negative": [
+                    "9:44"
+                ],
+                "positive": [
+                    "12:25",
+                    "17:55"
+                ]
+            }
+        ],
+        "message": "- Divergência(s) salva(s) com sucesso!"
+    },
+    {
+        "_id": {
+            "$oid": "5be41ebae7179a33cc15a438"
+        },
+        "status": "OK",
+        "date_created": "2018-11-08 09:30:00",
+        "divergences": [
+            {
+                "date": "Quarta, 07/11/2018",
+                "hours": "9:02 12:24 12:41 18:35 20:00 23:30",
+                "negative": [
+                    "9:02"
+                ],
+                "positive": [
+                    "12:24",
+                    "12:41",
+                    "18:35"
+                ],
+                "extra": [
+                    "20:00",
+                    "23:30"
+                ]
+            }
+        ],
+        "message": "- Divergência(s) salva(s) com sucesso!"
+    },
+    {
+        "_id": {
+            "$oid": "5be9a389fb6fc06239e1c4f3"
+        },
+        "status": "OK",
+        "date_created": "2018-11-12 13:48:00",
+        "divergences": [
+            {
+                "date": "Quinta, 08/11/2018",
+                "hours": "9:12 12:23 12:45 19:19 20:00 21:15",
+                "negative": [
+                    "9:12"
+                ],
+                "positive": [
+                    "12:23",
+                    "12:45",
+                    "19:19"
+                ],
+                "extra": [
+                    "20:00",
+                    "21:15"
+                ]
+            },
+            {
+                "date": "Sexta, 09/11/2018",
+                "hours": "8:31 13:14 13:32 17:10 19:00 21:30",
+                "negative": [
+                    "8:31",
+                    "17:10"
+                ],
+                "positive": [
+                    "13:14"
+                ],
+                "extra": [
+                    "19:00",
+                    "21:30"
+                ]
+            },
+            {
+                "date": "Sábado, 10/11/2018",
+                "hours": "9:00 10:30 16:00 20:30",
+                "negative": [],
+                "positive": [],
+                "extra": [
+                    "9:00",
+                    "10:30",
+                    "16:00",
+                    "20:30"
+                ]
+            },
+            {
+                "date": "Domingo, 11/11/2018",
+                "hours": "10:20 13:15 16:30 18:30",
+                "negative": [],
+                "positive": [],
+                "extra": [
+                    "10:20",
+                    "13:15",
+                    "16:30",
+                    "18:30"
+                ]
+            }
+        ],
+        "message": "- Divergência(s) salva(s) com sucesso!"
+    },
+    {
+        "_id": {
+            "$oid": "5beae299fb6fc06239e2b163"
+        },
+        "status": "OK",
+        "date_created": "2018-11-13 12:28:00",
+        "divergences": [
+            {
+                "date": "Segunda, 12/11/2018",
+                "hours": "9:00 12:40 13:05 17:40 18:50 20:25",
+                "negative": [
+                    "9:00"
+                ],
+                "positive": [
+                    "12:40",
+                    "13:05",
+                    "17:40"
+                ],
+                "extra": [
+                    "18:50",
+                    "20:25"
+                ]
+            }
+        ],
+        "message": "- Divergência(s) salva(s) com sucesso!"
+    },
+    {
+        "_id": {
+            "$oid": "5bec3e5ffb6fc005dcd57a11"
+        },
+        "status": "OK",
+        "date_created": "2018-11-14 13:06:00",
+        "divergences": [
+            {
+                "date": "Terça, 13/11/2018",
+                "hours": "9:12 12:08 13:02 18:53",
+                "negative": [
+                    "9:12"
+                ],
+                "positive": [
+                    "12:08",
+                    "13:02"
+                ],
+                "extra": [
+                    "18:53"
+                ]
+            }
+        ],
+        "message": "- Divergência(s) salva(s) com sucesso!"
+    },
+    {
+        "_id": {
+            "$oid": "5bf06562fb6fc0561ffaffdb"
+        },
+        "status": "OK",
+        "date_created": "2018-11-17 16:58:00",
+        "divergences": [
+            {
+                "date": "Quarta, 14/11/2018",
+                "hours": "9:37 12:33 12:52 17:11 19:00 20:00",
+                "negative": [
+                    "9:37",
+                    "17:11"
+                ],
+                "positive": [
+                    "12:33",
+                    "12:52"
+                ],
+                "extra": [
+                    "19:00",
+                    "20:00"
+                ]
+            },
+            {
+                "date": "Sexta, 16/11/2018",
+                "dayOff": true
+            }
+        ],
+        "message": "- Divergência(s) salva(s) com sucesso!"
+    },
+    {
+        "_id": {
+            "$oid": "5bf32741fb6fc0561ffc6441"
+        },
+        "status": "OK",
+        "date_created": "2018-11-19 19:11:00",
+        "divergences": [
+            {
+                "date": "Domingo, 18/11/2018",
+                "hours": "9:00 10:10 18:30 19:30",
+                "negative": [],
+                "positive": [],
+                "extra": [
+                    "9:00",
+                    "10:10",
+                    "18:30",
+                    "19:30"
+                ]
+            }
+        ],
+        "message": "- Divergência(s) salva(s) com sucesso!"
+    },
+    {
+        "_id": {
+            "$oid": "5bf42873fb6fc0561ffd0b83"
+        },
+        "status": "OK",
+        "date_created": "2018-11-20 13:27:00",
+        "divergences": [
+            {
+                "date": "Segunda, 19/11/2018",
+                "hours": "8:30 12:13 12:58 17:28 19:00 21:20",
+                "negative": [
+                    "8:30"
+                ],
+                "positive": [
+                    "12:13",
+                    "12:58"
+                ],
+                "extra": [
+                    "19:00",
+                    "21:20"
+                ]
+            }
+        ],
+        "message": "- Divergência(s) salva(s) com sucesso!"
+    },
+    {
+        "_id": {
+            "$oid": "5bf69871fb6fc0561ffec5a5"
+        },
+        "date_created": "2018-11-22 09:51:00",
+        "divergences": [
+            {
+                "date": "Terça, 20/11/2018",
+                "hours": "8:57 12:30 13:10 18:03",
+                "negative": [
+                    "8:57"
+                ],
+                "positive": [
+                    "12:30",
+                    "13:10",
+                    "18:03"
+                ]
+            },
+            {
+                "date": "Quarta, 21/11/2018",
+                "hours": "8:59 12:45 13:03 18:31 20:00 22:00",
+                "negative": [
+                    "8:59"
+                ],
+                "positive": [
+                    "12:45",
+                    "13:03",
+                    "18:31"
+                ],
+                "extra": [
+                    "20:00",
+                    "22:00"
+                ]
+            }
+        ]
+    },
+    {
+        "_id": {
+            "$oid": "5bf8a516fb6fc0561fffe228"
+        },
+        "date_created": "2018-11-23 23:10:00",
+        "divergences": [
+            {
+                "date": "Quinta, 22/11/2018",
+                "hours": "9:32 11:58 13:01 19:22",
+                "negative": [
+                    "9:32"
+                ],
+                "positive": [
+                    "13:01",
+                    "19:22"
+                ]
+            }
+        ]
+    },
+    {
+        "_id": {
+            "$oid": "5bfc16a1e7179a400842d05a"
+        },
+        "status": "OK",
+        "date_created": "2018-11-26 13:43:00",
+        "divergences": [
+            {
+                "date": "Sexta, 23/11/2018",
+                "hours": "8:54 12:31 13:03 15:52 18:30 21:00",
+                "negative": [
+                    "8:54",
+                    "15:52"
+                ],
+                "positive": [
+                    "12:31",
+                    "13:03",
+                    "18:30",
+                    "21:00"
+                ]
+            },
+            {
+                "date": "Sábado, 24/11/2018",
+                "hours": "10:00 11:20",
+                "negative": [],
+                "positive": [],
+                "extra": [
+                    "10:00",
+                    "11:20"
+                ]
+            },
+            {
+                "date": "Domingo, 25/11/2018",
+                "hours": "10:35 13:30 15:45 16:30 17:30 19:00",
+                "negative": [],
+                "positive": [],
+                "extra": [
+                    "10:35",
+                    "13:30",
+                    "15:45",
+                    "16:30",
+                    "17:30",
+                    "19:00"
+                ]
+            }
+        ]
+    },
+    {
+        "_id": {
+            "$oid": "5bfd3fe7e7179a4008438702"
+        },
+        "status": "OK",
+        "date_created": "2018-11-27 10:58:00",
+        "divergences": [
+            {
+                "date": "Segunda, 26/11/2018",
+                "hours": "08:00 12:00 13:25 19:02 20:00 21:00",
+                "middayOff": true,
+                "negative": [
+                    "08:00",
+                    "12:00"
+                ],
+                "positive": [
+                    "19:02"
+                ],
+                "extra": [
+                    "20:00",
+                    "21:00"
+                ]
+            }
+        ]
+    },
+    {
+        "_id": {
+            "$oid": "5bfeb0601f6e4f5a3fb6933e"
+        },
+        "status": "OK",
+        "date_created": "2018-11-28 13:11:35",
+        "divergences": [
+            {
+                "date": "Terça, 27/11/2018",
+                "extra": [],
+                "hours": "9:01 12:23 13:15 18:29",
+                "negative": [
+                    "9:01"
+                ],
+                "positive": [
+                    "12:23",
+                    "13:15",
+                    "18:29"
+                ]
+            }
+        ],
+        "message": "- Divergência(s) salva(s) com sucesso!"
+    },
+    {
+        "_id": {
+            "$oid": "5c001359e7179a6ca07f3ea3"
+        },
+        "status": "OK",
+        "date_created": "2018-11-29 15:24:00",
+        "divergences": [
+            {
+                "date": "Quarta, 28/11/2018",
+                "hours": "9:17 12:39 13:07 17:50 19:00 22:10",
+                "negative": [
+                    "9:17"
+                ],
+                "positive": [
+                    "12:39",
+                    "13:07",
+                    "17:50"
+                ],
+                "extra": [
+                    "19:00",
+                    "22:10"
+                ]
+            }
+        ]
+    },
+    {
+        "_id": {
+            "$oid": "5c01564ae7179a6ca07fe9c5"
+        },
+        "status": "OK",
+        "date_created": "2018-11-30 13:23:00",
+        "divergences": [
+            {
+                "date": "Quinta, 29/11/2018",
+                "hours": "9:18 12:34 13:32 17:33 18:30 22:10",
+                "negative": [
+                    "9:18"
+                ],
+                "positive": [
+                    "12:34"
+                ],
+                "extra": [
+                    "18:30",
+                    "22:10"
+                ]
+            }
+        ]
+    },
+    {
+        "_id": {
+            "$oid": "5c0544915d0e6536bede8c95"
+        },
+        "status": "OK",
+        "date_created": "2018-12-03 12:57:12",
+        "divergences": [
+            {
+                "date": "Sexta, 30/11/2018",
+                "extra": [],
+                "hours": "9:20 12:00 13:07 17:34",
+                "negative": [
+                    "9:20"
+                ],
+                "positive": [
+                    "13:07"
+                ]
+            }
+        ],
+        "message": "- Divergência(s) salva(s) com sucesso!"
+    },
+    {
+        "_id": {
+            "$oid": "5c054653e7179a6ca0812084"
+        },
+        "status": "OK",
+        "date_created": "2018-12-03 13:02:00",
+        "divergences": [
+            {
+                "date": "Sábado, 01/12/2018",
+                "hours": "19:15 22:00",
+                "negative": [],
+                "positive": [],
+                "extra": [
+                    "19:15",
+                    "22:00"
+                ]
+            },
+            {
+                "date": "Domingo, 02/12/2018",
+                "hours": "9:00 12:00 16:15 18:00 20:00 21:45",
+                "negative": [],
+                "positive": [],
+                "extra": [
+                    "9:00",
+                    "12:00",
+                    "16:15",
+                    "18:00",
+                    "20:00",
+                    "21:45"
+                ]
+            }
+        ]
+    },
+    {
+        "_id": {
+            "$oid": "5c0824085d0e6536befc7da0"
+        },
+        "status": "OK",
+        "date_created": "2018-12-05 17:15:00",
+        "divergences": [
+            {
+                "date": "Segunda, 03/12/2018",
+                "extra": [],
+                "hours": "9:33 12:20 12:44 18:14",
+                "negative": [
+                    "9:33"
+                ],
+                "positive": [
+                    "12:20",
+                    "12:44",
+                    "18:14"
+                ]
+            },
+            {
+                "date": "Terça, 04/12/2018",
+                "extra": [],
+                "hours": "8:33 12:03 12:42 18:17",
+                "negative": [
+                    "8:33"
+                ],
+                "positive": [
+                    "12:42",
+                    "18:17"
+                ]
+            }
+        ],
+        "message": "- Divergência(s) salva(s) com sucesso!"
+    },
+    {
+        "_id": {
+            "$oid": "5c099353e7179a6ca08402c1"
+        },
+        "status": "OK",
+        "date_created": "2018-12-06 19:23:00",
+        "divergences": [
+            {
+                "date": "Quarta, 05/12/2018",
+                "hours": "9:00 12:50 13:23 17:57 19:00 21:00",
+                "negative": [
+                    "9:00"
+                ],
+                "positive": [
+                    "12:50",
+                    "13:23",
+                    "17:57"
+                ],
+                "extra": [
+                    "19:00",
+                    "21:00"
+                ]
+            }
+        ]
+    },
+    {
+        "_id": {
+            "$oid": "5c0bbf67e7179a2e2704ea16"
+        },
+        "status": "OK",
+        "date_created": "2018-12-08 10:53:00",
+        "divergences": [
+            {
+                "date": "Quinta, 06/12/2018",
+                "hours": "9:15 12:06 12:59 17:40 19:00 22:20",
+                "negative": [
+                    "9:15"
+                ],
+                "positive": [
+                    "12:06",
+                    "12:59",
+                    "17:40"
+                ],
+                "extra": [
+                    "19:00",
+                    "22:20"
+                ]
+            }
+        ]
+    },
+    {
+        "_id": {
+            "$oid": "5c0e82a1e7179a2e2705ae84"
+        },
+        "status": "OK",
+        "date_created": "2018-12-10 13:10:00",
+        "divergences": [
+            {
+                "date": "Sexta, 07/12/2018",
+                "hours": "9:06 12:00 12:58 17:09 19:10 22:00",
+                "negative": [
+                    "9:06",
+                    "17:09"
+                ],
+                "positive": [
+                    "12:58"
+                ],
+                "extra": [
+                    "19:10",
+                    "22:00"
+                ]
+            },
+            {
+                "date": "Sábado, 08/12/2018",
+                "hours": "9:15 11:40 15:00 17:20",
+                "negative": [],
+                "positive": [],
+                "extra": [
+                    "9:15",
+                    "11:40",
+                    "15:00",
+                    "17:20"
+                ]
+            }
+        ]
+    },
+    {
+        "_id": {
+            "$oid": "5c0fd4a2e7179a2e27067fd7"
+        },
+        "status": "OK",
+        "date_created": "2018-12-11 13:12:00",
+        "divergences": [
+            {
+                "date": "Segunda, 10/12/2018",
+                "hours": "7:40 12:42 13:01 18:32 19:45 23:00",
+                "negative": [],
+                "positive": [
+                    "7:40",
+                    "12:42",
+                    "13:01",
+                    "18:32"
+                ],
+                "extra": [
+                    "19:45",
+                    "23:00"
+                ]
+            }
+        ]
+    },
+    {
+        "_id": {
+            "$oid": "5c128627e7179a2e27082f59"
+        },
+        "status": "OK",
+        "date_created": "2018-12-13 14:14:00",
+        "divergences": [
+            {
+                "date": "Terça, 11/12/2018",
+                "hours": "8:24 12:14 13:11 18:03",
+                "negative": [
+                    "8:24"
+                ],
+                "positive": [
+                    "12:14",
+                    "13:11",
+                    "18:03"
+                ]
+            },
+            {
+                "date": "Quarta, 12/12/2018",
+                "hours": "17:40 23:00",
+                "negative": [],
+                "positive": [],
+                "extra": [
+                    "17:40",
+                    "23:00"
+                ]
+            }
+        ]
+    },
+    {
+        "_id": {
+            "$oid": "5c17861afb6fc04dd6ee6422"
+        },
+        "status": "OK",
+        "date_created": "2018-12-17 09:13:00",
+        "divergences": [
+            {
+                "date": "Quinta, 13/12/2018",
+                "hours": "9:09 12:30 13:31 18:18 19:10 21:30",
+                "negative": [
+                    "9:09"
+                ],
+                "positive": [
+                    "12:30",
+                    "13:31",
+                    "18:18"
+                ],
+                "extra": [
+                    "19:10",
+                    "21:30"
+                ]
+            },
+            {
+                "date": "Sexta, 14/12/2018",
+                "hours": "8:09 13:09 13:48 17:36",
+                "negative": [
+                    "8:09",
+                    "13:48"
+                ],
+                "positive": [
+                    "13:09",
+                    "17:36"
+                ]
+            },
+            {
+                "date": "Sábado, 15/12/2018",
+                "hours": "18:00 20:00",
+                "negative": [],
+                "positive": [],
+                "extra": [
+                    "18:00",
+                    "20:00"
+                ]
+            }
+        ]
+    },
+    {
+        "_id": {
+            "$oid": "5c192da5fb6fc04dd6ef7433"
+        },
+        "status": "OK",
+        "date_created": "2018-12-18 15:24:00",
+        "divergences": [
+            {
+                "date": "Segunda, 17/12/2018",
+                "hours": "8:49 12:04 12:59 19:28",
+                "negative": [
+                    "8:49"
+                ],
+                "positive": [
+                    "12:59"
+                ],
+                "extra": [
+                    "19:28"
+                ]
+            }
+        ]
+    },
+    {
+        "_id": {
+            "$oid": "5c1bbb6bfb6fc00eee83b6df"
+        },
+        "status": "OK",
+        "date_created": "2018-12-20 13:51:00",
+        "divergences": [
+            {
+                "date": "Terça, 18/12/2018",
+                "hours": "7:50 12:28 12:57 17:55 19:00 20:30",
+                "negative": [],
+                "positive": [
+                    "7:50",
+                    "12:28",
+                    "12:57",
+                    "17:55"
+                ],
+                "extra": [
+                    "19:00",
+                    "20:30"
+                ]
+            },
+            {
+                "date": "Quarta, 19/12/2018",
+                "hours": "7:52 12:51 13:12 17:30 18:00 22:00",
+                "negative": [],
+                "positive": [
+                    "7:52",
+                    "12:51",
+                    "13:12"
+                ],
+                "extra": [
+                    "18:00",
+                    "22:00"
+                ]
+            }
+        ]
+    },
+    {
+        "_id": {
+            "$oid": "5c250fcbfb6fc00eee874636"
+        },
+        "status": "OK",
+        "date_created": "2018-12-27 15:39:00",
+        "divergences": [
+            {
+                "date": "Quinta, 20/12/2018",
+                "hours": "9:16 12:05 12:30 16:35 18:00 23:30",
+                "negative": [
+                    "9:16",
+                    "16:35"
+                ],
+                "positive": [
+                    "12:30"
+                ],
+                "extra": [
+                    "18:00",
+                    "23:30"
+                ]
+            },
+            {
+                "date": "Sexta, 21/12/2018",
+                "hours": "9:08 13:13 13:49 18:00",
+                "negative": [
+                    "9:08",
+                    "13:49"
+                ],
+                "positive": [
+                    "13:13",
+                    "18:00"
+                ]
+            },
+            {
+                "date": "Segunda, 24/12/2018",
+                "hours": "08:00 12:00 13:30 17:30",
+                "middayOff": true,
+                "negative": [
+                    "08:00",
+                    "12:00"
+                ],
+                "positive": []
+            },
+            {
+                "date": "Quarta, 26/12/2018",
+                "hours": "9:09 12:45 13:05 18:19",
+                "negative": [
+                    "9:09"
+                ],
+                "positive": [
+                    "12:45",
+                    "13:05",
+                    "18:19"
+                ]
+            }
+        ]
+    },
+    {
+        "_id": {
+            "$oid": "5c26a21ee7179a748799148c"
+        },
+        "status": "OK",
+        "date_created": "2018-12-28 20:20:00",
+        "divergences": [
+            {
+                "date": "Quinta, 27/12/2018",
+                "hours": "9:41 12:18 13:32 19:22",
+                "negative": [
+                    "9:41"
+                ],
+                "positive": [
+                    "12:18"
+                ],
+                "extra": [
+                    "19:22"
+                ]
+            }
+        ]
+    }
+]

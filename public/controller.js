@@ -25,6 +25,93 @@ angular.module('clockInApp', ['angular-loading-bar']).controller('CollectedDataC
         }
     };
 
+    const clearHours = () => {
+        $scope.date = new Date();
+        $scope.hour01 = { time: new Date(1970, 0, 1, 8, 0, 0) };
+        $scope.hour02 = { time: new Date(1970, 0, 1, 12, 0, 0) };
+        $scope.hour03 = { time: new Date(1970, 0, 1, 13, 30, 0) };
+        $scope.hour04 = { time: new Date(1970, 0, 1, 17, 30, 0) };
+        $scope.hour05 = {};
+        $scope.hour06 = {};
+    };
+
+    const encode = input => {
+        var output = '';
+        var chr1, chr2, chr3 = '';
+        var enc1, enc2, enc3, enc4 = '';
+        var i = 0;
+
+        do {
+            chr1 = input.charCodeAt(i++);
+            chr2 = input.charCodeAt(i++);
+            chr3 = input.charCodeAt(i++);
+
+            enc1 = chr1 >> 2;
+            enc2 = ((chr1 & 3) << 4) | (chr2 >> 4);
+            enc3 = ((chr2 & 15) << 2) | (chr3 >> 6);
+            enc4 = chr3 & 63;
+
+            if (isNaN(chr2)) {
+                enc3 = enc4 = 64;
+            } else if (isNaN(chr3)) {
+                enc4 = 64;
+            }
+
+            output = output +
+                keyStr.charAt(enc1) +
+                keyStr.charAt(enc2) +
+                keyStr.charAt(enc3) +
+                keyStr.charAt(enc4);
+            chr1 = chr2 = chr3 = '';
+            enc1 = enc2 = enc3 = enc4 = '';
+        } while (i < input.length);
+
+        return output;
+    };
+
+    const saveHours = (divergence, hour) => {
+        if (!hour.time) return;
+        const time = $filter('date')(hour.time, 'HH:mm');
+        switch (hour.type) {
+            case 'P':
+                divergence.positive.push(time);
+                break;
+            case 'N':
+                divergence.negative.push(time);
+                break;
+            case 'E':
+                divergence.extra.push(time);
+                break;
+            case 'A':
+                divergence.extraAceleration.push(time);
+                break;
+
+            default:
+                break;
+        }
+        return time;
+    };
+
+    const getClocks = (auth) => {
+        return $http.get('clocks')
+            .then(response => {
+                sessionStorage.user = auth.user;
+                sessionStorage.password = auth.password;
+                $('#modal_login').modal('hide');
+                $scope.isLogged = true;
+                $scope.items = response.data;
+                totalBalanceCalc($scope.items);
+            })
+            .catch(err => {
+                let msg = 'Erro interno, consulte o log ;)';
+                if (err.status === 403)
+                    msg = `Usuário '${auth.user}' não tem acesso`;
+                alert(msg);
+                console.error(err); //eslint-disable-line
+                $('#modal_login').modal('show');
+            });
+    };
+
     $('input[name="daterange"]').daterangepicker({ autoApply: true, locale: { format: 'DD/MM/YYYY' } });
 
     $scope.search = item => {
@@ -62,59 +149,54 @@ angular.module('clockInApp', ['angular-loading-bar']).controller('CollectedDataC
     $scope.login = auth => {
         const authData = encode(`${auth.user}:${auth.password}`);
         $http.defaults.headers.common['Authorization'] = 'Basic ' + authData;
-        $http.get('clocks')
+        getClocks(auth);
+    };
+
+    $scope.onSaveHours = () => {
+        const hours = {
+            date_created: $filter('date')(new Date(), 'yyyy-MM-dd HH:mm:ss'),
+            divergences: [
+                {
+                    date: $filter('date')($scope.date, 'EEEE, dd/MM/yyyy'),
+                    positive: [],
+                    negative: [],
+                    extra: [],
+                    extraAceleration: []
+                }
+            ]
+        };
+        const times = [];
+        times.push(saveHours(hours.divergences[0], $scope.hour01));
+        times.push(saveHours(hours.divergences[0], $scope.hour02));
+        times.push(saveHours(hours.divergences[0], $scope.hour03));
+        times.push(saveHours(hours.divergences[0], $scope.hour04));
+        times.push(saveHours(hours.divergences[0], $scope.hour05));
+        times.push(saveHours(hours.divergences[0], $scope.hour06));
+
+        hours.divergences[0].hours = times.join(' ').trim();
+
+        $http.post('clocks', hours)
             .then(response => {
-                sessionStorage.user = auth.user;
-                sessionStorage.password = auth.password;
-                $('#modal_login').modal('hide');
-                $scope.isLogged = true;
-                $scope.items = response.data;
-                totalBalanceCalc($scope.items);
+                if (response.status === 200) {
+                    getClocks({ user: sessionStorage.user, password: sessionStorage.password }).then(() => $('#modal_add').modal('hide'));
+                } else {
+                    alert('Erro interno, consulte o log ;)');
+                }
             })
             .catch(err => {
-                let msg = 'Erro interno, consulte o log ;)';
-                if (err.status === 403) msg = `Usuário '${auth.user}' não tem acesso`;
-                alert(msg);
+                alert('Erro interno, consulte o log ;)');
                 console.error(err);//eslint-disable-line
-                $('#modal_login').modal('show');
             });
     };
 
-    const encode = input => {
-        var output = '';
-        var chr1, chr2, chr3 = '';
-        var enc1, enc2, enc3, enc4 = '';
-        var i = 0;
+    $('#modal_add').on('show.bs.modal', () => {
+        clearHours();
+        $scope.$apply();
+    });
 
-        do {
-            chr1 = input.charCodeAt(i++);
-            chr2 = input.charCodeAt(i++);
-            chr3 = input.charCodeAt(i++);
-
-            enc1 = chr1 >> 2;
-            enc2 = ((chr1 & 3) << 4) | (chr2 >> 4);
-            enc3 = ((chr2 & 15) << 2) | (chr3 >> 6);
-            enc4 = chr3 & 63;
-
-            if (isNaN(chr2)) {
-                enc3 = enc4 = 64;
-            } else if (isNaN(chr3)) {
-                enc4 = 64;
-            }
-
-            output = output +
-                keyStr.charAt(enc1) +
-                keyStr.charAt(enc2) +
-                keyStr.charAt(enc3) +
-                keyStr.charAt(enc4);
-            chr1 = chr2 = chr3 = '';
-            enc1 = enc2 = enc3 = enc4 = '';
-        } while (i < input.length);
-
-        return output;
-    };
-
-    sessionStorage.user ? $scope.login({ user: sessionStorage.user, password: sessionStorage.password }) : $('#modal_login').modal('show');
+    clearHours();
+    $scope.isLogged = true;
+    // sessionStorage.user ? $scope.login({ user: sessionStorage.user, password: sessionStorage.password }) : $('#modal_login').modal('show');
 }).config(['cfpLoadingBarProvider', (cfpLoadingBarProvider) => {
     cfpLoadingBarProvider.includeSpinner = false;
 }]);
