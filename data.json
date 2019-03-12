@@ -1149,10 +1149,10 @@
         },
         "status": "OK",
         "date_created": "2018-11-05 13:13:00",
-        "isHoliday": true,
         "divergences": [
             {
                 "date": "Sexta, 02/11/2018",
+                "isHoliday": true,
                 "extra": [
                     "14:00",
                     "18:30"

@@ -33,6 +33,13 @@ angular.module('clockInApp', ['angular-loading-bar']).controller('CollectedDataC
         $scope.hour04 = { time: new Date(1970, 0, 1, 17, 30, 0) };
         $scope.hour05 = {};
         $scope.hour06 = {};
+        $scope.divergence = {
+            date: $filter('date')($scope.date, 'EEEE, dd/MM/yyyy'),
+            positive: [],
+            negative: [],
+            extra: [],
+            extraAceleration: []
+        };
     };
 
     const encode = input => {
@@ -153,29 +160,22 @@ angular.module('clockInApp', ['angular-loading-bar']).controller('CollectedDataC
     };
 
     $scope.onSaveHours = () => {
-        const hours = {
-            date_created: $filter('date')(new Date(), 'yyyy-MM-dd HH:mm:ss'),
-            divergences: [
-                {
-                    date: $filter('date')($scope.date, 'EEEE, dd/MM/yyyy'),
-                    positive: [],
-                    negative: [],
-                    extra: [],
-                    extraAceleration: []
-                }
-            ]
-        };
         const times = [];
-        times.push(saveHours(hours.divergences[0], $scope.hour01));
-        times.push(saveHours(hours.divergences[0], $scope.hour02));
-        times.push(saveHours(hours.divergences[0], $scope.hour03));
-        times.push(saveHours(hours.divergences[0], $scope.hour04));
-        times.push(saveHours(hours.divergences[0], $scope.hour05));
-        times.push(saveHours(hours.divergences[0], $scope.hour06));
+        const clockIn = {
+            date_created: $filter('date')(new Date(), 'yyyy-MM-dd HH:mm:ss'),
+            divergences: []
+        };
+        times.push(saveHours($scope.divergence, $scope.hour01));
+        times.push(saveHours($scope.divergence, $scope.hour02));
+        times.push(saveHours($scope.divergence, $scope.hour03));
+        times.push(saveHours($scope.divergence, $scope.hour04));
+        times.push(saveHours($scope.divergence, $scope.hour05));
+        times.push(saveHours($scope.divergence, $scope.hour06));
 
-        hours.divergences[0].hours = times.join(' ').trim();
+        $scope.divergence.hours = times.join(' ').trim();
+        clockIn.divergences.push($scope.divergence);
 
-        $http.post('clocks', hours)
+        $http.post('clocks', clockIn)
             .then(response => {
                 if (response.status === 200) {
                     getClocks({ user: sessionStorage.user, password: sessionStorage.password }).then(() => $('#modal_add').modal('hide'));
@@ -195,8 +195,8 @@ angular.module('clockInApp', ['angular-loading-bar']).controller('CollectedDataC
     });
 
     clearHours();
-    $scope.isLogged = true;
-    // sessionStorage.user ? $scope.login({ user: sessionStorage.user, password: sessionStorage.password }) : $('#modal_login').modal('show');
+    // $scope.isLogged = true;
+    sessionStorage.user ? $scope.login({ user: sessionStorage.user, password: sessionStorage.password }) : $('#modal_login').modal('show');
 }).config(['cfpLoadingBarProvider', (cfpLoadingBarProvider) => {
     cfpLoadingBarProvider.includeSpinner = false;
 }]);
