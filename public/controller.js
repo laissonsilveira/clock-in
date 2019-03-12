@@ -34,7 +34,6 @@ angular.module('clockInApp', ['angular-loading-bar']).controller('CollectedDataC
         $scope.hour05 = {};
         $scope.hour06 = {};
         $scope.divergence = {
-            date: $filter('date')($scope.date, 'EEEE, dd/MM/yyyy'),
             positive: [],
             negative: [],
             extra: [],
@@ -172,6 +171,7 @@ angular.module('clockInApp', ['angular-loading-bar']).controller('CollectedDataC
         times.push(saveHours($scope.divergence, $scope.hour05));
         times.push(saveHours($scope.divergence, $scope.hour06));
 
+        $scope.divergence.date = $filter('date')($scope.date, 'EEEE, dd/MM/yyyy');
         $scope.divergence.hours = times.join(' ').trim();
         clockIn.divergences.push($scope.divergence);
 
