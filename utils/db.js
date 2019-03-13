@@ -1,16 +1,14 @@
 const request = require('request');
-const url =  `https://api.mlab.com/api/1/databases/heroku_59xpzcr6/collections/clock-in?apiKey=${process.env.MONGODB_API_KEY}`;
-
+const URL = `https://api.mlab.com/api/1/databases/${require('../cfg').database}/collections`;
 class DB {
 
-    /**
- * Insert data in MongoDB mLab
- *
- * @param {object} doc - Object with divergences
- */
-    static insertDoc(doc) {
+    constructor(collection) {
+        this.url = `${URL}/${collection}?apiKey=${process.env.MONGODB_API_KEY}`;
+    }
+
+    insertDoc(doc) {
         return new Promise(resolve => {
-            const options = { url, json: true, body: doc };
+            const options = { url: this.url, json: true, body: doc };
             request.post(options, (error, res, body) => {
                 if (error) throw error;
                 resolve(body);
@@ -18,12 +16,9 @@ class DB {
         });
     }
 
-    /**
-     * List divergences
-     */
-    static listDocs() {
+    listDocs() {
         return new Promise(resolve => {
-            request(url, (error, res, body) => {
+            request(this.url, (error, res, body) => {
                 if (error) throw error;
                 resolve(JSON.parse(body));
             });
