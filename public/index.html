@@ -77,7 +77,7 @@
 						<th scope="col">Total Balance</th>
 						<th scope="col">Total Extra</th>
 						<th scope="col">Total Aceleration</th>
-						<th scope="col">Divergences</th>
+						<th colspan="2" scope="col">Divergences</th>
 					</tr>
 				</thead>
 				<tbody>
@@ -131,6 +131,9 @@
 									</tr>
 								</tbody>
 							</table>
+						</td>
+						<td>
+							<button type="button" class="btn btn-outline-danger" ng-click="onDelete(item._id.$oid)">X</button>
 						</td>
 					</tr>
 				</tbody>

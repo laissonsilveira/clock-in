@@ -194,6 +194,23 @@ angular.module('clockInApp', ['angular-loading-bar']).controller('CollectedDataC
         $scope.$apply();
     });
 
+    $scope.onDelete = id => {
+        if(confirm('Confirma delete???')) {
+            $http.delete(`clocks/${id}`)
+            .then(response => {
+                if (response.status === 200) {
+                    getClocks({ user: sessionStorage.user, password: sessionStorage.password });
+                } else {
+                    alert('Erro interno, consulte o log ;)');
+                }
+            })
+            .catch(err => {
+                alert('Erro interno, consulte o log ;)');
+                console.error(err);//eslint-disable-line
+            });
+        }
+    };
+
     clearHours();
     // $scope.isLogged = true;
     sessionStorage.user ? $scope.login({ user: sessionStorage.user, password: sessionStorage.password }) : $('#modal_login').modal('show');

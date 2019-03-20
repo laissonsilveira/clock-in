@@ -18,6 +18,21 @@ router.post('/clocks', authentication, (req, res, next) => {
         .catch(err => next(err));
 });
 
+router.delete('/clocks/:id', authentication, (req, res, next) => {
+    const ID = req.params.id;
+    if(ID) {
+        const db = new DBHelper('clock-in');
+        db.deleteDoc(ID)
+            .then(() => {
+                LOGGER.debug(`Registro '${ID}' deletado com sucesso`);
+                res.end();
+            })
+            .catch(err => next(err));
+    } else {
+        res.end();
+    }
+});
+
 router.get('/clocks', authentication, (req, res, next) => {
     LOGGER.info('Recuperando batidas salvas');
     const db = new DBHelper('clock-in');
