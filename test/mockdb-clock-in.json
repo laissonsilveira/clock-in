@@ -1,0 +1,17 @@
+{
+    "normalDay": {
+        "date_created": "2018-08-23 15:17:15",
+        "divergences": [
+            {
+                "date": "Quarta, 22/08/2018",
+                "hours": "8:31 12:02 13:29 17:55",
+                "negative": [
+                    "8:31"
+                ],
+                "positive": [
+                    "17:55"
+                ]
+            }
+        ]
+    }
+}
