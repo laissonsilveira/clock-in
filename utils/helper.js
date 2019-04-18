@@ -1,4 +1,6 @@
 const moment = require('moment');
+const momentDurationFormatSetup = require('moment-duration-format');
+momentDurationFormatSetup(moment);
 const DBHelper = require('../utils/db');
 const keyStr = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/=';
 
@@ -113,6 +115,7 @@ function _totalCalc(o) {
 
 const hoursCalculate = clockIn => {
     if (clockIn && Array.isArray(clockIn) && clockIn.length > 0) {
+        const weekendDays = ['Sábado', 'Domingo', 'Saturday', 'Sunday'];
         clockIn.forEach(o => {
             o.divergences.forEach(dv => {
                 if (!dv.positive)
@@ -120,9 +123,7 @@ const hoursCalculate = clockIn => {
                 if (!dv.negative)
                     dv.negative = [];
                 const hours = dv.dayOff ? ['08:00', '12:00', '13:30', '17:30'] : dv.hours.split(' ');
-                const isDouble = dv.date.indexOf('Sábado') > -1 || dv.date.indexOf('Domingo') > -1
-                    || dv.date.indexOf('Saturday') > -1 || dv.date.indexOf('Sunday') > -1
-                    || dv.isHoliday;
+                const isDouble = weekendDays.includes(dv.date.split(',')[0]) || dv.isHoliday;
                 const isExtraHour = Array.isArray(dv.extra) && dv.extra.length > 0;
                 const isExtraHourAceleration = Array.isArray(dv.extraAceleration) && dv.extraAceleration.length > 0;
                 const balanceHours = [];

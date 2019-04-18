@@ -1,17 +1,165 @@
-{
-    "normalDay": {
-        "date_created": "2018-08-23 15:17:15",
-        "divergences": [
-            {
-                "date": "Quarta, 22/08/2018",
-                "hours": "8:31 12:02 13:29 17:55",
-                "negative": [
-                    "8:31"
+[
+    {
+        "it": "deve calcular banco de horas para dias normais",
+        "test": {
+            "in": [
+                {
+                    "date_created": "2019-01-02 00:00:00",
+                    "divergences": [
+                        {
+                            "date": "Quarta, 01/01/2019",
+                            "hours": "8:31 12:02 13:29 17:55",
+                            "negative": [
+                                "8:31"
+                            ],
+                            "positive": [
+                                "17:55"
+                            ]
+                        }
+                    ]
+                }
+            ],
+            "out": {
+                "calc": [
+                    {
+                        "extraHour": 0,
+                        "extraHourAceleration": 0,
+                        "minutes": -6,
+                        "extraHourFormated": "00:00",
+                        "extraHourAcelerationFormated": "00:00",
+                        "minutesFormated": "-00:06",
+                        "hoursWorked": "07:54"
+                    }
                 ],
-                "positive": [
-                    "17:55"
-                ]
+                "total": {
+                    "totalMinutes": -6,
+                    "totalExtra": 0,
+                    "totalExtraAceleration": 0,
+                    "totalMinutesFormated": "-00:06",
+                    "totalExtraFormated": "00:00",
+                    "totalExtraAcelerationFormated": "00:00"
+                }
             }
-        ]
+        }
+    },
+    {
+        "it": "deve calcular banco de horas para finais de semana [pt_BR]",
+        "test": {
+            "in": [
+                {
+                    "date_created": "2019-01-02 00:00:00",
+                    "divergences": [
+                        {
+                            "date": "Sábado, 01/01/2019",
+                            "hours": "09:00 10:00",
+                            "negative": [],
+                            "positive": [
+                                "09:00",
+                                "10:00"
+                            ]
+                        },
+                        {
+                            "date": "Domingo, 01/01/2019",
+                            "hours": "14:00 15:00",
+                            "negative": [],
+                            "positive": [
+                                "14:00",
+                                "15:00"
+                            ]
+                        }
+                    ]
+                }
+            ],
+            "out": {
+                "calc": [
+                    {
+                        "extraHour": 0,
+                        "extraHourAceleration": 0,
+                        "minutes": 120,
+                        "extraHourFormated": "00:00",
+                        "extraHourAcelerationFormated": "00:00",
+                        "minutesFormated": "02:00",
+                        "hoursWorked": "01:00"
+                    },
+                    {
+                        "extraHour": 0,
+                        "extraHourAceleration": 0,
+                        "minutes": 120,
+                        "extraHourFormated": "00:00",
+                        "extraHourAcelerationFormated": "00:00",
+                        "minutesFormated": "02:00",
+                        "hoursWorked": "01:00"
+                    }
+                ],
+                "total": {
+                    "totalMinutes": 240,
+                    "totalExtra": 0,
+                    "totalExtraAceleration": 0,
+                    "totalMinutesFormated": "04:00",
+                    "totalExtraFormated": "00:00",
+                    "totalExtraAcelerationFormated": "00:00"
+                }
+            }
+        }
+    },
+    {
+        "it": "deve calcular banco de horas para finais de semana [en_US]",
+        "test": {
+            "in": [
+                {
+                    "date_created": "2019-01-02 00:00:00",
+                    "divergences": [
+                        {
+                            "date": "Saturday, 01/01/2019",
+                            "hours": "09:00 10:00",
+                            "negative": [],
+                            "positive": [
+                                "09:00",
+                                "10:00"
+                            ]
+                        },
+                        {
+                            "date": "Sunday, 01/01/2019",
+                            "hours": "14:00 15:00",
+                            "negative": [],
+                            "positive": [
+                                "14:00",
+                                "15:00"
+                            ]
+                        }
+                    ]
+                }
+            ],
+            "out": {
+                "calc": [
+                    {
+                        "extraHour": 0,
+                        "extraHourAceleration": 0,
+                        "minutes": 120,
+                        "extraHourFormated": "00:00",
+                        "extraHourAcelerationFormated": "00:00",
+                        "minutesFormated": "02:00",
+                        "hoursWorked": "01:00"
+                    },
+                    {
+                        "extraHour": 0,
+                        "extraHourAceleration": 0,
+                        "minutes": 120,
+                        "extraHourFormated": "00:00",
+                        "extraHourAcelerationFormated": "00:00",
+                        "minutesFormated": "02:00",
+                        "hoursWorked": "01:00"
+                    }
+                ],
+                "total": {
+                    "totalMinutes": 240,
+                    "totalExtra": 0,
+                    "totalExtraAceleration": 0,
+                    "totalMinutesFormated": "04:00",
+                    "totalExtraFormated": "00:00",
+                    "totalExtraAcelerationFormated": "00:00"
+                }
+            }
+        }
     }
-}
+]

@@ -1,8 +1,5 @@
 
 const router = require('express').Router();
-const moment = require('moment');
-const momentDurationFormatSetup = require('moment-duration-format');
-momentDurationFormatSetup(moment);
 const LOGGER = require('../utils/logger');
 const DBHelper = require('../utils/db');
 const { authentication, hoursCalculate } = require('../utils/helper');
