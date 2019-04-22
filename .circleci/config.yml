@@ -1,0 +1,5 @@
+test:
+  pre:
+    - npm install
+  override:
+    - npm test

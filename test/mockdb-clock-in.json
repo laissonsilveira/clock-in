@@ -1,6 +1,6 @@
 [
     {
-        "it": "deve calcular banco de horas para dias normais",
+        "it": "calcular banco de horas para dias normais",
         "test": {
             "in": [
                 {
@@ -43,7 +43,7 @@
         }
     },
     {
-        "it": "deve calcular banco de horas para finais de semana [pt_BR]",
+        "it": "calcular banco de horas para finais de semana [pt_BR]",
         "test": {
             "in": [
                 {
@@ -103,7 +103,7 @@
         }
     },
     {
-        "it": "deve calcular banco de horas para finais de semana [en_US]",
+        "it": "calcular banco de horas para finais de semana [en_US]",
         "test": {
             "in": [
                 {
@@ -156,6 +156,133 @@
                     "totalExtra": 0,
                     "totalExtraAceleration": 0,
                     "totalMinutesFormated": "04:00",
+                    "totalExtraFormated": "00:00",
+                    "totalExtraAcelerationFormated": "00:00"
+                }
+            }
+        }
+    },
+    {
+        "it": "calcular banco de horas para feriados",
+        "test": {
+            "in": [
+                {
+                    "date_created": "2019-01-02 00:00:00",
+                    "divergences": [
+                        {
+                            "date": "Segunda, 01/01/2019",
+                            "hours": "09:00 10:00",
+                            "negative": [],
+                            "positive": [
+                                "09:00",
+                                "10:00"
+                            ],
+                            "isHoliday": true
+                        }
+                    ]
+                }
+            ],
+            "out": {
+                "calc": [
+                    {
+                        "extraHour": 0,
+                        "extraHourAceleration": 0,
+                        "minutes": 120,
+                        "extraHourFormated": "00:00",
+                        "extraHourAcelerationFormated": "00:00",
+                        "minutesFormated": "02:00",
+                        "hoursWorked": "01:00"
+                    }
+                ],
+                "total": {
+                    "totalMinutes": 120,
+                    "totalExtra": 0,
+                    "totalExtraAceleration": 0,
+                    "totalMinutesFormated": "02:00",
+                    "totalExtraFormated": "00:00",
+                    "totalExtraAcelerationFormated": "00:00"
+                }
+            }
+        }
+    },
+    {
+        "it": "calcular banco de horas folga meio dia",
+        "test": {
+            "in": [
+                {
+                    "date_created": "2019-01-02 00:00:00",
+                    "divergences": [
+                        {
+                            "date": "Segunda, 01/01/2019",
+                            "hours": "07:00 11:00 13:30 17:30",
+                            "negative": [
+                                "11:00"
+                            ],
+                            "positive": [
+                                "07:00"
+                            ],
+                            "middayOff": true
+                        }
+                    ]
+                }
+            ],
+            "out": {
+                "calc": [
+                    {
+                        "extraHour": 0,
+                        "extraHourAceleration": 0,
+                        "minutes": -240,
+                        "extraHourFormated": "00:00",
+                        "extraHourAcelerationFormated": "00:00",
+                        "minutesFormated": "-04:00",
+                        "hoursWorked": "04:00"
+                    }
+                ],
+                "total": {
+                    "totalMinutes": -240,
+                    "totalExtra": 0,
+                    "totalExtraAceleration": 0,
+                    "totalMinutesFormated": "-04:00",
+                    "totalExtraFormated": "00:00",
+                    "totalExtraAcelerationFormated": "00:00"
+                }
+            }
+        }
+    },
+    {
+        "it": "calcular banco de horas folga dia inteiro",
+        "test": {
+            "in": [
+                {
+                    "date_created": "2019-01-02 00:00:00",
+                    "divergences": [
+                        {
+                            "date": "Segunda, 01/01/2019",
+                            "hours": "08:00 12:00 13:30 17:30",
+                            "negative": [],
+                            "positive": [],
+                            "dayOff": true
+                        }
+                    ]
+                }
+            ],
+            "out": {
+                "calc": [
+                    {
+                        "extraHour": 0,
+                        "extraHourAceleration": 0,
+                        "minutes": -480,
+                        "extraHourFormated": "00:00",
+                        "extraHourAcelerationFormated": "00:00",
+                        "minutesFormated": "-08:00",
+                        "hoursWorked": "00:00"
+                    }
+                ],
+                "total": {
+                    "totalMinutes": -480,
+                    "totalExtra": 0,
+                    "totalExtraAceleration": 0,
+                    "totalMinutesFormated": "-08:00",
                     "totalExtraFormated": "00:00",
                     "totalExtraAcelerationFormated": "00:00"
                 }
