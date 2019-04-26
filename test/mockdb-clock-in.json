@@ -8,12 +8,15 @@
                     "divergences": [
                         {
                             "date": "Quarta, 01/01/2019",
-                            "hours": "8:31 12:02 13:29 17:55",
+                            "hours": "8:30 12:02 13:00 18:00 19:00 20:00",
                             "negative": [
-                                "8:31"
+                                "8:30"
                             ],
                             "positive": [
-                                "17:55"
+                                "13:00",
+                                "18:00",
+                                "19:00",
+                                "20:00"
                             ]
                         }
                     ]
@@ -24,18 +27,18 @@
                     {
                         "extraHour": 0,
                         "extraHourAceleration": 0,
-                        "minutes": -6,
+                        "minutes": 90,
                         "extraHourFormated": "00:00",
                         "extraHourAcelerationFormated": "00:00",
-                        "minutesFormated": "-00:06",
-                        "hoursWorked": "07:54"
+                        "minutesFormated": "01:30",
+                        "hoursWorked": "09:30"
                     }
                 ],
                 "total": {
-                    "totalMinutes": -6,
+                    "totalMinutes": 90,
                     "totalExtra": 0,
                     "totalExtraAceleration": 0,
-                    "totalMinutesFormated": "-00:06",
+                    "totalMinutesFormated": "01:30",
                     "totalExtraFormated": "00:00",
                     "totalExtraAcelerationFormated": "00:00"
                 }
@@ -284,6 +287,53 @@
                     "totalExtraAceleration": 0,
                     "totalMinutesFormated": "-08:00",
                     "totalExtraFormated": "00:00",
+                    "totalExtraAcelerationFormated": "00:00"
+                }
+            }
+        }
+    },
+    {
+        "it": "calcular hora extra para dias normais",
+        "test": {
+            "in": [
+                {
+                    "date_created": "2019-01-02 00:00:00",
+                    "divergences": [
+                        {
+                            "date": "Quarta, 01/01/2019",
+                            "hours": "8:30 12:02 13:00 18:00 19:00 20:00",
+                            "negative": [
+                                "8:30"
+                            ],
+                            "positive": [],
+                            "extra": [
+                                "13:00",
+                                "18:00",
+                                "19:00",
+                                "20:00"
+                            ]
+                        }
+                    ]
+                }
+            ],
+            "out": {
+                "calc": [
+                    {
+                        "extraHour": 120,
+                        "extraHourAceleration": 0,
+                        "minutes": -30,
+                        "extraHourFormated": "02:00",
+                        "extraHourAcelerationFormated": "00:00",
+                        "minutesFormated": "-00:30",
+                        "hoursWorked": "09:30"
+                    }
+                ],
+                "total": {
+                    "totalMinutes": -30,
+                    "totalExtra": 120,
+                    "totalExtraAceleration": 0,
+                    "totalMinutesFormated": "-00:30",
+                    "totalExtraFormated": "02:00",
                     "totalExtraAcelerationFormated": "00:00"
                 }
             }
