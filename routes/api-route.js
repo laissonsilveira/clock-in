@@ -2,7 +2,8 @@
 const router = require('express').Router();
 const LOGGER = require('../utils/logger');
 const DBHelper = require('../utils/db');
-const { authentication, hoursCalculate } = require('../utils/helper');
+const { authentication } = require('../utils/auth-helper');
+const ClockIn = require('../utils/clock-in');
 
 router.post('/clocks', authentication, (req, res, next) => {
     const hours = req.body;
@@ -36,7 +37,8 @@ router.get('/clocks', authentication, (req, res, next) => {
     const db = new DBHelper('clock-in');
     db.listDocs()
         .then(body => {
-            res.json(hoursCalculate(body));
+            const clockIn = new ClockIn(body);
+            res.json(clockIn.hoursCalculate());
         })
         .catch(err => next(err));
 });

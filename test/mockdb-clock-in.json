@@ -338,5 +338,114 @@
                 }
             }
         }
+    },
+    {
+        "it": "calcular hora extra para finais de semana",
+        "test": {
+            "in": [
+                {
+                    "date_created": "2019-01-02 00:00:00",
+                    "divergences": [
+                        {
+                            "date": "Sábado, 01/01/2019",
+                            "hours": "13:00 14:00 19:00 20:00",
+                            "negative": [],
+                            "positive": [
+                                "13:00",
+                                "14:00"
+                            ],
+                            "extra": [
+                                "19:00",
+                                "20:00"
+                            ]
+                        },
+                        {
+                            "date": "Domingo, 02/01/2019",
+                            "hours": "10:00 11:00",
+                            "negative": [],
+                            "positive": [],
+                            "extra": [
+                                "10:00",
+                                "11:00"
+                            ]
+                        }
+                    ]
+                }
+            ],
+            "out": {
+                "calc": [
+                    {
+                        "extraHour": 60,
+                        "extraHourAceleration": 0,
+                        "minutes": 120,
+                        "extraHourFormated": "01:00",
+                        "extraHourAcelerationFormated": "00:00",
+                        "minutesFormated": "02:00",
+                        "hoursWorked": "02:00"
+                    },
+                    {
+                        "extraHour": 60,
+                        "extraHourAceleration": 0,
+                        "minutes": 0,
+                        "extraHourFormated": "01:00",
+                        "extraHourAcelerationFormated": "00:00",
+                        "minutesFormated": "00:00",
+                        "hoursWorked": "01:00"
+                    }
+                ],
+                "total": {
+                    "totalMinutes": 120,
+                    "totalExtra": 120,
+                    "totalExtraAceleration": 0,
+                    "totalMinutesFormated": "02:00",
+                    "totalExtraFormated": "02:00",
+                    "totalExtraAcelerationFormated": "00:00"
+                }
+            }
+        }
+    },
+    {
+        "it": "calcular hora extra para feriados",
+        "test": {
+            "in": [
+                {
+                    "date_created": "2019-01-02 00:00:00",
+                    "divergences": [
+                        {
+                            "date": "Segunda, 01/01/2019",
+                            "hours": "13:00 14:00 19:00 20:00",
+                            "isHoliday": true,
+                            "negative": [],
+                            "positive": [],
+                            "extra": [
+                                "19:00",
+                                "20:00"
+                            ]
+                        }
+                    ]
+                }
+            ],
+            "out": {
+                "calc": [
+                    {
+                        "extraHour": 60,
+                        "extraHourAceleration": 0,
+                        "minutes": 0,
+                        "extraHourFormated": "01:00",
+                        "extraHourAcelerationFormated": "00:00",
+                        "minutesFormated": "00:00",
+                        "hoursWorked": "01:00"
+                    }
+                ],
+                "total": {
+                    "totalMinutes": 0,
+                    "totalExtra": 60,
+                    "totalExtraAceleration": 0,
+                    "totalMinutesFormated": "00:00",
+                    "totalExtraFormated": "01:00",
+                    "totalExtraAcelerationFormated": "00:00"
+                }
+            }
+        }
     }
 ]

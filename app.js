@@ -6,7 +6,7 @@ const app = express();
 
 app.use(bodyParser.json({ limit: '50mb' }));
 
-app.use('/', require('./routes/apiRoute'));
+app.use('/', require('./routes/api-route'));
 app.use(express.static('public'));
 
 app.listen(PORT, LOGGER.info(`Listening on PORT ${PORT}`));
