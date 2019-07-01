@@ -32,8 +32,23 @@ class ClockIn {
                 this._setDate();
             });
             this._totalCalc(ci);
+            ci.divergences.sort(this._compareDate);
         });
-        return this.clockIn;
+        return this.clockIn.sort(this._compareDivergenceDate);
+    }
+
+    _compare(d01, d02) {
+        if (d01.isBefore(d02)) return 1;
+        if (d01.isAfter(d02)) return -1;
+        return 0;
+    }
+    
+    _compareDate(d01, d02){
+        return this._compare(d01.date, d02.date);
+    }
+    
+    _compareDivergenceDate(d01, d02) {
+        return this._compare(d01.divergences[0].date, d02.divergences[0].date);
     }
 
     _normalizeHour(hour) {
