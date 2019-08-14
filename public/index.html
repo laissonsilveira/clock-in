@@ -82,7 +82,7 @@
 				</thead>
 				<tbody>
 					<tr scope="row"
-						ng-repeat="item in items | orderBy:'date_created':1 | filter:search as itemsFiltered">
+						ng-repeat="item in items | filter:search as itemsFiltered">
 						<td ng-class="{'negative': item.totalMinutes < 0, 'positive': item.totalMinutes > 0}">
 							<strong>{{ item.totalMinutesFormated }}</strong>
 						</td>
