@@ -1,3 +1,5 @@
 .history
 node_modules
 .vscode
+test/reports
+.nyc_output

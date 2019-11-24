@@ -8,6 +8,50 @@
                     "divergences": [
                         {
                             "date": "Quarta, 01/01/2019",
+                            "hours": "8:30 12:00 13:00 18:00",
+                            "negative": [
+                                "8:30"
+                            ],
+                            "positive": [
+                                "13:00",
+                                "18:00"
+                            ]
+                        }
+                    ]
+                }
+            ],
+            "out": {
+                "calc": [
+                    {
+                        "extraHour": 0,
+                        "extraHourAceleration": 0,
+                        "minutes": 30,
+                        "extraHourFormated": "00:00",
+                        "extraHourAcelerationFormated": "00:00",
+                        "minutesFormated": "00:30",
+                        "hoursWorked": "08:30"
+                    }
+                ],
+                "total": {
+                    "totalMinutes": 30,
+                    "totalExtra": 0,
+                    "totalExtraAceleration": 0,
+                    "totalMinutesFormated": "00:30",
+                    "totalExtraFormated": "00:00",
+                    "totalExtraAcelerationFormated": "00:00"
+                }
+            }
+        }
+    },
+    {
+        "it": "calcular banco de horas para dias normais com 6 batidas",
+        "test": {
+            "in": [
+                {
+                    "date_created": "2019-01-02 00:00:00",
+                    "divergences": [
+                        {
+                            "date": "Quarta, 01/01/2019",
                             "hours": "8:30 12:02 13:00 18:00 19:00 20:00",
                             "negative": [
                                 "8:30"
@@ -152,6 +196,50 @@
                         "extraHourAcelerationFormated": "00:00",
                         "minutesFormated": "02:00",
                         "hoursWorked": "01:00"
+                    }
+                ],
+                "total": {
+                    "totalMinutes": 240,
+                    "totalExtra": 0,
+                    "totalExtraAceleration": 0,
+                    "totalMinutesFormated": "04:00",
+                    "totalExtraFormated": "00:00",
+                    "totalExtraAcelerationFormated": "00:00"
+                }
+            }
+        }
+    },
+    {
+        "it": "calcular banco de horas para finais de semana [en_US] com 4 batidas",
+        "test": {
+            "in": [
+                {
+                    "date_created": "2019-01-02 00:00:00",
+                    "divergences": [
+                        {
+                            "date": "Saturday, 01/01/2019",
+                            "hours": "09:00 10:00 13:00 14:00",
+                            "negative": [],
+                            "positive": [
+                                "09:00",
+                                "10:00",
+                                "13:00",
+                                "14:00"
+                            ]
+                        }
+                    ]
+                }
+            ],
+            "out": {
+                "calc": [
+                    {
+                        "extraHour": 0,
+                        "extraHourAceleration": 0,
+                        "minutes": 240,
+                        "extraHourFormated": "00:00",
+                        "extraHourAcelerationFormated": "00:00",
+                        "minutesFormated": "04:00",
+                        "hoursWorked": "02:00"
                     }
                 ],
                 "total": {
@@ -348,6 +436,68 @@
                     "divergences": [
                         {
                             "date": "Sábado, 01/01/2019",
+                            "hours": "19:00 20:00",
+                            "negative": [],
+                            "positive": [],
+                            "extra": [
+                                "19:00",
+                                "20:00"
+                            ]
+                        },
+                        {
+                            "date": "Domingo, 02/01/2019",
+                            "hours": "10:00 11:00",
+                            "negative": [],
+                            "positive": [],
+                            "extra": [
+                                "10:00",
+                                "11:00"
+                            ]
+                        }
+                    ]
+                }
+            ],
+            "out": {
+                "calc": [
+                    {
+                        "extraHour": 60,
+                        "extraHourAceleration": 0,
+                        "minutes": 0,
+                        "extraHourFormated": "01:00",
+                        "extraHourAcelerationFormated": "00:00",
+                        "minutesFormated": "00:00",
+                        "hoursWorked": "01:00"
+                    },
+                    {
+                        "extraHour": 60,
+                        "extraHourAceleration": 0,
+                        "minutes": 0,
+                        "extraHourFormated": "01:00",
+                        "extraHourAcelerationFormated": "00:00",
+                        "minutesFormated": "00:00",
+                        "hoursWorked": "01:00"
+                    }
+                ],
+                "total": {
+                    "totalMinutes": 0,
+                    "totalExtra": 120,
+                    "totalExtraAceleration": 0,
+                    "totalMinutesFormated": "00:00",
+                    "totalExtraFormated": "02:00",
+                    "totalExtraAcelerationFormated": "00:00"
+                }
+            }
+        }
+    },
+    {
+        "it": "calcular hora extra para finais de semana com banco de horas",
+        "test": {
+            "in": [
+                {
+                    "date_created": "2019-01-02 00:00:00",
+                    "divergences": [
+                        {
+                            "date": "Sábado, 01/01/2019",
                             "hours": "13:00 14:00 19:00 20:00",
                             "negative": [],
                             "positive": [
@@ -377,20 +527,20 @@
                     {
                         "extraHour": 60,
                         "extraHourAceleration": 0,
-                        "minutes": 120,
-                        "extraHourFormated": "01:00",
-                        "extraHourAcelerationFormated": "00:00",
-                        "minutesFormated": "02:00",
-                        "hoursWorked": "02:00"
-                    },
-                    {
-                        "extraHour": 60,
-                        "extraHourAceleration": 0,
                         "minutes": 0,
                         "extraHourFormated": "01:00",
                         "extraHourAcelerationFormated": "00:00",
                         "minutesFormated": "00:00",
                         "hoursWorked": "01:00"
+                    },
+                    {
+                        "extraHour": 60,
+                        "extraHourAceleration": 0,
+                        "minutes": 120,
+                        "extraHourFormated": "01:00",
+                        "extraHourAcelerationFormated": "00:00",
+                        "minutesFormated": "02:00",
+                        "hoursWorked": "02:00"
                     }
                 ],
                 "total": {

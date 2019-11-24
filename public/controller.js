@@ -136,7 +136,7 @@ angular.module('clockInApp', ['angular-loading-bar']).controller('CollectedDataC
                     const d2 = dateTo.split('/');
                     const from = new Date(d1[2], d1[1] - 1, d1[0]);
                     const to = new Date(d2[2], d2[1] - 1, d2[0]);
-                    const dateCheck = $filter('date')(d.date, 'dd/MM/yyyy');
+                    const dateCheck = $filter('date')(moment(d.date, ['dddd, MMMM DD, YYYY']).format('DD/MM/YYYY'), 'dd/MM/yyyy');
                     const c = dateCheck.split('/');
                     const check = new Date(c[2], c[1] - 1, c[0]);
                     return check >= from && check <= to;

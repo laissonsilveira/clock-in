@@ -34,7 +34,9 @@ class ClockIn {
             this._totalCalc(ci);
             ci.divergences.sort(ClockIn._compareDate);
         });
-        return this.clockIn.sort(ClockIn._compareDivergenceDate);
+        const clockInSorted = this.clockIn.sort(ClockIn._compareDivergenceDate);
+        clockInSorted.forEach(cIn => cIn.divergences.forEach(dv => dv.date = dv.date.format('dddd, MMMM DD, YYYY')));
+        return clockInSorted;
     }
 
     static _compare(d01, d02) {
@@ -42,11 +44,11 @@ class ClockIn {
         if (d01.isAfter(d02)) return -1;
         return 0;
     }
-    
+
     static _compareDate(d01, d02){
         return ClockIn._compare(d01.date, d02.date);
     }
-    
+
     static _compareDivergenceDate(d01, d02) {
         return ClockIn._compare(d01.divergences[0].date, d02.divergences[0].date);
     }
