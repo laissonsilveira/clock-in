@@ -1,3 +1,11 @@
 {
-    "database": "heroku_59xpzcr6"
+    "database": {
+        "host": "cluster0-uvqh7.mongodb.net",
+        "dbName": "heroku_59xpzcr6",
+        "user": "laisson_admin",
+        "pass": ";admin!23",
+        "authdb": "admin",
+        "isDebug": true,
+        "max_row": 10000
+    }
 }

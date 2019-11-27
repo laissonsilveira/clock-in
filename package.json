@@ -17,6 +17,7 @@
 		"express": "^4.16.4",
 		"moment": "^2.24.0",
 		"moment-duration-format": "^2.2.2",
+		"mongoose": "^5.7.12",
 		"request": "^2.88.0",
 		"winston": "^2.3.1"
 	},
