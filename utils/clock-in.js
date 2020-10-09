@@ -3,6 +3,9 @@ const momentDurationFormatSetup = require('moment-duration-format');
 momentDurationFormatSetup(moment);
 
 const WEEKEND_DAYS = ['Sábado', 'Domingo', 'Saturday', 'Sunday'];
+const workedHours = new Map();
+workedHours.set('6', { clocks: ['09:00', '12:00', '13:30', '16:30'], minutes: 360 });
+workedHours.set('8', { clocks: ['08:00', '12:00', '13:30', '17:30'], minutes: 480 });
 
 class ClockIn {
 
@@ -15,17 +18,26 @@ class ClockIn {
             ci.divergences.forEach(dv => {
                 this.balanceHours = [];
                 this.divergence = dv;
+                if (!this.divergence.worked_hours) this.divergence.worked_hours = '8';
                 if (!this.divergence.positive) this.divergence.positive = [];
                 if (!this.divergence.negative) this.divergence.negative = [];
-                const hours = this.divergence.dayOff ? ['08:00', '12:00', '13:30', '17:30'] : this.divergence.hours.split(' ');
+                const hours = this.divergence.dayOff
+                    ? workedHours.get(this.divergence.worked_hours).clocks
+                    : this.divergence.hours.split(' ');
 
                 if (hours.length === 2) {
                     this._calculateTwoHours(hours);
                 } else {
                     this._calculateFourHours(hours);
                 }
-                if (this.divergence.dayOff) this.balanceHours.push({ sum: -480, type: 'P' });
-                if (this.divergence.middayOff) this.balanceHours.push({ sum: -240, type: 'P' });
+                if (this.divergence.dayOff) this.balanceHours.push({
+                    sum: -workedHours.get(this.divergence.worked_hours).minutes,
+                    type: 'P'
+                });
+                if (this.divergence.middayOff) this.balanceHours.push({
+                    sum: -(workedHours.get(this.divergence.worked_hours).minutes / 2),
+                    type: 'P'
+                });
 
                 this._setHours();
                 this._setFormatedHours();
@@ -45,7 +57,7 @@ class ClockIn {
         return 0;
     }
 
-    static _compareDate(d01, d02){
+    static _compareDate(d01, d02) {
         return ClockIn._compare(d01.date, d02.date);
     }
 
@@ -54,9 +66,13 @@ class ClockIn {
     }
 
     _normalizeHour(hour) {
+        const init = this.divergence.worked_hours === '8' ? '08' : '09';
+        const end = this.divergence.worked_hours === '8' ? '17' : '16';
+        const initTolerance = this.divergence.worked_hours === '8' ? '07' : '08';
+
         const hrs = hour.split(':');
-        if ((hrs[0] === '07' && Number(hrs[1]) >= 55) || (hrs[0] === '08' && Number(hrs[1]) <= 5)) {
-            hrs[0] = '08';
+        if ((hrs[0] === initTolerance && Number(hrs[1]) >= 55) || (hrs[0] === init && Number(hrs[1]) <= 5)) {
+            hrs[0] = init;
             hrs[1] = '00';
         } else if ((hrs[0] === '11' && Number(hrs[1]) >= 55) || (hrs[0] === '12' && Number(hrs[1]) <= 5)) {
             hrs[0] = '12';
@@ -64,8 +80,8 @@ class ClockIn {
         } else if (hrs[0] === '13' && Number(hrs[1]) >= 25 && Number(hrs[1]) <= 35) {
             hrs[0] = '13';
             hrs[1] = '30';
-        } else if (hrs[0] === '17' && Number(hrs[1]) >= 25 && Number(hrs[1]) <= 35) {
-            hrs[0] = '17';
+        } else if (hrs[0] === end && Number(hrs[1]) >= 25 && Number(hrs[1]) <= 35) {
+            hrs[0] = end;
             hrs[1] = '30';
         }
         return hrs;
@@ -93,7 +109,7 @@ class ClockIn {
         if (Array.isArray(h02)) h02 = h02.join(':');
 
         let hour = h01;
-        if (!this._isDouble() && ['08:00', '12:00', '13:30', '17:30'].includes(h01)) hour = h02;
+        if (!this._isDouble() && workedHours.get(this.divergence.worked_hours).clocks.includes(h01)) hour = h02;
 
         const type = this._getType(hour);
         return ['E', 'A'].includes(type);
@@ -135,7 +151,7 @@ class ClockIn {
     }
 
     _getHoursWorked() {
-        const hoursInDay = (this._isDouble() ? 0 : 480);
+        const hoursInDay = (this._isDouble() ? 0 : workedHours.get(this.divergence.worked_hours).minutes);
         const hoursDB = (this._isDouble() ? this.divergence.minutes / 2 : this.divergence.minutes);
         return hoursInDay + this.divergence.extraHour + this.divergence.extraHourAceleration + hoursDB;
     }
@@ -165,8 +181,11 @@ class ClockIn {
             });
         }
         else {
+            const init = this.divergence.worked_hours === '8' ? '08' : '09';
+            const end = this.divergence.worked_hours === '8' ? '17' : '16';
+
             this.balanceHours.push({
-                sum: this._getDuration(['08', '00'], h01),
+                sum: this._getDuration([init, '00'], h01),
                 type: this._getType(h01)
             });
             this.balanceHours.push({
@@ -178,7 +197,7 @@ class ClockIn {
                 type: this._getType(h03)
             });
             this.balanceHours.push({
-                sum: this._getDuration(h04, ['17', '30']),
+                sum: this._getDuration(h04, [end, '30']),
                 type: this._getType(h04)
             });
         }

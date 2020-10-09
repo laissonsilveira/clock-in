@@ -12,6 +12,10 @@ module.exports = mongoose.model(modelName, {
         extraAceleration: [String],
         message: String,
         dayOff: Boolean,
-        middayOff: Boolean
+        middayOff: Boolean,
+        worked_hours: {
+            type: String,
+            default: '8'
+        },
     }]
 }, modelName);

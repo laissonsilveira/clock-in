@@ -37,7 +37,8 @@ angular.module('clockInApp', ['angular-loading-bar']).controller('CollectedDataC
             positive: [],
             negative: [],
             extra: [],
-            extraAceleration: []
+            extraAceleration: [],
+            worked_hours: '8'
         };
     };
 
@@ -100,7 +101,7 @@ angular.module('clockInApp', ['angular-loading-bar']).controller('CollectedDataC
 
     const getType = (hour, divergence) => {
         const { negative, positive, extra, extraAceleration } = divergence;
-        
+
         if (hour) {
             if (Array.isArray(negative) && negative.includes(hour))
                 return 'N';
@@ -132,6 +133,15 @@ angular.module('clockInApp', ['angular-loading-bar']).controller('CollectedDataC
 
     $('input[name="daterange"]').daterangepicker({ autoApply: true, locale: { format: 'DD/MM/YYYY' } });
 
+    $scope.setHours = () => {
+        if ($scope.divergence.worked_hours === '8') {
+            $scope.hour01 = { time: new Date(1970, 0, 1, 8, 0, 0) };
+            $scope.hour04 = { time: new Date(1970, 0, 1, 17, 30, 0) };
+        } else {
+            $scope.hour01 = { time: new Date(1970, 0, 1, 9, 0, 0) };
+            $scope.hour04 = { time: new Date(1970, 0, 1, 16, 30, 0) };
+        }
+    };
 
     $scope.getClockByDate = () => {
         clearHours();
@@ -141,6 +151,7 @@ angular.module('clockInApp', ['angular-loading-bar']).controller('CollectedDataC
                 const clock = response.data;
                 if (clock) {
                     const divergence = clock.divergences[0];
+                    $scope.divergence.worked_hours = divergence.worked_hours;
                     const { hours: strHours } = divergence;
                     const arrHours = strHours.split(' ');
                     for (let index = 0; index < arrHours.length; index++) {
