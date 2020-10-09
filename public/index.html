@@ -6,7 +6,7 @@
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<title>clock-in</title>
 	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<link rel="apple-touch-icon" href="favicon.png"/>
+	<link rel="apple-touch-icon" href="favicon.png" />
 	<link rel="shortcut icon" type="image/png" href="favicon.png" />
 	<link rel="stylesheet" href="lib/bootstrap/bootstrap.min.css">
 	<link rel="stylesheet" href="lib/datarangepicker/daterangepicker.min.css">
@@ -31,116 +31,192 @@
 		.positive {
 			color: blue
 		}
+
+		.modal-full {
+			padding: 20px !important;
+		}
+
+		.modal-full .modal-dialog-full {
+			width: 100%;
+			max-width: none;
+			height: 100%;
+			margin: 0;
+		}
+
+		.modal-full .modal-content-full {
+			height: 100%;
+			border: 0;
+			border-radius: 0;
+		}
+
+		.modal-full .modal-body-full {
+			overflow-y: auto;
+		}
 	</style>
 </head>
 
 <body ng-controller="CollectedDataController">
 	<div class="container-fluid" ng-show="isLogged">
-		<div class="row">
-			<div class="col-md-5">
-				<strong>Saldo inicial (19/08/2018): <span class="negative">{{ initialBalance }}</span></strong><br>
+		<form>
+			<div class="row">
+				<div class="col-6">
+					<input class="form-control" type="date" ng-model="date" ng-change="getClockByDate()">
+				</div>
+				<div class="col-6">
+					<div class="form-check form-check-inline">
+						<input class="form-check-input" type="checkbox" value="P" ng-model="divergence.isHoliday"
+							ng-disabled="divergence.dayOff">
+						<label class="form-check-label">Feriado</label>
+					</div>
+					<div class="form-check form-check-inline">
+						<input class="form-check-input" type="checkbox" value="P" ng-model="divergence.dayOff">
+						<label class="form-check-label">Folga Dia</label>
+					</div>
+					<div class="form-check form-check-inline">
+						<input class="form-check-input" type="checkbox" value="P" ng-model="divergence.middayOff"
+							ng-disabled="divergence.dayOff">
+						<label class="form-check-label">Folga Meio Dia</label>
+					</div>
+				</div>
 			</div>
-			<div class="col-md-4">
-				<input class="form-control" ng-model="query" name="daterange" placeholder="Date Filter">
+			<hr>
+			<div class="row">
+				<div class="col-6">
+					<div class="form-check form-check-inline">
+						<input class="form-check-input" type="radio" value="P" ng-model="hour01.type">
+						<label class="form-check-label">P</label>
+					</div>
+					<div class="form-check form-check-inline">
+						<input class="form-check-input" type="radio" value="N" ng-model="hour01.type"
+							ng-checked="divergence.dayOff">
+						<label class="form-check-label">N</label>
+					</div>
+					<div class="form-check form-check-inline">
+						<input class="form-check-input" type="radio" value="E" ng-model="hour01.type">
+						<label class="form-check-label">E</label>
+					</div>
+					<div class="form-check form-check-inline">
+						<input class="form-check-input" type="radio" value="A" ng-model="hour01.type">
+						<label class="form-check-label">A</label>
+					</div>
+					<input class="form-control mb-2 mr-sm-2" type="time" ng-model="hour01.time"
+						ng-disabled="divergence.dayOff">
+				</div>
+				<div class="col-6">
+					<div class="form-check form-check-inline">
+						<input class="form-check-input" type="radio" value="P" ng-model="hour02.type">
+						<label class="form-check-label">P</label>
+					</div>
+					<div class="form-check form-check-inline">
+						<input class="form-check-input" type="radio" value="N" ng-model="hour02.type"
+							ng-checked="divergence.dayOff">
+						<label class="form-check-label">N</label>
+					</div>
+					<div class="form-check form-check-inline">
+						<input class="form-check-input" type="radio" value="E" ng-model="hour02.type">
+						<label class="form-check-label">E</label>
+					</div>
+					<div class="form-check form-check-inline">
+						<input class="form-check-input" type="radio" value="A" ng-model="hour02.type">
+						<label class="form-check-label">A</label>
+					</div>
+					<input class="form-control mb-2 mr-sm-2" type="time" ng-model="hour02.time"
+						ng-disabled="divergence.dayOff">
+				</div>
 			</div>
-			<div class="col-md-2">
-				<button class="form-control btn btn-secondary" ng-click="query='';search=''">Limpar Filtro</button>
+			<div class="row">
+				<div class="col-6">
+					<div class="form-check form-check-inline">
+						<input class="form-check-input" type="radio" value="P" ng-model="hour03.type">
+						<label class="form-check-label">P</label>
+					</div>
+					<div class="form-check form-check-inline">
+						<input class="form-check-input" type="radio" value="N" ng-model="hour03.type"
+							ng-checked="divergence.dayOff">
+						<label class="form-check-label">N</label>
+					</div>
+					<div class="form-check form-check-inline">
+						<input class="form-check-input" type="radio" value="E" ng-model="hour03.type">
+						<label class="form-check-label">E</label>
+					</div>
+					<div class="form-check form-check-inline">
+						<input class="form-check-input" type="radio" value="A" ng-model="hour03.type">
+						<label class="form-check-label">A</label>
+					</div>
+					<input class="form-control mb-2 mr-sm-2" type="time" ng-model="hour03.time"
+						ng-disabled="divergence.dayOff">
+				</div>
+				<div class="col-6">
+					<div class="form-check form-check-inline">
+						<input class="form-check-input" type="radio" value="P" ng-model="hour04.type">
+						<label class="form-check-label">P</label>
+					</div>
+					<div class="form-check form-check-inline">
+						<input class="form-check-input" type="radio" value="N" ng-model="hour04.type"
+							ng-checked="divergence.dayOff">
+						<label class="form-check-label">N</label>
+					</div>
+					<div class="form-check form-check-inline">
+						<input class="form-check-input" type="radio" value="E" ng-model="hour04.type">
+						<label class="form-check-label">E</label>
+					</div>
+					<div class="form-check form-check-inline">
+						<input class="form-check-input" type="radio" value="A" ng-model="hour04.type">
+						<label class="form-check-label">A</label>
+					</div>
+					<input class="form-control mb-2 mr-sm-2" type="time" ng-model="hour04.time"
+						ng-disabled="divergence.dayOff">
+				</div>
 			</div>
-			<div class="col-md-1">
-				<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modal_add">Add</button>
+			<div class="row">
+				<div class="col-6">
+					<div class="form-check form-check-inline">
+						<input class="form-check-input" type="radio" value="P" ng-model="hour05.type">
+						<label class="form-check-label">P</label>
+					</div>
+					<div class="form-check form-check-inline">
+						<input class="form-check-input" type="radio" value="N" ng-model="hour05.type">
+						<label class="form-check-label">N</label>
+					</div>
+					<div class="form-check form-check-inline">
+						<input class="form-check-input" type="radio" value="E" ng-model="hour05.type">
+						<label class="form-check-label">E</label>
+					</div>
+
+					<div class="form-check form-check-inline">
+						<input class="form-check-input" type="radio" value="A" ng-model="hour05.type">
+						<label class="form-check-label">A</label>
+					</div>
+					<input class="form-control mb-2 mr-sm-2" type="time" ng-model="hour05.time">
+				</div>
+				<div class="col-6">
+					<div class="form-check form-check-inline">
+						<input class="form-check-input" type="radio" value="P" ng-model="hour06.type">
+						<label class="form-check-label">P</label>
+					</div>
+					<div class="form-check form-check-inline">
+						<input class="form-check-input" type="radio" value="N" ng-model="hour06.type">
+						<label class="form-check-label">N</label>
+					</div>
+					<div class="form-check form-check-inline">
+						<input class="form-check-input" type="radio" value="E" ng-model="hour06.type">
+						<label class="form-check-label">E</label>
+					</div>
+					<div class="form-check form-check-inline">
+						<input class="form-check-input" type="radio" value="A" ng-model="hour06.type">
+						<label class="form-check-label">A</label>
+					</div>
+					<input class="form-control mb-2 mr-sm-2" type="time" ng-model="hour06.time">
+				</div>
 			</div>
-		</div>
-		<hr>
-		<div class="row">
-			<div class="col-md-3">
-				<strong>FILTRO: <span ng-class="{'negative': balanceFilter < 0, 'positive': balanceFilter > 0}">{{
-						balanceFilterLabel }}</span></strong>
+			<div class="row">
+				<div class="col-12">
+					<button type="button" ng-click="onSaveHours()" class="btn btn-outline-dark btn-block">Save</button>
+					<button type="button" class="btn btn-outline-dark btn-block" data-toggle="modal"
+						data-target="#modal_list_hours">Lista batidas</button>
+				</div>
 			</div>
-			<div class="col-md-3">
-				<strong>BANCO: <span
-						ng-class="{'negative': balance < 0, 'positive': balance > 0}">{{ balanceLabel }}</span></strong>
-			</div>
-			<div class="col-md-3">
-				<strong>EXTRA: <span ng-class="{'negative': extraBalance < 0, 'positive': extraBalance > 0}">{{ extraBalanceLabel
-						}}</span></strong>
-			</div>
-			<div class="col-md-3">
-				<strong>ACELERAÇÃO: <span
-						ng-class="{'negative': extraAcelerationBalance < 0, 'positive': extraAcelerationBalance > 0}">{{
-						extraAcelerationBalanceLabel }}</span>&nbsp;(<i>{{ extraPercent }}%</i>)</strong>
-			</div>
-		</div>
-		<hr>
-		<div class="table-responsive">
-			<table class="table table-hover">
-				<thead class="thead-dark">
-					<tr>
-						<th scope="col">Total Balance</th>
-						<th scope="col">Total Extra</th>
-						<th scope="col">Total Aceleration</th>
-						<th colspan="2" scope="col">Divergences</th>
-					</tr>
-				</thead>
-				<tbody>
-					<tr scope="row"
-						ng-repeat="item in items | filter:search as itemsFiltered">
-						<td ng-class="{'negative': item.totalMinutes < 0, 'positive': item.totalMinutes > 0}">
-							<strong>{{ item.totalMinutesFormated }}</strong>
-						</td>
-						<td ng-class="{'negative': item.totalExtra < 0, 'positive': item.totalExtra > 0}">
-							<strong>{{ item.totalExtraFormated }}</strong>
-						</td>
-						<td
-							ng-class="{'negative': item.totalExtraAceleration < 0, 'positive': item.totalExtraAceleration > 0}">
-							<strong>{{ item.totalExtraAcelerationFormated }}</strong>
-						</td>
-						<td>
-							<table class="table table-bordered table-warning table-sm">
-								<thead class="thead-dark">
-									<tr>
-										<th scope="col">Date</th>
-										<th scope="col">Hours worked</th>
-										<th scope="col">Day Balance</th>
-										<th scope="col">Extra Balance</th>
-										<th scope="col">Aceleration Balance</th>
-										<th scope="col">Hours</th>
-										<th scope="col">Negative</th>
-										<th scope="col">Positive</th>
-										<th scope="col">Extra Hours</th>
-										<th scope="col">Extra Aceleration</th>
-									</tr>
-								</thead>
-								<tbody>
-									<tr scope="row" ng-repeat="div in item.divergences">
-										<td>{{ div.date | date: 'fullDate' }}</td>
-										<td
-											ng-class="{'negative': (div.minutes + div.extraHour + div.extraHourAceleration) < 0, 'positive': (div.minutes + div.extraHour + div.extraHourAceleration) > 0}">
-											<strong>{{ div.hoursWorked }}</strong>
-										</td>
-										<td ng-class="{'negative': div.minutes < 0, 'positive': div.minutes > 0}">
-											{{ div.minutesFormated }}</td>
-										<td ng-class="{'negative': div.extraHour < 0, 'positive': div.extraHour > 0}">
-											{{ div.extraHourFormated }}</td>
-										<td
-											ng-class="{'negative': div.extraHourAceleration < 0, 'positive': div.extraHourAceleration > 0}">{{
-											div.extraHourAcelerationFormated }}</td>
-										<td>{{ div.hours }}</td>
-										<td>{{ div.negative.join(' ') }}</td>
-										<td>{{ div.positive.join(' ') }}</td>
-										<td>{{ div.extra.join(' ') }}</td>
-										<td>{{ div.extraAceleration.join(' ') }}</td>
-									</tr>
-								</tbody>
-							</table>
-						</td>
-						<td>
-							<button type="button" class="btn btn-outline-danger" ng-click="onDelete(item._id)">X</button>
-						</td>
-					</tr>
-				</tbody>
-			</table>
-		</div>
-	</div>
+		</form>
 	</div>
 </body>
 
@@ -167,169 +243,131 @@
 	</div>
 </div>
 
-<!-- Modal Add -->
-<div class="modal fade" id="modal_add" tabindex="-1" role="dialog" aria-labelledby="modalAdd" aria-hidden="true">
-	<div class="modal-dialog" role="document">
-		<div class="modal-content">
+<!-- Banco de Horas -->
+<div class="modal modal-full fade" id="modal_list_hours" tabindex="-1" role="dialog" aria-labelledby="modalListHours"
+	aria-hidden="true">
+	<div class="modal-dialog modal-dialog-full" role="document">
+		<div class="modal-content modal-content-full">
 			<div class="modal-header">
-				<h5 class="modal-title" id="modalAdd">Nova batida</h5>
+				<h5 class="modal-title" id="modalListHours">Banco de Horas</h5>
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+					<span aria-hidden="true">&times;</span>
+				  </button>
 			</div>
-			<div class="modal-body">
-				<form>
+			<div class="modal-body modal-body-full">
+				<div class="container-fluid">
 					<div class="row">
-						<div class="col-6">
-							<input class="form-control" type="date" ng-model="date">
+						<div class="col-md-3">
+							<strong>Saldo inicial (19/08/2018): <span
+									class="negative">{{ initialBalance }}</span></strong><br>
 						</div>
-						<div class="col-6">
-							<div class="form-check form-check-inline">
-								<input class="form-check-input" type="checkbox" value="P"
-									ng-model="divergence.isHoliday"
-									ng-disabled="divergence.dayOff">
-								<label class="form-check-label">Feriado</label>
-							</div>
-							<div class="form-check form-check-inline">
-								<input class="form-check-input" type="checkbox" value="P" ng-model="divergence.dayOff">
-								<label class="form-check-label">Folga Dia</label>
-							</div>
-							<div class="form-check form-check-inline">
-								<input class="form-check-input" type="checkbox" value="P"
-									ng-model="divergence.middayOff"
-									ng-disabled="divergence.dayOff">
-								<label class="form-check-label">Folga Meio Dia</label>
-							</div>
+						<div class="col-md-3">
+							<strong>FILTRO: <span
+									ng-class="{'negative': balanceFilter < 0, 'positive': balanceFilter > 0}">{{
+								balanceFilterLabel }}</span></strong>
+						</div>
+						<div class="col-md-3">
+							<strong>BANCO: <span
+									ng-class="{'negative': balance < 0, 'positive': balance > 0}">{{ balanceLabel }}</span></strong>
+						</div>
+						<div class="col-md-3">
+							<strong>EXTRA: <span
+									ng-class="{'negative': extraBalance < 0, 'positive': extraBalance > 0}">{{ extraBalanceLabel
+								}}</span></strong>
+						</div>
+						<!-- <div class="col-md-2">
+						<strong>ACELERAÇÃO: <span
+								ng-class="{'negative': extraAcelerationBalance < 0, 'positive': extraAcelerationBalance > 0}">{{
+								extraAcelerationBalanceLabel }}</span>&nbsp;(<i>{{ extraPercent }}%</i>)</strong>
+					</div> -->
+					</div>
+					<hr>
+					<div class="row">
+						<div class="col-md-4">
+							<input class="form-control" ng-model="query" name="daterange" placeholder="Date Filter">
+						</div>
+						<div class="col-md-2">
+							<button class="form-control btn btn-secondary" ng-click="query='';search=''">Limpar
+								Filtro</button>
 						</div>
 					</div>
 					<hr>
 					<div class="row">
-						<div class="col-6">
-							<div class="form-check form-check-inline">
-								<input class="form-check-input" type="radio" value="P" ng-model="hour01.type">
-								<label class="form-check-label">P</label>
-							</div>
-							<div class="form-check form-check-inline">
-								<input class="form-check-input" type="radio" value="N" ng-model="hour01.type" ng-checked="divergence.dayOff">
-								<label class="form-check-label">N</label>
-							</div>
-							<div class="form-check form-check-inline">
-								<input class="form-check-input" type="radio" value="E" ng-model="hour01.type">
-								<label class="form-check-label">E</label>
-							</div>
-							<div class="form-check form-check-inline">
-								<input class="form-check-input" type="radio" value="A" ng-model="hour01.type">
-								<label class="form-check-label">A</label>
-							</div>
-							<input class="form-control mb-2 mr-sm-2" type="time" ng-model="hour01.time" ng-disabled="divergence.dayOff">
-						</div>
-						<div class="col-6">
-							<div class="form-check form-check-inline">
-								<input class="form-check-input" type="radio" value="P" ng-model="hour02.type">
-								<label class="form-check-label">P</label>
-							</div>
-							<div class="form-check form-check-inline">
-								<input class="form-check-input" type="radio" value="N" ng-model="hour02.type" ng-checked="divergence.dayOff">
-								<label class="form-check-label">N</label>
-							</div>
-							<div class="form-check form-check-inline">
-								<input class="form-check-input" type="radio" value="E" ng-model="hour02.type">
-								<label class="form-check-label">E</label>
-							</div>
-							<div class="form-check form-check-inline">
-								<input class="form-check-input" type="radio" value="A" ng-model="hour02.type">
-								<label class="form-check-label">A</label>
-							</div>
-							<input class="form-control mb-2 mr-sm-2" type="time" ng-model="hour02.time" ng-disabled="divergence.dayOff">
-						</div>
-					</div>
-					<div class="row">
-						<div class="col-6">
-							<div class="form-check form-check-inline">
-								<input class="form-check-input" type="radio" value="P" ng-model="hour03.type">
-								<label class="form-check-label">P</label>
-							</div>
-							<div class="form-check form-check-inline">
-								<input class="form-check-input" type="radio" value="N" ng-model="hour03.type" ng-checked="divergence.dayOff">
-								<label class="form-check-label">N</label>
-							</div>
-							<div class="form-check form-check-inline">
-								<input class="form-check-input" type="radio" value="E" ng-model="hour03.type">
-								<label class="form-check-label">E</label>
-							</div>
-							<div class="form-check form-check-inline">
-								<input class="form-check-input" type="radio" value="A" ng-model="hour03.type">
-								<label class="form-check-label">A</label>
-							</div>
-							<input class="form-control mb-2 mr-sm-2" type="time" ng-model="hour03.time"
-								ng-disabled="divergence.dayOff">
-						</div>
-						<div class="col-6">
-							<div class="form-check form-check-inline">
-								<input class="form-check-input" type="radio" value="P" ng-model="hour04.type">
-								<label class="form-check-label">P</label>
-							</div>
-							<div class="form-check form-check-inline">
-								<input class="form-check-input" type="radio" value="N" ng-model="hour04.type" ng-checked="divergence.dayOff">
-								<label class="form-check-label">N</label>
-							</div>
-							<div class="form-check form-check-inline">
-								<input class="form-check-input" type="radio" value="E" ng-model="hour04.type">
-								<label class="form-check-label">E</label>
-							</div>
-							<div class="form-check form-check-inline">
-								<input class="form-check-input" type="radio" value="A" ng-model="hour04.type">
-								<label class="form-check-label">A</label>
-							</div>
-							<input class="form-control mb-2 mr-sm-2" type="time" ng-model="hour04.time"
-								ng-disabled="divergence.dayOff">
+						<div class="table-responsive">
+							<table class="table table-hover">
+								<thead class="thead-dark">
+									<tr>
+										<th scope="col">Total Balance</th>
+										<th scope="col">Total Extra</th>
+										<th scope="col">Total Aceleration</th>
+										<th colspan="2" scope="col">Divergences</th>
+									</tr>
+								</thead>
+								<tbody>
+									<tr scope="row" ng-repeat="item in items | filter:search as itemsFiltered">
+										<td
+											ng-class="{'negative': item.totalMinutes < 0, 'positive': item.totalMinutes > 0}">
+											<strong>{{ item.totalMinutesFormated }}</strong>
+										</td>
+										<td
+											ng-class="{'negative': item.totalExtra < 0, 'positive': item.totalExtra > 0}">
+											<strong>{{ item.totalExtraFormated }}</strong>
+										</td>
+										<td
+											ng-class="{'negative': item.totalExtraAceleration < 0, 'positive': item.totalExtraAceleration > 0}">
+											<strong>{{ item.totalExtraAcelerationFormated }}</strong>
+										</td>
+										<td>
+											<table class="table table-bordered table-warning table-sm">
+												<thead class="thead-dark">
+													<tr>
+														<th scope="col">Date</th>
+														<th scope="col">Hours worked</th>
+														<th scope="col">Day Balance</th>
+														<th scope="col">Extra Balance</th>
+														<th scope="col">Aceleration Balance</th>
+														<th scope="col">Hours</th>
+														<th scope="col">Negative</th>
+														<th scope="col">Positive</th>
+														<th scope="col">Extra Hours</th>
+														<th scope="col">Extra Aceleration</th>
+													</tr>
+												</thead>
+												<tbody>
+													<tr scope="row" ng-repeat="div in item.divergences">
+														<td>{{ div.date | date: 'fullDate' }}</td>
+														<td
+															ng-class="{'negative': (div.minutes + div.extraHour + div.extraHourAceleration) < 0, 'positive': (div.minutes + div.extraHour + div.extraHourAceleration) > 0}">
+															<strong>{{ div.hoursWorked }}</strong>
+														</td>
+														<td
+															ng-class="{'negative': div.minutes < 0, 'positive': div.minutes > 0}">
+															{{ div.minutesFormated }}</td>
+														<td
+															ng-class="{'negative': div.extraHour < 0, 'positive': div.extraHour > 0}">
+															{{ div.extraHourFormated }}</td>
+														<td
+															ng-class="{'negative': div.extraHourAceleration < 0, 'positive': div.extraHourAceleration > 0}">{{
+													div.extraHourAcelerationFormated }}</td>
+														<td>{{ div.hours }}</td>
+														<td>{{ div.negative.join(' ') }}</td>
+														<td>{{ div.positive.join(' ') }}</td>
+														<td>{{ div.extra.join(' ') }}</td>
+														<td>{{ div.extraAceleration.join(' ') }}</td>
+													</tr>
+												</tbody>
+											</table>
+										</td>
+										<td>
+											<button type="button" class="btn btn-outline-danger"
+												ng-click="onDelete(item._id)">X</button>
+										</td>
+									</tr>
+								</tbody>
+							</table>
 						</div>
 					</div>
-					<div class="row">
-						<div class="col-6">
-							<div class="form-check form-check-inline">
-								<input class="form-check-input" type="radio" value="P" ng-model="hour05.type">
-								<label class="form-check-label">P</label>
-							</div>
-							<div class="form-check form-check-inline">
-								<input class="form-check-input" type="radio" value="N" ng-model="hour05.type">
-								<label class="form-check-label">N</label>
-							</div>
-							<div class="form-check form-check-inline">
-								<input class="form-check-input" type="radio" value="E" ng-model="hour05.type">
-								<label class="form-check-label">E</label>
-							</div>
-
-							<div class="form-check form-check-inline">
-								<input class="form-check-input" type="radio" value="A" ng-model="hour05.type">
-								<label class="form-check-label">A</label>
-							</div>
-							<input class="form-control mb-2 mr-sm-2" type="time" ng-model="hour05.time">
-						</div>
-						<div class="col-6">
-							<div class="form-check form-check-inline">
-								<input class="form-check-input" type="radio" value="P" ng-model="hour06.type">
-								<label class="form-check-label">P</label>
-							</div>
-							<div class="form-check form-check-inline">
-								<input class="form-check-input" type="radio" value="N" ng-model="hour06.type">
-								<label class="form-check-label">N</label>
-							</div>
-							<div class="form-check form-check-inline">
-								<input class="form-check-input" type="radio" value="E" ng-model="hour06.type">
-								<label class="form-check-label">E</label>
-							</div>
-							<div class="form-check form-check-inline">
-								<input class="form-check-input" type="radio" value="A" ng-model="hour06.type">
-								<label class="form-check-label">A</label>
-							</div>
-							<input class="form-control mb-2 mr-sm-2" type="time" ng-model="hour06.time">
-						</div>
-					</div>
-					<div class="row">
-						<div class="col-12">
-							<button type="button" ng-click="onSaveHours()"
-								class="btn btn-outline-dark btn-block">Save</button>
-						</div>
-					</div>
-				</form>
+				</div>
 			</div>
 		</div>
 	</div>

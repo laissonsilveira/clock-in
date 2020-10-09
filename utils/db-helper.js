@@ -10,8 +10,12 @@ class DBHelper {
         return new this.collection(doc).save();
     }
 
-    listDocs() {
-        return this.collection.find({}).lean();
+    updateDoc(filter, update) {
+        return this.collection.updateOne(filter, update, { upsert: true });
+    }
+
+    listDocs(filter = {}) {
+        return this.collection.find(filter).lean();
     }
 
     deleteDoc(id) {

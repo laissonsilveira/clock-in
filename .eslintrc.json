@@ -20,6 +20,7 @@
     },
     "globals": {
         "angular": true,
-        "moment": true
+        "moment": true,
+        "__CONFIG": true
     }
 }

@@ -8,6 +8,8 @@ module.exports = mongoose.model(modelName, {
         hours: String,
         negative: [String],
         positive: [String],
+        extra: [String],
+        extraAceleration: [String],
         message: String,
         dayOff: Boolean,
         middayOff: Boolean

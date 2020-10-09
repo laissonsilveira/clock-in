@@ -3,6 +3,7 @@ angular.module('clockInApp', ['angular-loading-bar']).controller('CollectedDataC
     const INITIAL_BALANCE = -95;
     const keyStr = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/=';
     $scope.isLogged = false;
+    $scope.date = new Date();
 
     const totalBalanceCalc = (items) => {
         if (items) {
@@ -26,7 +27,6 @@ angular.module('clockInApp', ['angular-loading-bar']).controller('CollectedDataC
     };
 
     const clearHours = () => {
-        $scope.date = new Date();
         $scope.hour01 = { time: new Date(1970, 0, 1, 8, 0, 0) };
         $scope.hour02 = { time: new Date(1970, 0, 1, 12, 0, 0) };
         $scope.hour03 = { time: new Date(1970, 0, 1, 13, 30, 0) };
@@ -98,20 +98,32 @@ angular.module('clockInApp', ['angular-loading-bar']).controller('CollectedDataC
         return time;
     };
 
-    const getClocks = (auth) => {
+    const getType = (hour, divergence) => {
+        const { negative, positive, extra, extraAceleration } = divergence;
+        
+        if (hour) {
+            if (Array.isArray(negative) && negative.includes(hour))
+                return 'N';
+            if (Array.isArray(positive) && positive.includes(hour))
+                return 'P';
+            if (Array.isArray(extra) && extra.includes(hour))
+                return 'E';
+            if (Array.isArray(extraAceleration) && negative.includes(hour))
+                return 'A';
+        }
+
+    };
+
+    const getClocks = () => {
         return $http.get('clocks')
             .then(response => {
-                sessionStorage.user = auth.user;
-                sessionStorage.password = auth.password;
-                $('#modal_login').modal('hide');
-                $scope.isLogged = true;
                 $scope.items = response.data;
                 totalBalanceCalc($scope.items);
             })
             .catch(err => {
                 let msg = 'Erro interno, consulte o log ;)';
                 if (err.status === 403)
-                    msg = `Usuário '${auth.user}' não tem acesso`;
+                    msg = 'Usuário sem acesso';
                 alert(msg);
                 console.error(err); //eslint-disable-line
                 $('#modal_login').modal('show');
@@ -119,6 +131,35 @@ angular.module('clockInApp', ['angular-loading-bar']).controller('CollectedDataC
     };
 
     $('input[name="daterange"]').daterangepicker({ autoApply: true, locale: { format: 'DD/MM/YYYY' } });
+
+
+    $scope.getClockByDate = () => {
+        clearHours();
+        const today = $filter('date')($scope.date, 'EEEE, dd/MM/yyyy');
+        return $http.get(`clocks?date=${today}`)
+            .then(response => {
+                const clock = response.data;
+                if (clock) {
+                    const divergence = clock.divergences[0];
+                    const { hours: strHours } = divergence;
+                    const arrHours = strHours.split(' ');
+                    for (let index = 0; index < arrHours.length; index++) {
+                        const hour = arrHours[index];
+                        const hours = hour.split(':');
+                        $scope[`hour0${index + 1}`].time = new Date(1970, 0, 1, hours[0], hours[1], 0);
+                        $scope[`hour0${index + 1}`].type = getType(hour, divergence);
+                    }
+                }
+            })
+            .catch(err => {
+                let msg = 'Erro interno, consulte o log ;)';
+                if (err.status === 403)
+                    msg = 'Usuário sem acesso';
+                alert(msg);
+                console.error(err); //eslint-disable-line
+                $('#modal_login').modal('show');
+            });
+    };
 
     $scope.search = item => {
         if (angular.isDefined($scope.query)) {
@@ -155,7 +196,23 @@ angular.module('clockInApp', ['angular-loading-bar']).controller('CollectedDataC
     $scope.login = auth => {
         const authData = encode(`${auth.user}:${auth.password}`);
         $http.defaults.headers.common['Authorization'] = 'Basic ' + authData;
-        getClocks(auth);
+        $http.post('login')
+            .then(() => {
+                sessionStorage.user = auth.user;
+                sessionStorage.password = auth.password;
+                $scope.getClockByDate().then(() => {
+                    $('#modal_login').modal('hide');
+                    $scope.isLogged = true;
+                });
+            })
+            .catch(err => {
+                let msg = 'Erro interno, consulte o log ;)';
+                if (err.status === 403)
+                    msg = `Usuário '${auth.user}' não tem acesso`;
+                alert(msg);
+                console.error(err); //eslint-disable-line
+                $('#modal_login').modal('show');
+            });
     };
 
     $scope.onSaveHours = () => {
@@ -178,7 +235,7 @@ angular.module('clockInApp', ['angular-loading-bar']).controller('CollectedDataC
         $http.post('clocks', clockIn)
             .then(response => {
                 if (response.status === 200) {
-                    getClocks({ user: sessionStorage.user, password: sessionStorage.password }).then(() => $('#modal_add').modal('hide'));
+                    getClocks().then(() => $('#modal_list_hours').modal('hide'));
                 } else {
                     alert('Erro interno, consulte o log ;)');
                 }
@@ -189,25 +246,25 @@ angular.module('clockInApp', ['angular-loading-bar']).controller('CollectedDataC
             });
     };
 
-    $('#modal_add').on('show.bs.modal', () => {
-        clearHours();
+    $('#modal_list_hours').on('show.bs.modal', () => {
+        getClocks();
         $scope.$apply();
     });
 
     $scope.onDelete = id => {
-        if(confirm('Confirma delete???')) {
+        if (confirm('Confirma delete???')) {
             $http.delete(`clocks/${id}`)
-            .then(response => {
-                if (response.status === 200) {
-                    getClocks({ user: sessionStorage.user, password: sessionStorage.password });
-                } else {
+                .then(response => {
+                    if (response.status === 200) {
+                        getClocks();
+                    } else {
+                        alert('Erro interno, consulte o log ;)');
+                    }
+                })
+                .catch(err => {
                     alert('Erro interno, consulte o log ;)');
-                }
-            })
-            .catch(err => {
-                alert('Erro interno, consulte o log ;)');
-                console.error(err);//eslint-disable-line
-            });
+                    console.error(err);//eslint-disable-line
+                });
         }
     };
 
