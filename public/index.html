@@ -172,6 +172,10 @@
 						<input class="form-check-input" type="radio" value="A" ng-model="hour04.type">
 						<label class="form-check-label">A</label>
 					</div>
+					<div class="form-check form-check-inline">
+						<input class="form-check-input" type="checkbox" value="D" ng-model="hour04.isNextDay">
+						<label class="form-check-label">Next Day</label>
+					</div>
 					<input class="form-control mb-2 mr-sm-2" type="time" ng-model="hour04.time"
 						ng-disabled="divergence.dayOff">
 				</div>
@@ -195,6 +199,10 @@
 						<input class="form-check-input" type="radio" value="A" ng-model="hour05.type">
 						<label class="form-check-label">A</label>
 					</div>
+					<div class="form-check form-check-inline">
+						<input class="form-check-input" type="checkbox" value="D" ng-model="hour05.isNextDay">
+						<label class="form-check-label">Next Day</label>
+					</div>
 					<input class="form-control mb-2 mr-sm-2" type="time" ng-model="hour05.time">
 				</div>
 				<div class="col-6">
@@ -213,6 +221,10 @@
 					<div class="form-check form-check-inline">
 						<input class="form-check-input" type="radio" value="A" ng-model="hour06.type">
 						<label class="form-check-label">A</label>
+					</div>
+					<div class="form-check form-check-inline">
+						<input class="form-check-input" type="checkbox" value="D" ng-model="hour06.isNextDay">
+						<label class="form-check-label">Next Day</label>
 					</div>
 					<input class="form-control mb-2 mr-sm-2" type="time" ng-model="hour06.time">
 				</div>
@@ -307,8 +319,8 @@
 									<tr>
 										<th scope="col">Total Balance</th>
 										<th scope="col">Total Extra</th>
-										<th scope="col">Total Aceleration</th>
-										<th colspan="2" scope="col">Divergences</th>
+										<!-- <th scope="col">Total Aceleration</th> -->
+										<th colspan="3" scope="col">Divergences</th>
 									</tr>
 								</thead>
 								<tbody>
@@ -321,10 +333,10 @@
 											ng-class="{'negative': item.totalExtra < 0, 'positive': item.totalExtra > 0}">
 											<strong>{{ item.totalExtraFormated }}</strong>
 										</td>
-										<td
+										<!-- <td
 											ng-class="{'negative': item.totalExtraAceleration < 0, 'positive': item.totalExtraAceleration > 0}">
 											<strong>{{ item.totalExtraAcelerationFormated }}</strong>
-										</td>
+										</td> -->
 										<td>
 											<table class="table table-bordered table-warning table-sm">
 												<thead class="thead-dark">
@@ -333,35 +345,36 @@
 														<th scope="col">Hours worked</th>
 														<th scope="col">Day Balance</th>
 														<th scope="col">Extra Balance</th>
-														<th scope="col">Aceleration Balance</th>
+														<!-- <th scope="col">Aceleration Balance</th> -->
 														<th scope="col">Hours</th>
 														<th scope="col">Negative</th>
 														<th scope="col">Positive</th>
 														<th scope="col">Extra Hours</th>
-														<th scope="col">Extra Aceleration</th>
+														<!-- <th scope="col">Extra Aceleration</th> -->
+														<th scope="col">Next Day Hours</th>
 													</tr>
 												</thead>
 												<tbody>
 													<tr scope="row" ng-repeat="div in item.divergences">
 														<td>{{ div.date | date: 'fullDate' }}</td>
-														<td
-															ng-class="{'negative': (div.minutes + div.extraHour + div.extraHourAceleration) < 0, 'positive': (div.minutes + div.extraHour + div.extraHourAceleration) > 0}">
+														<td ng-class="{'negative': (div.minutes + div.extraHour + div.extraHourAceleration) < 0, 'positive': (div.minutes + div.extraHour + div.extraHourAceleration) > 0}">
 															<strong>{{ div.hoursWorked }}</strong>
 														</td>
-														<td
-															ng-class="{'negative': div.minutes < 0, 'positive': div.minutes > 0}">
-															{{ div.minutesFormated }}</td>
-														<td
-															ng-class="{'negative': div.extraHour < 0, 'positive': div.extraHour > 0}">
-															{{ div.extraHourFormated }}</td>
-														<td
+														<td ng-class="{'negative': div.minutes < 0, 'positive': div.minutes > 0}">
+															{{ div.minutesFormated }}
+														</td>
+														<td ng-class="{'negative': div.extraHour < 0, 'positive': div.extraHour > 0}">
+															{{ div.extraHourFormated }}
+														</td>
+														<!-- <td
 															ng-class="{'negative': div.extraHourAceleration < 0, 'positive': div.extraHourAceleration > 0}">{{
-													div.extraHourAcelerationFormated }}</td>
+													div.extraHourAcelerationFormated }}</td> -->
 														<td>{{ div.hours }}</td>
 														<td>{{ div.negative.join(' ') }}</td>
 														<td>{{ div.positive.join(' ') }}</td>
 														<td>{{ div.extra.join(' ') }}</td>
-														<td>{{ div.extraAceleration.join(' ') }}</td>
+														<!-- <td>{{ div.extraAceleration.join(' ') }}</td> -->
+														<td>{{ div.nextDay.join(' ') }}</td>
 													</tr>
 												</tbody>
 											</table>

@@ -38,6 +38,7 @@ angular.module('clockInApp', ['angular-loading-bar']).controller('CollectedDataC
             negative: [],
             extra: [],
             extraAceleration: [],
+            nextDay: [],
             worked_hours: '8'
         };
     };
@@ -79,6 +80,10 @@ angular.module('clockInApp', ['angular-loading-bar']).controller('CollectedDataC
     const saveHours = (divergence, hour) => {
         if (!hour.time) return;
         const time = $filter('date')(hour.time, 'HH:mm');
+
+        if (hour.isNextDay)
+            divergence.nextDay.push(time);
+
         switch (hour.type) {
             case 'P':
                 divergence.positive.push(time);
@@ -92,7 +97,6 @@ angular.module('clockInApp', ['angular-loading-bar']).controller('CollectedDataC
             case 'A':
                 divergence.extraAceleration.push(time);
                 break;
-
             default:
                 break;
         }
@@ -113,6 +117,11 @@ angular.module('clockInApp', ['angular-loading-bar']).controller('CollectedDataC
                 return 'A';
         }
 
+    };
+
+    const isNextDay = (hour, divergence) => {
+        const { nextDay } = divergence;
+        return hour && Array.isArray(nextDay) && nextDay.includes(hour);
     };
 
     const getClocks = () => {
@@ -159,6 +168,7 @@ angular.module('clockInApp', ['angular-loading-bar']).controller('CollectedDataC
                         const hours = hour.split(':');
                         $scope[`hour0${index + 1}`].time = new Date(1970, 0, 1, hours[0], hours[1], 0);
                         $scope[`hour0${index + 1}`].type = getType(hour, divergence);
+                        $scope[`hour0${index + 1}`].isNextDay = isNextDay(hour, divergence);
                     }
                 }
             })

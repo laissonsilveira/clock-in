@@ -95,9 +95,15 @@ class ClockIn {
     }
 
     _getDuration(h_2, h_1) {
-        return moment({ hour: h_2[0], minute: h_2[1] })
-            .diff(moment({ hour: h_1[0], minute: h_1[1] }), 'm')
-            * this._getMultiple(h_2, h_1);
+        const initialTime = moment({ hour: h_1[0], minute: h_1[1] });
+        const endTime = moment({ hour: h_2[0], minute: h_2[1] });
+
+        if (this.divergence.nextDay) {
+            if (this.divergence.nextDay.includes(h_1.join(':'))) initialTime.add(1, 'd');
+            if (this.divergence.nextDay.includes(h_2.join(':'))) endTime.add(1, 'd');
+        }
+
+        return endTime.diff(initialTime, 'm') * this._getMultiple(h_2, h_1);
     }
 
     _getMultiple(h_2, h_1) {
