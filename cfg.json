@@ -1,7 +1,7 @@
 {
     "database": {
         "host": "cluster0-uvqh7.mongodb.net",
-        "dbName": "heroku_59xpzcr6",
+        "dbName": "clocks",
         "user": "laisson_admin",
         "pass": ";admin!23",
         "authdb": "admin",

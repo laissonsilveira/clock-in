@@ -1,4 +1,4 @@
-const { readdirSync, writeFileSync, readFileSync } = require('fs');
+const { writeFileSync, readFileSync } = require('fs');
 const { join } = require('path');
 const jsdom = require('jsdom');
 const { JSDOM } = jsdom;

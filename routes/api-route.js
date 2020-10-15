@@ -4,6 +4,23 @@ const LOGGER = require('../utils/logger');
 const DBHelper = require('../utils/db-helper');
 const { authentication } = require('../utils/auth-helper');
 const ClockIn = require('../utils/clock-in');
+const daysWeek = new Map();
+daysWeek.set('Monday', 'Segunda');
+daysWeek.set('Tuesday', 'Terça');
+daysWeek.set('Wednesday', 'Quarta');
+daysWeek.set('Thursday', 'Quinta');
+daysWeek.set('Friday', 'Sexta');
+daysWeek.set('Saturday', 'Sábado');
+daysWeek.set('Sunday', 'Domingo');
+
+(async () => {
+    global.__CONFIG = require('../cfg');
+    require('../utils/db-client');
+    const db = new DBHelper('clock-in');
+
+    const bkp = require('../importAbril-13Out/bd.json');
+    await db.insertManyDoc(bkp);
+})();
 
 router.post('/login', authentication, async (req, res) => {
     res.end();
@@ -11,16 +28,20 @@ router.post('/login', authentication, async (req, res) => {
 
 router.post('/clocks', authentication, async (req, res, next) => {
     try {
-        const hours = req.body;
+        const divergence = req.body;
+        if (daysWeek.has(divergence.date)) {
+            divergence.date = daysWeek.get(divergence.date);
+        }
+
         // LOGGER.info(JSON.stringify(hours));
         const db = new DBHelper('clock-in');
-        const filter = { 'divergences.date': hours.divergences[0].date };
+        const filter = { date: divergence.date };
         const docs = await db.listDocs(filter);
         if (Array.isArray(docs) && docs.length) {
-            await db.updateDoc(filter, hours);
+            await db.updateDoc(filter, divergence);
             LOGGER.debug(`docs.length: ${docs.length}`);
         } else {
-            const response = await db.insertDoc(hours);
+            const response = await db.insertDoc(divergence);
             LOGGER.debug(`Result insert: ${JSON.stringify(response)}`);
         }
         res.end();
@@ -45,11 +66,14 @@ router.delete('/clocks/:id', authentication, async (req, res, next) => {
 
 router.get('/clocks', authentication, async (req, res, next) => {
     try {
-        const { date } = req.query;
+        let { date } = req.query;
+        if (daysWeek.has(date)) {
+            date = daysWeek.get(date);
+        }
         LOGGER.info(`Recuperando batidas salvas ${date ? date : ''}`);
         const db = new DBHelper('clock-in');
         if (date) {
-            const docs = await db.listDocs({ 'divergences.date': date });
+            const docs = await db.listDocs({ date });
             if (docs.length)
                 res.json(docs[0]);
             else

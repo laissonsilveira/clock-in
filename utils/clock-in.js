@@ -2,7 +2,7 @@ const moment = require('moment');
 const momentDurationFormatSetup = require('moment-duration-format');
 momentDurationFormatSetup(moment);
 
-const WEEKEND_DAYS = ['Sábado', 'Domingo', 'Saturday', 'Sunday'];
+const WEEKEND_DAYS = ['Sábado', 'Domingo'];
 const workedHours = new Map();
 workedHours.set('6', { clocks: ['09:00', '12:00', '13:30', '16:30'], minutes: 360 });
 workedHours.set('8', { clocks: ['08:00', '12:00', '13:30', '17:30'], minutes: 480 });

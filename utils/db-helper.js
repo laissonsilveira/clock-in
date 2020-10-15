@@ -10,6 +10,10 @@ class DBHelper {
         return new this.collection(doc).save();
     }
 
+    insertManyDoc(docs) {
+        return new this.collection.insertMany(docs);
+    }
+
     updateDoc(filter, update) {
         return this.collection.updateOne(filter, update, { upsert: true });
     }
