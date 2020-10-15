@@ -44,6 +44,98 @@
         }
     },
     {
+        "it": "calcular banco de horas para dias normais [6 hrs]",
+        "test": {
+            "in": [
+                {
+                    "date_created": "2019-01-02 00:00:00",
+                    "divergences": [
+                        {
+                            "date": "Quarta, 01/01/2019",
+                            "hours": "8:30 12:00 13:00 18:00",
+                            "worked_hours": "6",
+                            "negative": [
+                                "8:30"
+                            ],
+                            "positive": [
+                                "13:00",
+                                "18:00"
+                            ]
+                        }
+                    ]
+                }
+            ],
+            "out": {
+                "calc": [
+                    {
+                        "extraHour": 0,
+                        "extraHourAceleration": 0,
+                        "minutes": 150,
+                        "extraHourFormated": "00:00",
+                        "extraHourAcelerationFormated": "00:00",
+                        "minutesFormated": "02:30",
+                        "hoursWorked": "08:30"
+                    }
+                ],
+                "total": {
+                    "totalMinutes": 150,
+                    "totalExtra": 0,
+                    "totalExtraAceleration": 0,
+                    "totalMinutesFormated": "02:30",
+                    "totalExtraFormated": "00:00",
+                    "totalExtraAcelerationFormated": "00:00"
+                }
+            }
+        }
+    },
+    {
+        "it": "calcular banco de horas com batidas no dia seguinte",
+        "test": {
+            "in": [
+                {
+                    "date_created": "2019-01-02 00:00:00",
+                    "divergences": [
+                        {
+                            "date": "Quarta, 01/01/2019",
+                            "hours": "8:30 12:00 13:00 01:30",
+                            "negative": [
+                                "8:30"
+                            ],
+                            "positive": [
+                                "13:00",
+                                "01:30"
+                            ],
+                            "nextDay": [
+                                "01:30"
+                            ]
+                        }
+                    ]
+                }
+            ],
+            "out": {
+                "calc": [
+                    {
+                        "extraHour": 0,
+                        "extraHourAceleration": 0,
+                        "minutes": 480,
+                        "extraHourFormated": "00:00",
+                        "extraHourAcelerationFormated": "00:00",
+                        "minutesFormated": "08:00",
+                        "hoursWorked": "16:00"
+                    }
+                ],
+                "total": {
+                    "totalMinutes": 480,
+                    "totalExtra": 0,
+                    "totalExtraAceleration": 0,
+                    "totalMinutesFormated": "08:00",
+                    "totalExtraFormated": "00:00",
+                    "totalExtraAcelerationFormated": "00:00"
+                }
+            }
+        }
+    },
+    {
         "it": "calcular banco de horas para dias normais com 6 batidas",
         "test": {
             "in": [
