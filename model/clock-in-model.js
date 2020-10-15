@@ -11,6 +11,7 @@ module.exports = mongoose.model(modelName, {
     message: String,
     dayOff: Boolean,
     middayOff: Boolean,
+    isHoliday: Boolean,
     worked_hours: {
         type: String,
         default: '8'

@@ -78,11 +78,13 @@
 						<label class="form-check-label">Folga Meio Dia</label>
 					</div>
 					<div class="form-check form-check-inline">
-						<input class="form-check-input" type="radio" value="6" ng-model="divergence.worked_hours" ng-change="setHours()">
+						<input class="form-check-input" type="radio" value="6" ng-model="divergence.worked_hours"
+							ng-change="setHours()">
 						<label class="form-check-label">6 Horas</label>
 					</div>
 					<div class="form-check form-check-inline">
-						<input class="form-check-input" type="radio" value="8" ng-model="divergence.worked_hours" ng-change="setHours()">
+						<input class="form-check-input" type="radio" value="8" ng-model="divergence.worked_hours"
+							ng-change="setHours()">
 						<label class="form-check-label">8 Horas</label>
 					</div>
 				</div>
@@ -233,7 +235,7 @@
 				<div class="col-12">
 					<button type="button" ng-click="onSaveHours()" class="btn btn-outline-dark btn-block">Save</button>
 					<button type="button" class="btn btn-outline-dark btn-block" data-toggle="modal"
-						data-target="#modal_list_hours">Lista batidas</button>
+						data-target="#modal_list_hours">Clock-in List</button>
 				</div>
 			</div>
 		</form>
@@ -269,12 +271,6 @@
 	<div class="modal-dialog modal-dialog-full" role="document">
 		<div class="modal-content modal-content-full">
 			<div class="modal-header">
-				<h5 class="modal-title" id="modalListHours">Banco de Horas</h5>
-				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
-					<span aria-hidden="true">&times;</span>
-				  </button>
-			</div>
-			<div class="modal-body modal-body-full">
 				<div class="container-fluid">
 					<div class="row">
 						<div class="col-md-3">
@@ -284,7 +280,7 @@
 						<div class="col-md-3">
 							<strong>FILTRO: <span
 									ng-class="{'negative': balanceFilter < 0, 'positive': balanceFilter > 0}">{{
-								balanceFilterLabel }}</span></strong>
+							balanceFilterLabel }}</span></strong>
 						</div>
 						<div class="col-md-3">
 							<strong>BANCO: <span
@@ -293,13 +289,13 @@
 						<div class="col-md-3">
 							<strong>EXTRA: <span
 									ng-class="{'negative': extraBalance < 0, 'positive': extraBalance > 0}">{{ extraBalanceLabel
-								}}</span></strong>
+							}}</span></strong>
 						</div>
 						<!-- <div class="col-md-2">
-						<strong>ACELERAÇÃO: <span
-								ng-class="{'negative': extraAcelerationBalance < 0, 'positive': extraAcelerationBalance > 0}">{{
-								extraAcelerationBalanceLabel }}</span>&nbsp;(<i>{{ extraPercent }}%</i>)</strong>
-					</div> -->
+					<strong>ACELERAÇÃO: <span
+							ng-class="{'negative': extraAcelerationBalance < 0, 'positive': extraAcelerationBalance > 0}">{{
+							extraAcelerationBalanceLabel }}</span>&nbsp;(<i>{{ extraPercent }}%</i>)</strong>
+				</div> -->
 					</div>
 					<hr>
 					<div class="row">
@@ -310,78 +306,68 @@
 							<button class="form-control btn btn-secondary" ng-click="query='';search=''">Limpar
 								Filtro</button>
 						</div>
+						<div class="col-md-2 table-success text-center">
+							<i>Feriado</i>
+						</div>
+						<div class="col-md-2 table-primary text-center">
+							<i>Final de Semana</i>
+						</div>
+						<div class="col-md-2 table-danger text-center">
+							<i>Folga</i>
+						</div>
 					</div>
-					<hr>
+				</div>
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+					<span aria-hidden="true">&times;</span>
+				</button>
+			</div>
+			<div class="modal-body modal-body-full">
+				<div class="container-fluid">
 					<div class="row">
 						<div class="table-responsive">
 							<table class="table table-hover table-sm">
 								<thead class="thead-dark">
 									<tr>
-										<th scope="col">Total Balance</th>
-										<th scope="col">Total Extra</th>
-										<!-- <th scope="col">Total Aceleration</th> -->
-										<th colspan="3" scope="col">Divergences</th>
+										<th scope="col">Date</th>
+										<th scope="col">Hours worked</th>
+										<th scope="col">Day Balance</th>
+										<th scope="col">Extra Balance</th>
+										<!-- <th scope="col">Aceleration Balance</th> -->
+										<th scope="col">Hours</th>
+										<th scope="col">Negative</th>
+										<th scope="col">Positive</th>
+										<th scope="col">Extra Hours</th>
+										<!-- <th scope="col">Extra Aceleration</th> -->
+										<th scope="col">Next Day Hours</th>
+										<th scope="col"></th>
 									</tr>
 								</thead>
 								<tbody>
-									<tr scope="row" ng-repeat="item in items | filter:search as itemsFiltered">
+									<tr scope="row" ng-repeat="div in items | filter:search as itemsFiltered"
+										ng-class="{ 'table-danger': div.middayOff || div.dayOff, 'table-primary': div.isWeekend, 'table-success': div.isHoliday }">
+										<td>{{ div.date | date: 'fullDate' }}</td>
 										<td
-											ng-class="{'negative': item.totalMinutes < 0, 'positive': item.totalMinutes > 0}">
-											<strong>{{ item.totalMinutesFormated }}</strong>
+											ng-class="{'negative': (div.minutes + div.extraHour + div.extraHourAceleration) < 0, 'positive': (div.minutes + div.extraHour + div.extraHourAceleration) > 0}">
+											<strong>{{ div.hoursWorked }}</strong>
 										</td>
-										<td
-											ng-class="{'negative': item.totalExtra < 0, 'positive': item.totalExtra > 0}">
-											<strong>{{ item.totalExtraFormated }}</strong>
+										<td ng-class="{'negative': div.minutes < 0, 'positive': div.minutes > 0}">
+											{{ div.minutesFormated }}
+										</td>
+										<td ng-class="{'negative': div.extraHour < 0, 'positive': div.extraHour > 0}">
+											{{ div.extraHourFormated }}
 										</td>
 										<!-- <td
-											ng-class="{'negative': item.totalExtraAceleration < 0, 'positive': item.totalExtraAceleration > 0}">
-											<strong>{{ item.totalExtraAcelerationFormated }}</strong>
-										</td> -->
+											ng-class="{'negative': div.extraHourAceleration < 0, 'positive': div.extraHourAceleration > 0}">{{
+									div.extraHourAcelerationFormated }}</td> -->
+										<td>{{ div.hours }}</td>
+										<td>{{ div.negative.join(' ') }}</td>
+										<td>{{ div.positive.join(' ') }}</td>
+										<td>{{ div.extra.join(' ') }}</td>
+										<!-- <td>{{ div.extraAceleration.join(' ') }}</td> -->
+										<td>{{ div.nextDay.join(' ') }}</td>
 										<td>
-											<table class="table table-bordered table-warning table-sm">
-												<thead class="thead-dark">
-													<tr>
-														<th scope="col">Date</th>
-														<th scope="col">Hours worked</th>
-														<th scope="col">Day Balance</th>
-														<th scope="col">Extra Balance</th>
-														<!-- <th scope="col">Aceleration Balance</th> -->
-														<th scope="col">Hours</th>
-														<th scope="col">Negative</th>
-														<th scope="col">Positive</th>
-														<th scope="col">Extra Hours</th>
-														<!-- <th scope="col">Extra Aceleration</th> -->
-														<th scope="col">Next Day Hours</th>
-													</tr>
-												</thead>
-												<tbody>
-													<tr scope="row" ng-repeat="div in item.divergences">
-														<td>{{ div.date | date: 'fullDate' }}</td>
-														<td ng-class="{'negative': (div.minutes + div.extraHour + div.extraHourAceleration) < 0, 'positive': (div.minutes + div.extraHour + div.extraHourAceleration) > 0}">
-															<strong>{{ div.hoursWorked }}</strong>
-														</td>
-														<td ng-class="{'negative': div.minutes < 0, 'positive': div.minutes > 0}">
-															{{ div.minutesFormated }}
-														</td>
-														<td ng-class="{'negative': div.extraHour < 0, 'positive': div.extraHour > 0}">
-															{{ div.extraHourFormated }}
-														</td>
-														<!-- <td
-															ng-class="{'negative': div.extraHourAceleration < 0, 'positive': div.extraHourAceleration > 0}">{{
-													div.extraHourAcelerationFormated }}</td> -->
-														<td>{{ div.hours }}</td>
-														<td>{{ div.negative.join(' ') }}</td>
-														<td>{{ div.positive.join(' ') }}</td>
-														<td>{{ div.extra.join(' ') }}</td>
-														<!-- <td>{{ div.extraAceleration.join(' ') }}</td> -->
-														<td>{{ div.nextDay.join(' ') }}</td>
-													</tr>
-												</tbody>
-											</table>
-										</td>
-										<td>
-											<button type="button" class="btn btn-outline-danger"
-												ng-click="onDelete(item._id)">X</button>
+											<img style="cursor: pointer" role="button" src="icon_del.png" alt="Delete"
+												ng-click="onDelete(div._id)">
 										</td>
 									</tr>
 								</tbody>

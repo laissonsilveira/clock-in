@@ -2,6 +2,14 @@ const { writeFileSync, readFileSync } = require('fs');
 const { join } = require('path');
 const jsdom = require('jsdom');
 const { JSDOM } = jsdom;
+// const daysWeek = new Map();
+// daysWeek.set('Segunda', 'Monday');
+// daysWeek.set('Terça', 'Tuesday');
+// daysWeek.set('Quarta', 'Wednesday');
+// daysWeek.set('Quinta', 'Thursday');
+// daysWeek.set('Sexta', 'Friday');
+// daysWeek.set('Sábado', 'Saturday');
+// daysWeek.set('Domingo', 'Sunday');
 
 console.log('---------------------------------------------');
 console.time();

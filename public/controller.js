@@ -5,24 +5,30 @@ angular.module('clockInApp', ['angular-loading-bar']).controller('CollectedDataC
     $scope.isLogged = false;
     $scope.date = new Date();
 
-    const totalBalanceCalc = (items) => {
-        if (items) {
+    const totalBalanceCalc = (clockIn, isFilter) => {
+        if (clockIn) {
             $scope.initialBalance = moment.duration(INITIAL_BALANCE, 'minutes').format('h [hours], m [minutes]');
 
-            $scope.balance = items.reduce((previousVal, currentVal) => previousVal + currentVal.totalMinutes, 0) + INITIAL_BALANCE;
+            if (isFilter) {
+                $scope.balance = clockIn.reduce((previousVal, currentVal) => previousVal + currentVal.minutes, 0) + INITIAL_BALANCE;
+                $scope.balanceFilter = $scope.balance - INITIAL_BALANCE;
+                $scope.extraBalance = clockIn.reduce((previousVal, currentVal) => previousVal + currentVal.extraHour, 0);
+
+            } else {
+                $scope.balance = (clockIn.totalMinutes || 0) + INITIAL_BALANCE;
+                $scope.balanceFilter = $scope.balance - INITIAL_BALANCE;
+                $scope.extraBalance = clockIn.totalExtra || 0;
+            }
+
             $scope.balanceLabel = moment.duration($scope.balance, 'minutes').format('h [hours], m [minutes]');
-
-            $scope.balanceFilter = $scope.balance - INITIAL_BALANCE;
             $scope.balanceFilterLabel = moment.duration($scope.balanceFilter, 'minutes').format('h [hours], m [minutes]');
-
-            $scope.extraAcelerationBalance = items.reduce((previousVal, currentVal) => previousVal + currentVal.totalExtraAceleration, 0);
-            $scope.extraAcelerationBalanceLabel = moment.duration($scope.extraAcelerationBalance, 'minutes').format('h [hours], m [minutes]');
-            //8(hrs)*5(dias)*4(semanas)*8(meses)=1280(hrs)*20%=256(hrs) = 15360min[20%] -> 76800min[100%]
-            const resultPercent = $scope.extraAcelerationBalance * 100 / 76800;
-            $scope.extraPercent = Number(resultPercent).toFixed(parseInt(resultPercent) === 0 ? 1 : 0);
-
-            $scope.extraBalance = items.reduce((previousVal, currentVal) => previousVal + currentVal.totalExtra, 0);
             $scope.extraBalanceLabel = moment.duration($scope.extraBalance, 'minutes').format('h [hours], m [minutes]');
+
+            // $scope.extraAcelerationBalance = items.reduce((previousVal, currentVal) => previousVal + currentVal.totalExtraAceleration, 0);
+            // $scope.extraAcelerationBalanceLabel = moment.duration($scope.extraAcelerationBalance, 'minutes').format('h [hours], m [minutes]');
+            // //8(hrs)*5(dias)*4(semanas)*8(meses)=1280(hrs)*20%=256(hrs) = 15360min[20%] -> 76800min[100%]
+            // const resultPercent = $scope.extraAcelerationBalance * 100 / 76800;
+            // $scope.extraPercent = Number(resultPercent).toFixed(parseInt(resultPercent) === 0 ? 1 : 0);
         }
     };
 
@@ -127,8 +133,8 @@ angular.module('clockInApp', ['angular-loading-bar']).controller('CollectedDataC
     const getClocks = () => {
         return $http.get('clocks')
             .then(response => {
-                $scope.items = response.data;
-                totalBalanceCalc($scope.items);
+                $scope.items = response.data.divergences;
+                totalBalanceCalc(response.data);
             })
             .catch(err => {
                 let msg = 'Erro interno, consulte o log ;)';
@@ -157,9 +163,8 @@ angular.module('clockInApp', ['angular-loading-bar']).controller('CollectedDataC
         const today = $filter('date')($scope.date, 'EEEE, dd/MM/yyyy');
         return $http.get(`clocks?date=${today}`)
             .then(response => {
-                const clock = response.data;
-                if (clock) {
-                    const divergence = clock.divergences[0];
+                const divergence = response.data;
+                if (divergence) {
                     $scope.divergence.worked_hours = divergence.worked_hours;
                     const { hours: strHours } = divergence;
                     const arrHours = strHours.split(' ');
@@ -182,36 +187,34 @@ angular.module('clockInApp', ['angular-loading-bar']).controller('CollectedDataC
             });
     };
 
-    $scope.search = item => {
+    $scope.search = divergence => {
         if (angular.isDefined($scope.query)) {
 
             const filterDate = angular.copy($scope.query);
 
             let resultFilterDate;
             if (angular.isDefined(filterDate)) {
-                resultFilterDate = item.divergences.find(d => {
-                    const dataChangedReplace = filterDate.replace(new RegExp(' ', 'g'), '');
-                    const dateChanged = dataChangedReplace.split('-');
-                    const dateFrom = dateChanged[0];
-                    const dateTo = dateChanged[1];
-                    const d1 = dateFrom.split('/');
-                    const d2 = dateTo.split('/');
-                    const from = new Date(d1[2], d1[1] - 1, d1[0]);
-                    const to = new Date(d2[2], d2[1] - 1, d2[0]);
-                    const dateCheck = $filter('date')(moment(d.date, ['dddd, MMMM DD, YYYY']).format('DD/MM/YYYY'), 'dd/MM/yyyy');
-                    const c = dateCheck.split('/');
-                    const check = new Date(c[2], c[1] - 1, c[0]);
-                    return check >= from && check <= to;
-                });
+                const dataChangedReplace = filterDate.replace(new RegExp(' ', 'g'), '');
+                const dateChanged = dataChangedReplace.split('-');
+                const dateFrom = dateChanged[0];
+                const dateTo = dateChanged[1];
+                const d1 = dateFrom.split('/');
+                const d2 = dateTo.split('/');
+                const from = new Date(d1[2], d1[1] - 1, d1[0]);
+                const to = new Date(d2[2], d2[1] - 1, d2[0]);
+                const dateCheck = $filter('date')(moment(divergence.date, ['dddd, MMMM DD, YYYY']).format('DD/MM/YYYY'), 'dd/MM/yyyy');
+                const c = dateCheck.split('/');
+                const check = new Date(c[2], c[1] - 1, c[0]);
+                return check >= from && check <= to;
             }
             return resultFilterDate;
         } else {
-            return item;
+            return divergence;
         }
     };
 
     $scope.$watchCollection('itemsFiltered', () => {
-        totalBalanceCalc($scope.itemsFiltered);
+        totalBalanceCalc($scope.itemsFiltered, true);
     });
 
     $scope.login = auth => {
@@ -238,10 +241,6 @@ angular.module('clockInApp', ['angular-loading-bar']).controller('CollectedDataC
 
     $scope.onSaveHours = () => {
         const times = [];
-        const clockIn = {
-            date_created: $filter('date')(new Date(), 'yyyy-MM-dd HH:mm:ss'),
-            divergences: []
-        };
         times.push(saveHours($scope.divergence, $scope.hour01));
         times.push(saveHours($scope.divergence, $scope.hour02));
         times.push(saveHours($scope.divergence, $scope.hour03));
@@ -251,9 +250,8 @@ angular.module('clockInApp', ['angular-loading-bar']).controller('CollectedDataC
 
         $scope.divergence.date = $filter('date')($scope.date, 'EEEE, dd/MM/yyyy');
         $scope.divergence.hours = times.join(' ').trim();
-        clockIn.divergences.push($scope.divergence);
 
-        $http.post('clocks', clockIn)
+        $http.post('clocks', $scope.divergence)
             .then(response => {
                 if (response.status === 200) {
                     getClocks().then(() => $('#modal_list_hours').modal('hide'));

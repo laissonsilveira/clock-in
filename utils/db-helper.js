@@ -11,7 +11,7 @@ class DBHelper {
     }
 
     insertManyDoc(docs) {
-        return new this.collection.insertMany(docs);
+        return this.collection.insertMany(docs);
     }
 
     updateDoc(filter, update) {

@@ -2,7 +2,7 @@ const moment = require('moment');
 const momentDurationFormatSetup = require('moment-duration-format');
 momentDurationFormatSetup(moment);
 
-const WEEKEND_DAYS = ['Sábado', 'Domingo'];
+const WEEKEND_DAYS = ['sábado', 'domingo', 'saturday', 'sunday'];
 const workedHours = new Map();
 workedHours.set('6', { clocks: ['09:00', '12:00', '13:30', '16:30'], minutes: 360 });
 workedHours.set('8', { clocks: ['08:00', '12:00', '13:30', '17:30'], minutes: 480 });
@@ -14,41 +14,40 @@ class ClockIn {
     }
 
     hoursCalculate() {
-        this.clockIn.forEach(ci => {
-            ci.divergences.forEach(dv => {
-                this.balanceHours = [];
-                this.divergence = dv;
-                if (!this.divergence.worked_hours) this.divergence.worked_hours = '8';
-                if (!this.divergence.positive) this.divergence.positive = [];
-                if (!this.divergence.negative) this.divergence.negative = [];
-                const hours = this.divergence.dayOff
-                    ? workedHours.get(this.divergence.worked_hours).clocks
-                    : this.divergence.hours.split(' ');
+        this.clockIn.forEach(dv => {
+            this.balanceHours = [];
+            this.divergence = dv;
+            this.divergence.isWeekend = WEEKEND_DAYS.includes(this.divergence.date.split(',')[0].toLowerCase());
+            if (!this.divergence.worked_hours) this.divergence.worked_hours = '8';
+            if (!this.divergence.positive) this.divergence.positive = [];
+            if (!this.divergence.negative) this.divergence.negative = [];
+            const hours = this.divergence.dayOff
+                ? workedHours.get(this.divergence.worked_hours).clocks
+                : this.divergence.hours.split(' ');
 
-                if (hours.length === 2) {
-                    this._calculateTwoHours(hours);
-                } else {
-                    this._calculateFourHours(hours);
-                }
-                if (this.divergence.dayOff) this.balanceHours.push({
-                    sum: -workedHours.get(this.divergence.worked_hours).minutes,
-                    type: 'P'
-                });
-                if (this.divergence.middayOff) this.balanceHours.push({
-                    sum: -(workedHours.get(this.divergence.worked_hours).minutes / 2),
-                    type: 'P'
-                });
-
-                this._setHours();
-                this._setFormatedHours();
-                this._setDate();
+            if (hours.length === 2) {
+                this._calculateTwoHours(hours);
+            } else {
+                this._calculateFourHours(hours);
+            }
+            if (this.divergence.dayOff) this.balanceHours.push({
+                sum: -workedHours.get(this.divergence.worked_hours).minutes,
+                type: 'P'
             });
-            this._totalCalc(ci);
-            ci.divergences.sort(ClockIn._compareDate);
+            if (this.divergence.middayOff) this.balanceHours.push({
+                sum: -(workedHours.get(this.divergence.worked_hours).minutes / 2),
+                type: 'P'
+            });
+
+            this._setHours();
+            this._setFormatedHours();
+            this._setDate();
         });
+
         const clockInSorted = this.clockIn.sort(ClockIn._compareDivergenceDate);
-        clockInSorted.forEach(cIn => cIn.divergences.forEach(dv => dv.date = dv.date.format('dddd, MMMM DD, YYYY')));
-        return clockInSorted;
+        clockInSorted.forEach(dv => dv.date = dv.date.format('dddd, MMMM DD, YYYY'));
+
+        return this._totalCalc(clockInSorted);
     }
 
     static _compare(d01, d02) {
@@ -57,12 +56,8 @@ class ClockIn {
         return 0;
     }
 
-    static _compareDate(d01, d02) {
-        return ClockIn._compare(d01.date, d02.date);
-    }
-
     static _compareDivergenceDate(d01, d02) {
-        return ClockIn._compare(d01.divergences[0].date, d02.divergences[0].date);
+        return ClockIn._compare(d01.date, d02.date);
     }
 
     _normalizeHour(hour) {
@@ -129,20 +124,25 @@ class ClockIn {
         return this.balanceHours.filter(h => h.type === type).reduce((sum, h) => sum + h.sum, 0);
     }
 
-    _totalCalc(ci) {
-        if (ci.divergences.length > 1) {
-            ci.totalMinutes = ci.divergences.reduce((previousVal, currentVal) => previousVal + (currentVal.minutes || 0), 0);
-            ci.totalExtra = ci.divergences.reduce((previousVal, currentVal) => previousVal + (currentVal.extraHour || 0), 0);
-            ci.totalExtraAceleration = ci.divergences.reduce((previousVal, currentVal) => previousVal + (currentVal.extraHourAceleration || 0), 0);
+    _totalCalc(divergences) {
+        const clockIn = { };
+        if (divergences.length > 1) {
+            clockIn.totalMinutes = divergences.reduce((previousVal, currentVal) => previousVal + (currentVal.minutes || 0), 0);
+            clockIn.totalExtra = divergences.reduce((previousVal, currentVal) => previousVal + (currentVal.extraHour || 0), 0);
+            // clockIn.totalExtraAceleration = divergences.reduce((previousVal, currentVal) => previousVal + (currentVal.extraHourAceleration || 0), 0);
         }
         else {
-            ci.totalMinutes = ci.divergences[0].minutes || 0;
-            ci.totalExtra = ci.divergences[0].extraHour || 0;
-            ci.totalExtraAceleration = ci.divergences[0].extraHourAceleration || 0;
+            clockIn.totalMinutes = divergences[0].minutes || 0;
+            clockIn.totalExtra = divergences[0].extraHour || 0;
+            // clockIn.totalExtraAceleration = divergences[0].extraHourAceleration || 0;
         }
-        ci.totalMinutesFormated = this._formatMinutes(ci.totalMinutes);
-        ci.totalExtraFormated = this._formatMinutes(ci.totalExtra);
-        ci.totalExtraAcelerationFormated = this._formatMinutes(ci.totalExtraAceleration);
+        // clockIn.totalMinutesFormated = this._formatMinutes(clockIn.totalMinutes);
+        // clockIn.totalExtraFormated = this._formatMinutes(clockIn.totalExtra);
+        // clockIn.totalExtraAcelerationFormated = this._formatMinutes(clockIn.totalExtraAceleration);
+
+        clockIn.divergences = divergences;
+
+        return clockIn;
     }
 
     _setDate() {
@@ -225,7 +225,7 @@ class ClockIn {
     }
 
     _isDouble() {
-        return WEEKEND_DAYS.includes(this.divergence.date.split(',')[0]) || !!this.divergence.isHoliday;
+        return this.divergence.isWeekend || !!this.divergence.isHoliday;
     }
 }
 
