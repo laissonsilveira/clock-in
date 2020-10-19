@@ -26,7 +26,7 @@
 	<div class="container-fluid" ng-show="isLogged">
 		<form>
 			<div class="row">
-				<div class="col-10 text-center number" style="font-size: 40px;">
+				<div class="col-12 text-center number" style="font-size: 35px;">
 					<label ng-class="{
 						'text-gray': count.hour01 && !clockSaved.hour01,
 						'text-danger font-weight-bold': clockSaved.isNegative01,
@@ -69,24 +69,6 @@
 					}">
 						{{ clockSaved.hour06 || count.hour06 }}
 					</label>
-				</div>
-				<div class="col-2">
-					<dl class="inline-flex">
-						<dt>Worked <em style="font-size: 8px;">({{ date | date: 'dd/MM/yyyy' }})</em></dt>
-						<dd class="number" ng-class="{
-							'negative': (divergence.minutes + divergence.extraHour + divergence.extraHourAceleration) < 0,
-							'positive': (divergence.minutes + divergence.extraHour + divergence.extraHourAceleration) > 0}">
-							{{ divergence.hoursWorked }}
-						</dd>
-						<dt>Day Balance</dt>
-						<dd class="number" ng-class="{'negative': divergence.minutes < 0, 'positive': divergence.minutes > 0}">
-							{{ divergence.minutesFormated }}
-						</dd>
-						<dt>Extra Balance</dt>
-						<dd class="number" ng-class="{'negative': divergence.extraHour < 0, 'positive': divergence.extraHour > 0}">
-							{{ divergence.extraHourFormated }}
-						</dd>
-					</dl>
 				</div>
 			</div>
 			<div class="row">
@@ -259,6 +241,26 @@
 						<label class="form-check-label">Next Day</label>
 					</div>
 					<input class="form-control mb-2 mr-sm-2 number" type="time" ng-model="hour06.time">
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-12">
+					<dl class="inline-flex">
+						<dt>Worked <em style="font-size: 8px;">({{ date | date: 'dd/MM/yyyy' }})</em></dt>
+						<dd class="number" ng-class="{
+							'negative': (divergence.minutes + divergence.extraHour + divergence.extraHourAceleration) < 0,
+							'positive': (divergence.minutes + divergence.extraHour + divergence.extraHourAceleration) > 0}">
+							{{ divergence.hoursWorked }}
+						</dd>
+						<dt>Day Balance</dt>
+						<dd class="number" ng-class="{'negative': divergence.minutes < 0, 'positive': divergence.minutes > 0}">
+							{{ divergence.minutesFormated }}
+						</dd>
+						<dt>Extra Balance</dt>
+						<dd class="number" ng-class="{'negative': divergence.extraHour < 0, 'positive': divergence.extraHour > 0}">
+							{{ divergence.extraHourFormated }}
+						</dd>
+					</dl>
 				</div>
 			</div>
 			<div class="row">
