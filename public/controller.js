@@ -1,9 +1,13 @@
 angular.module('clockInApp', ['angular-loading-bar']).controller('CollectedDataController', ($scope, $http, $filter) => {
 
     const INITIAL_BALANCE = -95;
+    const eightHoursInMinutes = 480;
+    const sixHourInMinutes = 360;
     const keyStr = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/=';
     $scope.isLogged = false;
     $scope.date = new Date();
+    $scope.count = {};
+    $scope.clockSaved = {};
 
     const totalBalanceCalc = (clockIn, isFilter) => {
         if (clockIn) {
@@ -33,12 +37,14 @@ angular.module('clockInApp', ['angular-loading-bar']).controller('CollectedDataC
     };
 
     const clearHours = () => {
-        $scope.hour01 = { time: new Date(1970, 0, 1, 8, 0, 0) };
-        $scope.hour02 = { time: new Date(1970, 0, 1, 12, 0, 0) };
-        $scope.hour03 = { time: new Date(1970, 0, 1, 13, 30, 0) };
-        $scope.hour04 = { time: new Date(1970, 0, 1, 17, 30, 0) };
+        $scope.hour01 = {};
+        $scope.hour02 = {};
+        $scope.hour03 = {};
+        $scope.hour04 = {};
         $scope.hour05 = {};
         $scope.hour06 = {};
+        $scope.clockSaved = {};
+        $scope.count = {};
         $scope.divergence = {
             positive: [],
             negative: [],
@@ -83,7 +89,7 @@ angular.module('clockInApp', ['angular-loading-bar']).controller('CollectedDataC
         return output;
     };
 
-    const saveHours = (divergence, hour) => {
+    const addHours = (divergence, hour) => {
         if (!hour.time) return;
         const time = $filter('date')(hour.time, 'HH:mm');
 
@@ -130,6 +136,16 @@ angular.module('clockInApp', ['angular-loading-bar']).controller('CollectedDataC
         return hour && Array.isArray(nextDay) && nextDay.includes(hour);
     };
 
+    const isPositive = (hour, divergence) => {
+        const { positive } = divergence;
+        return hour && Array.isArray(positive) && positive.includes(hour);
+    };
+
+    const isNegative = (hour, divergence) => {
+        const { negative } = divergence;
+        return hour && Array.isArray(negative) && negative.includes(hour);
+    };
+
     const getClocks = () => {
         return $http.get('clocks')
             .then(response => {
@@ -146,15 +162,38 @@ angular.module('clockInApp', ['angular-loading-bar']).controller('CollectedDataC
             });
     };
 
+    const getDuration = (h_2, h_1) => {
+        const initialTime = moment({ hour: h_1[0], minute: h_1[1] });
+        const endTime = moment({ hour: h_2[0], minute: h_2[1] });
+        return endTime.diff(initialTime, 'm');
+    };
+
     $('input[name="daterange"]').daterangepicker({ autoApply: true, locale: { format: 'DD/MM/YYYY' } });
 
-    $scope.setHours = () => {
+    $scope.updateCount = () => {
+        $scope.count = {};
         if ($scope.divergence.worked_hours === '8') {
-            $scope.hour01 = { time: new Date(1970, 0, 1, 8, 0, 0) };
-            $scope.hour04 = { time: new Date(1970, 0, 1, 17, 30, 0) };
+            $scope.count.hour01 = '08:00';
+            $scope.count.hour04 = '17:30';
         } else {
-            $scope.hour01 = { time: new Date(1970, 0, 1, 9, 0, 0) };
-            $scope.hour04 = { time: new Date(1970, 0, 1, 16, 30, 0) };
+            $scope.count.hour01 = '09:00';
+            $scope.count.hour04 = '16:30';
+        }
+
+        $scope.count.hour02 = '12:00';
+        if ($scope.clockSaved.hour02 && !$scope.clockSaved.hour03) {
+            $scope.count.hour03 = moment(`1970-01-01 ${$scope.clockSaved.hour02}`).add(1, 'h').format('HH:mm');
+        } else {
+            $scope.count.hour03 = '13:30';
+        }
+
+        if (!$scope.clockSaved.hour04) {
+            const h01 = $scope.clockSaved.hour01 || $scope.count.hour01;
+            const h02 = $scope.clockSaved.hour02 || $scope.count.hour02;
+            const duration = getDuration(h02.split(':'), h01.split(':'));
+            $scope.count.hour04 = moment(`1970-01-01 ${$scope.clockSaved.hour03 || $scope.count.hour03}`)
+                .add($scope.divergence.worked_hours === '8' ? eightHoursInMinutes - duration : sixHourInMinutes - duration, 'm')
+                .format('HH:mm');
         }
     };
 
@@ -163,19 +202,35 @@ angular.module('clockInApp', ['angular-loading-bar']).controller('CollectedDataC
         const today = $filter('date')($scope.date, 'EEEE, dd/MM/yyyy');
         return $http.get(`clocks?date=${today}`)
             .then(response => {
-                const divergence = response.data;
-                if (divergence) {
-                    $scope.divergence.worked_hours = divergence.worked_hours;
-                    const { hours: strHours } = divergence;
+                let clockIn = response.data;
+                if (clockIn && clockIn.divergences.length) {
+                    $scope.divergence = clockIn.divergences[0];
+                    const { hours: strHours } = $scope.divergence;
                     const arrHours = strHours.split(' ');
                     for (let index = 0; index < arrHours.length; index++) {
                         const hour = arrHours[index];
+
+                        $scope.clockSaved[`hour0${index + 1}`] = hour;
+                        $scope.clockSaved[`isNegative0${index + 1}`] = isNegative(hour, $scope.divergence);
+                        $scope.clockSaved[`isPositive0${index + 1}`] = isPositive(hour, $scope.divergence);
+
                         const hours = hour.split(':');
-                        $scope[`hour0${index + 1}`].time = new Date(1970, 0, 1, hours[0], hours[1], 0);
-                        $scope[`hour0${index + 1}`].type = getType(hour, divergence);
-                        $scope[`hour0${index + 1}`].isNextDay = isNextDay(hour, divergence);
+                        const objHour = $scope[`hour0${index + 1}`];
+                        objHour.time = new Date(1970, 0, 1, hours[0], hours[1], 0);
+                        objHour.type = getType(hour, $scope.divergence);
+                        objHour.isNextDay = isNextDay(hour, $scope.divergence);
                     }
+                } else {
+                    const isWeekEnd = moment($scope.date).isoWeekday() > 5;
+                    const is8Clock = $scope.divergence.worked_hours === '8';
+                    $scope.divergence.hoursWorked = '00:00';
+                    $scope.divergence.minutesFormated = isWeekEnd ? '00:00' : is8Clock ? '-08:00' : '-06:00';
+                    $scope.divergence.extraHourFormated = '00:00';
+                    $scope.divergence.minutes = isWeekEnd ? 0 : is8Clock ? -eightHoursInMinutes : -sixHourInMinutes;
+                    $scope.divergence.extraHour = 0;
+                    $scope.divergence.extraHourAceleration = 0;
                 }
+                $scope.updateCount();
             })
             .catch(err => {
                 let msg = 'Erro interno, consulte o log ;)';
@@ -241,12 +296,20 @@ angular.module('clockInApp', ['angular-loading-bar']).controller('CollectedDataC
 
     $scope.onSaveHours = () => {
         const times = [];
-        times.push(saveHours($scope.divergence, $scope.hour01));
-        times.push(saveHours($scope.divergence, $scope.hour02));
-        times.push(saveHours($scope.divergence, $scope.hour03));
-        times.push(saveHours($scope.divergence, $scope.hour04));
-        times.push(saveHours($scope.divergence, $scope.hour05));
-        times.push(saveHours($scope.divergence, $scope.hour06));
+        $scope.divergence = {
+            positive: [],
+            negative: [],
+            extra: [],
+            extraAceleration: [],
+            nextDay: [],
+            worked_hours: $scope.divergence.worked_hours
+        };
+        times.push(addHours($scope.divergence, $scope.hour01));
+        times.push(addHours($scope.divergence, $scope.hour02));
+        times.push(addHours($scope.divergence, $scope.hour03));
+        times.push(addHours($scope.divergence, $scope.hour04));
+        times.push(addHours($scope.divergence, $scope.hour05));
+        times.push(addHours($scope.divergence, $scope.hour06));
 
         $scope.divergence.date = $filter('date')($scope.date, 'EEEE, dd/MM/yyyy');
         $scope.divergence.hours = times.join(' ').trim();
@@ -254,7 +317,7 @@ angular.module('clockInApp', ['angular-loading-bar']).controller('CollectedDataC
         $http.post('clocks', $scope.divergence)
             .then(response => {
                 if (response.status === 200) {
-                    getClocks().then(() => $('#modal_list_hours').modal('hide'));
+                    $scope.getClockByDate();
                 } else {
                     alert('Erro interno, consulte o log ;)');
                 }
