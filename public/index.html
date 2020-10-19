@@ -27,13 +27,13 @@
 		<form>
 			<div class="row">
 				<div class="col-12 text-center">
-					Day balance:
+					Remaining hours:
 					<label style="font-size: 25px;" class="number" ng-class="{
 						'negative': (divergence.worked_hours === '8' && divergence.minutes < 480 
 							|| divergence.worked_hours === '6' && divergence.minutes < 360), 
 						'positive': (divergence.worked_hours === '8' && divergence.minutes > 480 
 							|| divergence.worked_hours === '6' && divergence.minutes > 360)}">
-						{{ divergence.minutesFormated }}
+						{{ remaining }}
 					</label>
 				</div>
 			</div>
