@@ -155,11 +155,9 @@ class ClockIn {
         } else if (divergences.length) {
             clockIn.totalMinutes = divergences[0].minutes || 0;
             clockIn.totalExtra = divergences[0].extraHour || 0;
-            // clockIn.totalExtraAceleration = divergences[0].extraHourAceleration || 0;
         }
         // clockIn.totalMinutesFormated = this._formatMinutes(clockIn.totalMinutes);
         // clockIn.totalExtraFormated = this._formatMinutes(clockIn.totalExtra);
-        // clockIn.totalExtraAcelerationFormated = this._formatMinutes(clockIn.totalExtraAceleration);
 
         clockIn.divergences = divergences;
 
@@ -239,9 +237,11 @@ class ClockIn {
     _calculateTwoHours(hours) {
         const h01 = this._normalizeHour(hours[0]);
         const h02 = this._normalizeHour(hours[1]);
+        let type = this._getType(h01);
+        if (!type) type = this._getType(h02);
         this.balanceHours.push({
             sum: this._getDuration(h02, h01),
-            type: this._getType(h01)
+            type
         });
     }
 

@@ -204,6 +204,7 @@ angular.module('clockInApp', ['angular-loading-bar']).controller('CollectedDataC
             .then(response => {
                 let clockIn = response.data;
                 if (clockIn && clockIn.divergences.length) {
+                    $scope.clockIn = clockIn;
                     $scope.divergence = clockIn.divergences[0];
                     const { hours: strHours } = $scope.divergence;
                     const arrHours = strHours.split(' ');

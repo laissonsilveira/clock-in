@@ -26,56 +26,68 @@
 	<div class="container-fluid" ng-show="isLogged">
 		<form>
 			<div class="row">
+				<div class="col-12 text-center">
+					Day balance:
+					<label style="font-size: 25px;" class="number" ng-class="{
+						'negative': (divergence.worked_hours === '8' && divergence.minutes < 480 
+							|| divergence.worked_hours === '6' && divergence.minutes < 360), 
+						'positive': (divergence.worked_hours === '8' && divergence.minutes > 480 
+							|| divergence.worked_hours === '6' && divergence.minutes > 360)}">
+						{{ divergence.minutesFormated }}
+					</label>
+				</div>
+			</div>
+			<div class="row">
 				<div class="col-12 text-center number" style="font-size: 35px;">
 					<label ng-class="{
 						'text-gray': count.hour01 && !clockSaved.hour01,
-						'text-danger font-weight-bold': clockSaved.isNegative01,
-						'text-primary font-weight-bold': clockSaved.isPositive01
+						'text-danger': clockSaved.isNegative01,
+						'text-primary': clockSaved.isPositive01
 					}">
 						{{ clockSaved.hour01 || count.hour01 }}
 					</label>
 					<label ng-class="{
 						'text-gray': count.hour02 && !clockSaved.hour02,
-						'text-danger font-weight-bold': clockSaved.isNegative02,
-						'text-primary font-weight-bold': clockSaved.isPositive02
+						'text-danger': clockSaved.isNegative02,
+						'text-primary': clockSaved.isPositive02
 					}">
 						{{ clockSaved.hour02 || count.hour02 }}
 					</label>
 					<label ng-class="{
 						'text-gray': count.hour03 && !clockSaved.hour03,
-						'text-danger font-weight-bold': clockSaved.isNegative03,
-						'text-primary font-weight-bold': clockSaved.isPositive03
+						'text-danger': clockSaved.isNegative03,
+						'text-primary': clockSaved.isPositive03
 					}">
 						{{ clockSaved.hour03 || count.hour03 }}
 					</label>
 					<label ng-class="{
 						'text-gray': count.hour04 && !clockSaved.hour04,
-						'text-danger font-weight-bold': clockSaved.isNegative04,
-						'text-primary font-weight-bold': clockSaved.isPositive04
+						'text-danger': clockSaved.isNegative04,
+						'text-primary': clockSaved.isPositive04
 					}">
 						{{ clockSaved.hour04 || count.hour04 }}
 					</label>
 					<label ng-class="{
 						'text-gray': count.hour05 && !clockSaved.hour05,
-						'text-danger font-weight-bold': clockSaved.isNegative05,
-						'text-primary font-weight-bold': clockSaved.isPositive05
+						'text-danger': clockSaved.isNegative05,
+						'text-primary': clockSaved.isPositive05
 					}">
 						{{ clockSaved.hour05 || count.hour05 }}
 					</label>
 					<label ng-class="{
 						'text-gray': count.hour06 && !clockSaved.hour06,
-						'text-danger font-weight-bold': clockSaved.isNegative06,
-						'text-primary font-weight-bold': clockSaved.isPositive06
+						'text-danger': clockSaved.isNegative06,
+						'text-primary': clockSaved.isPositive06
 					}">
 						{{ clockSaved.hour06 || count.hour06 }}
 					</label>
 				</div>
 			</div>
 			<div class="row">
-				<div class="col-6">
+				<div class="col-7">
 					<input class="form-control" type="date" ng-model="date" ng-change="getClockByDate()">
 				</div>
-				<div class="col-6">
+				<div class="col-5">
 					<div class="form-check form-check-inline">
 						<input class="form-check-input" type="checkbox" value="P" ng-model="divergence.isHoliday"
 							ng-disabled="divergence.dayOff">
@@ -245,26 +257,6 @@
 			</div>
 			<div class="row">
 				<div class="col-12">
-					<dl class="inline-flex">
-						<dt>Worked <em style="font-size: 8px;">({{ date | date: 'dd/MM/yyyy' }})</em></dt>
-						<dd class="number" ng-class="{
-							'negative': (divergence.minutes + divergence.extraHour + divergence.extraHourAceleration) < 0,
-							'positive': (divergence.minutes + divergence.extraHour + divergence.extraHourAceleration) > 0}">
-							{{ divergence.hoursWorked }}
-						</dd>
-						<dt>Day Balance</dt>
-						<dd class="number" ng-class="{'negative': divergence.minutes < 0, 'positive': divergence.minutes > 0}">
-							{{ divergence.minutesFormated }}
-						</dd>
-						<dt>Extra Balance</dt>
-						<dd class="number" ng-class="{'negative': divergence.extraHour < 0, 'positive': divergence.extraHour > 0}">
-							{{ divergence.extraHourFormated }}
-						</dd>
-					</dl>
-				</div>
-			</div>
-			<div class="row">
-				<div class="col-12">
 					<button type="button" ng-click="onSaveHours()" class="btn btn-outline-dark btn-block">Save</button>
 					<button type="button" class="btn btn-outline-dark btn-block" data-toggle="modal"
 						data-target="#modal_list_hours">Clock-in List</button>
@@ -330,22 +322,22 @@
 					</div>
 					<hr>
 					<div class="row">
-						<div class="col-md-3">
+						<div class="col-md-6">
 							<input class="form-control" ng-model="query" name="daterange" placeholder="Date Filter">
 						</div>
-						<div class="col-md-1">
+						<div class="col-md-2">
 							<button class="form-control btn btn-secondary" ng-click="query='';search=''">Limpar</button>
 						</div>
-						<div class="col-md-2 table-success text-center">
+						<div class="col-md-1 table-success text-center">
 							<i>Feriado</i>
 						</div>
-						<div class="col-md-2 table-primary text-center">
+						<div class="col-md-1 table-primary text-center">
 							<i>Final de Semana</i>
 						</div>
-						<div class="col-md-2 table-danger text-center">
+						<div class="col-md-1 table-danger text-center">
 							<i>Folga</i>
 						</div>
-						<div class="col-md-2 table-warning text-center">
+						<div class="col-md-1 table-warning text-center">
 							<i>Hr.Extra</i>
 						</div>
 					</div>
