@@ -112,15 +112,17 @@ class ClockIn {
     }
 
     _getDuration(h_2, h_1) {
-        const initialTime = moment({ hour: h_1[0], minute: h_1[1] });
-        const endTime = moment({ hour: h_2[0], minute: h_2[1] });
+        if (h_1 && h_2) {
+            const initialTime = moment({ hour: h_1[0], minute: h_1[1] });
+            const endTime = moment({ hour: h_2[0], minute: h_2[1] });
 
-        if (this.divergence.nextDay) {
-            if (this.divergence.nextDay.includes(h_1.join(':'))) initialTime.add(1, 'd');
-            if (this.divergence.nextDay.includes(h_2.join(':'))) endTime.add(1, 'd');
+            if (this.divergence.nextDay.length) {
+                if (this.divergence.nextDay.includes(h_1.join(':'))) initialTime.add(1, 'd');
+                if (this.divergence.nextDay.includes(h_2.join(':'))) endTime.add(1, 'd');
+            }
+
+            return endTime.diff(initialTime, 'm') * this._getMultiple(h_2, h_1);
         }
-
-        return endTime.diff(initialTime, 'm') * this._getMultiple(h_2, h_1);
     }
 
     _getMultiple(h_2, h_1) {
@@ -194,14 +196,17 @@ class ClockIn {
         const h04 = this._normalizeHour(hours[3]);
         const h05 = hours.length > 4 && this._normalizeHour(hours[4]);
         const h06 = hours.length > 5 && this._normalizeHour(hours[5]);
+        const morning = this._getDuration(h02, h01);
+        const afternoon = this._getDuration(h04, h03);
+        const night = this._getDuration(h06, h05);
 
         if (this._isDouble()) {
             this.balanceHours.push({
-                sum: this._getDuration(h02, h01),
+                sum: morning,
                 type: this._getType(h01)
             });
             this.balanceHours.push({
-                sum: this._getDuration(h04, h03),
+                sum: afternoon,
                 type: this._getType(h03)
             });
         }
@@ -226,12 +231,13 @@ class ClockIn {
                 type: this._getType(h04)
             });
         }
-        if (h05 && h06) {
+        if (night) {
             this.balanceHours.push({
-                sum: this._getDuration(h06, h05),
+                sum: night,
                 type: this._getType(h05)
             });
         }
+        this.divergence.totalWorked = (morning || 0) + (afternoon || 0) + (night || 0);
     }
 
     _calculateTwoHours(hours) {

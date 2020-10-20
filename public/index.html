@@ -28,11 +28,7 @@
 			<div class="row">
 				<div class="col-12 text-center">
 					Remaining hours:
-					<label style="font-size: 25px;" class="number" ng-class="{
-						'negative': (divergence.worked_hours === '8' && divergence.minutes < 480 
-							|| divergence.worked_hours === '6' && divergence.minutes < 360), 
-						'positive': (divergence.worked_hours === '8' && divergence.minutes > 480 
-							|| divergence.worked_hours === '6' && divergence.minutes > 360)}">
+					<label style="font-size: 25px;" class="number" ng-class="{'negative': divergence.totalWorked > 0">
 						{{ remaining }}
 					</label>
 				</div>
@@ -89,6 +85,20 @@
 				</div>
 				<div class="col-5">
 					<div class="form-check form-check-inline">
+						<input class="form-check-input" type="radio" value="6" ng-model="divergence.worked_hours"
+							ng-change="updateCount()">
+						<label class="form-check-label">6 Hours</label>
+					</div>
+					<div class="form-check form-check-inline">
+						<input class="form-check-input" type="radio" value="8" ng-model="divergence.worked_hours"
+							ng-change="updateCount()">
+						<label class="form-check-label">8 Hours</label>
+					</div>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-12">
+					<div class="form-check form-check-inline">
 						<input class="form-check-input" type="checkbox" value="P" ng-model="divergence.isHoliday"
 							ng-disabled="divergence.dayOff">
 						<label class="form-check-label">Holiday</label>
@@ -101,16 +111,6 @@
 						<input class="form-check-input" type="checkbox" value="P" ng-model="divergence.middayOff"
 							ng-disabled="divergence.dayOff">
 						<label class="form-check-label">Midday OFF</label>
-					</div>
-					<div class="form-check form-check-inline">
-						<input class="form-check-input" type="radio" value="6" ng-model="divergence.worked_hours"
-							ng-change="updateCount()">
-						<label class="form-check-label">6 Hours</label>
-					</div>
-					<div class="form-check form-check-inline">
-						<input class="form-check-input" type="radio" value="8" ng-model="divergence.worked_hours"
-							ng-change="updateCount()">
-						<label class="form-check-label">8 Hours</label>
 					</div>
 				</div>
 			</div>

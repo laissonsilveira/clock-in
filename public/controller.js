@@ -198,7 +198,8 @@ angular.module('clockInApp', ['angular-loading-bar']).controller('CollectedDataC
                 .format('HH:mm');
         }
 
-        $scope.remaining = moment.duration($scope.totalToWork - $scope.divergence.minutes, 'minutes').format('HH:mm', { trim: false });
+        const worked = $scope.totalToWork - $scope.divergence.totalWorked;
+        $scope.remaining = moment.duration(worked < 0 ? 0 : worked, 'minutes').format('HH:mm', { trim: false });
     };
 
     $scope.getClockByDate = () => {
