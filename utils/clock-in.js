@@ -17,6 +17,7 @@ class ClockIn {
         for (let index = 0; index < this.clockIn.length; index++) {
             this.balanceHours = [];
             this.divergence = this.clockIn[index];
+            this.divergence.totalWorked = 0;
             this.divergence.isWeekend = WEEKEND_DAYS.includes(this.divergence.date.split(',')[0].toLowerCase());
             if (!this.divergence.worked_hours) this.divergence.worked_hours = '8';
             if (!this.divergence.positive) this.divergence.positive = [];
@@ -243,12 +244,14 @@ class ClockIn {
     _calculateTwoHours(hours) {
         const h01 = this._normalizeHour(hours[0]);
         const h02 = this._normalizeHour(hours[1]);
+        const morning = this._getDuration(h02, h01);
         let type = this._getType(h01);
         if (!type) type = this._getType(h02);
         this.balanceHours.push({
             sum: this._getDuration(h02, h01),
             type
         });
+        this.divergence.totalWorked = morning || 0;
     }
 
     _isDouble() {

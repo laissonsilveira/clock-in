@@ -9,6 +9,8 @@ angular.module('clockInApp', ['angular-loading-bar']).controller('CollectedDataC
     $scope.count = {};
     $scope.clockSaved = {};
     $scope.totalToWork = eightHoursInMinutes;
+    $scope.remainingFormatted = '08:00';
+    $scope.remaining = 0;
 
     const totalBalanceCalc = (clockIn, isFilter) => {
         if (clockIn) {
@@ -198,8 +200,8 @@ angular.module('clockInApp', ['angular-loading-bar']).controller('CollectedDataC
                 .format('HH:mm');
         }
 
-        const worked = $scope.totalToWork - $scope.divergence.totalWorked;
-        $scope.remaining = moment.duration(worked < 0 ? 0 : worked, 'minutes').format('HH:mm', { trim: false });
+        $scope.remaining = $scope.totalToWork - ($scope.divergence.totalWorked || 0);
+        $scope.remainingFormatted = moment.duration($scope.remaining < 0 ? 0 : $scope.remaining, 'minutes').format('HH:mm', { trim: false });
     };
 
     $scope.getClockByDate = () => {
