@@ -26,11 +26,19 @@
 	<div class="container-fluid" ng-show="isLogged">
 		<form>
 			<div class="row">
-				<div class="col-12 text-center">
-					Remaining hours:
-					<label style="font-size: 25px;" class="negative number"
-						ng-class="{'positive': remaining === 0 }">
+				<div class="col-6 text-center">
+					Remaining hours
+					<br>
+					<label style="font-size: 25px;" class="negative number" ng-class="{'positive': remaining === 0 }">
 						{{ remainingFormatted }}
+					</label>
+				</div>
+				<div class="col-6 text-center">
+					Worked hours
+					<br>
+					<label style="font-size: 25px;" class="negative number"
+						ng-class="{'positive': divergence.worked_hours === '8' ? divergence.totalWorked >= 480 : divergence.totalWorked >= 360 }">
+						{{ totalWorkedFormatted }}
 					</label>
 				</div>
 			</div>
@@ -314,10 +322,10 @@
 							}}</span></strong>
 						</div>
 						<!-- <div class="col-md-2">
-					<strong>ACELERAÇÃO: <span
-							ng-class="{'negative': extraAcelerationBalance < 0, 'positive': extraAcelerationBalance > 0}">{{
-							extraAcelerationBalanceLabel }}</span>&nbsp;(<i>{{ extraPercent }}%</i>)</strong>
-				</div> -->
+							<strong>ACELERAÇÃO: <span
+									ng-class="{'negative': extraAcelerationBalance < 0, 'positive': extraAcelerationBalance > 0}">{{
+									extraAcelerationBalanceLabel }}</span>&nbsp;(<i>{{ extraPercent }}%</i>)</strong>
+						</div> -->
 					</div>
 					<hr>
 					<div class="row">

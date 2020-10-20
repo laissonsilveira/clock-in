@@ -3,12 +3,12 @@ angular.module('clockInApp', ['angular-loading-bar']).controller('CollectedDataC
     const INITIAL_BALANCE = -95;
     const eightHoursInMinutes = 480;
     const sixHourInMinutes = 360;
+    let totalToWork = eightHoursInMinutes;
     const keyStr = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/=';
     $scope.isLogged = false;
     $scope.date = new Date();
     $scope.count = {};
     $scope.clockSaved = {};
-    $scope.totalToWork = eightHoursInMinutes;
     $scope.remainingFormatted = '08:00';
     $scope.remaining = 0;
 
@@ -179,7 +179,7 @@ angular.module('clockInApp', ['angular-loading-bar']).controller('CollectedDataC
             $scope.count.hour01 = '08:00';
             $scope.count.hour04 = '17:30';
         } else {
-            $scope.totalToWork = sixHourInMinutes;
+            totalToWork = sixHourInMinutes;
             $scope.count.hour01 = '09:00';
             $scope.count.hour04 = '16:30';
         }
@@ -200,7 +200,8 @@ angular.module('clockInApp', ['angular-loading-bar']).controller('CollectedDataC
                 .format('HH:mm');
         }
 
-        $scope.remaining = $scope.totalToWork - ($scope.divergence.totalWorked || 0);
+        $scope.remaining = totalToWork - ($scope.divergence.totalWorked || 0);
+        $scope.totalWorkedFormatted = moment.duration($scope.divergence.totalWorked || 0, 'minutes').format('HH:mm', { trim: false });
         $scope.remainingFormatted = moment.duration($scope.remaining < 0 ? 0 : $scope.remaining, 'minutes').format('HH:mm', { trim: false });
     };
 
