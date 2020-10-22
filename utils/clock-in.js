@@ -68,8 +68,6 @@ class ClockIn {
         }
 
         const clockInSorted = this.clockIn.sort(ClockIn._compareDivergenceDate);
-        clockInSorted.forEach(dv => dv.date = dv.date.format('dddd, MMMM DD, YYYY'));
-
         return this._totalCalc(clockInSorted);
     }
 

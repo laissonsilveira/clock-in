@@ -361,9 +361,9 @@
 								<thead class="thead-dark">
 									<tr>
 										<th scope="col">Date</th>
-										<th scope="col">Hours worked</th>
-										<th scope="col">Day Balance</th>
-										<th scope="col">Extra Balance</th>
+										<th class="text-center" scope="col">Hours worked</th>
+										<th class="text-center" scope="col">Day Balance</th>
+										<th class="text-center" scope="col">Extra Balance</th>
 										<!-- <th scope="col">Aceleration Balance</th> -->
 										<th scope="col">Hours</th>
 										<th scope="col">Negative</th>
@@ -377,15 +377,15 @@
 								<tbody>
 									<tr scope="row" ng-repeat="div in items | filter:search as itemsFiltered"
 										ng-class="{ 'table-danger': div.middayOff || div.dayOff, 'table-primary': div.isWeekend, 'table-success': div.isHoliday, 'table-warning': div.extra && div.extra.length }">
-										<td>{{ div.date | date: 'fullDate' }}</td>
-										<td
+										<td>{{ div.date | date: 'EEE, dd/MM/yyyy' }}</td>
+										<td class="text-center"
 											ng-class="{'negative': (div.minutes + div.extraHour + div.extraHourAceleration) < 0, 'positive': (div.minutes + div.extraHour + div.extraHourAceleration) > 0}">
 											<strong>{{ div.hoursWorked }}</strong>
 										</td>
-										<td ng-class="{'negative': div.minutes < 0, 'positive': div.minutes > 0}">
+										<td class="text-center" ng-class="{'negative': div.minutes < 0, 'positive': div.minutes > 0}">
 											{{ div.minutesFormated }}
 										</td>
-										<td ng-class="{'negative': div.extraHour < 0, 'positive': div.extraHour > 0}">
+										<td class="text-center" ng-class="{'negative': div.extraHour < 0, 'positive': div.extraHour > 0}">
 											{{ div.extraHourFormated }}
 										</td>
 										<!-- <td
