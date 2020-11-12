@@ -26,11 +26,19 @@
 	<div class="container-fluid" ng-show="isLogged">
 		<form>
 			<div class="row">
-				<div class="col-12 text-center">
-					Remaining hours:
-					<label style="font-size: 25px;" class="negative number"
-						ng-class="{'positive': remaining === 0 }">
+				<div class="col-6 text-center">
+					Remaining hours
+					<br>
+					<label style="font-size: 25px;" class="negative number" ng-class="{'positive': remaining === 0 }">
 						{{ remainingFormatted }}
+					</label>
+				</div>
+				<div class="col-6 text-center">
+					Worked hours
+					<br>
+					<label style="font-size: 25px;" class="negative number"
+						ng-class="{'positive': divergence.worked_hours === '8' ? divergence.totalWorked >= 480 : divergence.totalWorked >= 360 }">
+						{{ totalWorkedFormatted }}
 					</label>
 				</div>
 			</div>
@@ -39,42 +47,42 @@
 					<label ng-class="{
 						'text-gray': count.hour01 && !clockSaved.hour01,
 						'negative': clockSaved.isNegative01,
-						'text-primary': clockSaved.isPositive01
+						'positive': clockSaved.isPositive01
 					}">
 						{{ clockSaved.hour01 || count.hour01 }}
 					</label>
 					<label ng-class="{
 						'text-gray': count.hour02 && !clockSaved.hour02,
 						'negative': clockSaved.isNegative02,
-						'text-primary': clockSaved.isPositive02
+						'positive': clockSaved.isPositive02
 					}">
 						{{ clockSaved.hour02 || count.hour02 }}
 					</label>
 					<label ng-class="{
 						'text-gray': count.hour03 && !clockSaved.hour03,
 						'negative': clockSaved.isNegative03,
-						'text-primary': clockSaved.isPositive03
+						'positive': clockSaved.isPositive03
 					}">
 						{{ clockSaved.hour03 || count.hour03 }}
 					</label>
 					<label ng-class="{
 						'text-gray': count.hour04 && !clockSaved.hour04,
 						'negative': clockSaved.isNegative04,
-						'text-primary': clockSaved.isPositive04
+						'positive': clockSaved.isPositive04
 					}">
 						{{ clockSaved.hour04 || count.hour04 }}
 					</label>
 					<label ng-class="{
 						'text-gray': count.hour05 && !clockSaved.hour05,
 						'negative': clockSaved.isNegative05,
-						'text-primary': clockSaved.isPositive05
+						'positive': clockSaved.isPositive05
 					}">
 						{{ clockSaved.hour05 || count.hour05 }}
 					</label>
 					<label ng-class="{
 						'text-gray': count.hour06 && !clockSaved.hour06,
 						'negative': clockSaved.isNegative06,
-						'text-primary': clockSaved.isPositive06
+						'positive': clockSaved.isPositive06
 					}">
 						{{ clockSaved.hour06 || count.hour06 }}
 					</label>
@@ -314,10 +322,10 @@
 							}}</span></strong>
 						</div>
 						<!-- <div class="col-md-2">
-					<strong>ACELERAÇÃO: <span
-							ng-class="{'negative': extraAcelerationBalance < 0, 'positive': extraAcelerationBalance > 0}">{{
-							extraAcelerationBalanceLabel }}</span>&nbsp;(<i>{{ extraPercent }}%</i>)</strong>
-				</div> -->
+							<strong>ACELERAÇÃO: <span
+									ng-class="{'negative': extraAcelerationBalance < 0, 'positive': extraAcelerationBalance > 0}">{{
+									extraAcelerationBalanceLabel }}</span>&nbsp;(<i>{{ extraPercent }}%</i>)</strong>
+						</div> -->
 					</div>
 					<hr>
 					<div class="row">
@@ -353,9 +361,9 @@
 								<thead class="thead-dark">
 									<tr>
 										<th scope="col">Date</th>
-										<th scope="col">Hours worked</th>
-										<th scope="col">Day Balance</th>
-										<th scope="col">Extra Balance</th>
+										<th class="text-center" scope="col">Hours worked</th>
+										<th class="text-center" scope="col">Day Balance</th>
+										<th class="text-center" scope="col">Extra Balance</th>
 										<!-- <th scope="col">Aceleration Balance</th> -->
 										<th scope="col">Hours</th>
 										<th scope="col">Negative</th>
@@ -369,15 +377,15 @@
 								<tbody>
 									<tr scope="row" ng-repeat="div in items | filter:search as itemsFiltered"
 										ng-class="{ 'table-danger': div.middayOff || div.dayOff, 'table-primary': div.isWeekend, 'table-success': div.isHoliday, 'table-warning': div.extra && div.extra.length }">
-										<td>{{ div.date | date: 'fullDate' }}</td>
-										<td
+										<td>{{ div.date | date: 'EEE, dd/MM/yyyy' }}</td>
+										<td class="text-center"
 											ng-class="{'negative': (div.minutes + div.extraHour + div.extraHourAceleration) < 0, 'positive': (div.minutes + div.extraHour + div.extraHourAceleration) > 0}">
 											<strong>{{ div.hoursWorked }}</strong>
 										</td>
-										<td ng-class="{'negative': div.minutes < 0, 'positive': div.minutes > 0}">
+										<td class="text-center" ng-class="{'negative': div.minutes < 0, 'positive': div.minutes > 0}">
 											{{ div.minutesFormated }}
 										</td>
-										<td ng-class="{'negative': div.extraHour < 0, 'positive': div.extraHour > 0}">
+										<td class="text-center" ng-class="{'negative': div.extraHour < 0, 'positive': div.extraHour > 0}">
 											{{ div.extraHourFormated }}
 										</td>
 										<!-- <td
