@@ -304,13 +304,17 @@ angular.module('clockInApp', ['angular-loading-bar']).controller('CollectedDataC
 
     $scope.onSaveHours = () => {
         const times = [];
+        const { isHoliday, dayOff, middayOff } = $scope.divergence;
         $scope.divergence = {
             positive: [],
             negative: [],
             extra: [],
             extraAceleration: [],
             nextDay: [],
-            worked_hours: $scope.divergence.worked_hours
+            worked_hours: $scope.divergence.worked_hours,
+            isHoliday,
+            dayOff,
+            middayOff
         };
         times.push(addHours($scope.divergence, $scope.hour01));
         times.push(addHours($scope.divergence, $scope.hour02));
