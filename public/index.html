@@ -124,7 +124,8 @@
 			<hr>
 			<div class="row">
 				<div class="col-12 pb-3">
-					<button type="button" ng-click="normalDay()" class="btn btn-outline-dark btn-block">Normal day</button>
+					<button type="button" ng-click="normalDay()" class="btn btn-outline-dark btn-block">Normal
+						day</button>
 				</div>
 			</div>
 			<div class="row">
@@ -315,16 +316,17 @@
 						<div class="col-md-3">
 							<strong>FILTRO: <span
 									ng-class="{'negative': balanceFilter < 0, 'positive': balanceFilter > 0}">{{
-							balanceFilterLabel }}</span></strong>
+									balanceFilterLabel }}</span></strong>
 						</div>
 						<div class="col-md-3">
-							<strong>BANCO: <span
-									ng-class="{'negative': balance < 0, 'positive': balance > 0}">{{ balanceLabel }}</span></strong>
+							<strong>BANCO: <span ng-class="{'negative': balance < 0, 'positive': balance > 0}">{{
+									balanceLabel }}</span></strong>
 						</div>
 						<div class="col-md-3">
 							<strong>EXTRA: <span
-									ng-class="{'negative': extraBalance < 0, 'positive': extraBalance > 0}">{{ extraBalanceLabel
-							}}</span></strong>
+									ng-class="{'negative': extraBalance < 0, 'positive': extraBalance > 0}">{{
+									extraBalanceLabel
+									}}</span></strong>
 						</div>
 						<!-- <div class="col-md-2">
 							<strong>ACELERAÇÃO: <span
@@ -335,7 +337,8 @@
 					<hr>
 					<div class="row">
 						<div class="col-md-6">
-							<input class="form-control" ng-model="query" name="daterange" placeholder="Date Filter">
+							<input class="form-control" ng-model="query" name="daterange" placeholder="Date Filter"
+								ng-change="search">
 						</div>
 						<div class="col-md-2">
 							<button class="form-control btn btn-secondary" ng-click="query='';search=''">Limpar</button>
@@ -387,10 +390,12 @@
 											ng-class="{'negative': (div.minutes + div.extraHour + div.extraHourAceleration) < 0, 'positive': (div.minutes + div.extraHour + div.extraHourAceleration) > 0}">
 											<strong>{{ div.hoursWorked }}</strong>
 										</td>
-										<td class="text-center" ng-class="{'negative': div.minutes < 0, 'positive': div.minutes > 0}">
+										<td class="text-center"
+											ng-class="{'negative': div.minutes < 0, 'positive': div.minutes > 0}">
 											{{ div.minutesFormated }}
 										</td>
-										<td class="text-center" ng-class="{'negative': div.extraHour < 0, 'positive': div.extraHour > 0}">
+										<td class="text-center"
+											ng-class="{'negative': div.extraHour < 0, 'positive': div.extraHour > 0}">
 											{{ div.extraHourFormated }}
 										</td>
 										<!-- <td
