@@ -8,6 +8,7 @@ const mongoose = require('mongoose');
 mongoose.Promise = require('bluebird');
 mongoose.set('useCreateIndex', true);
 const CONFIG_DATABASE = __CONFIG.database;
+const { MONGODB_USER, MONGODB_PWD } = process.env;
 
 function serializer(data) {
     const query = JSON.stringify(data.query);
@@ -16,7 +17,7 @@ function serializer(data) {
 }
 
 function _getUri() {
-    return `mongodb+srv://${CONFIG_DATABASE.user}:${CONFIG_DATABASE.pass}@${CONFIG_DATABASE.host}/${CONFIG_DATABASE.dbName}?retryWrites=true&w=majority`;
+    return `mongodb+srv://${MONGODB_USER}:${MONGODB_PWD}@${CONFIG_DATABASE.host}/${CONFIG_DATABASE.dbName}?retryWrites=true&w=majority`;
 }
 
 // CONNECTION EVENTS
