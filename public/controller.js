@@ -177,7 +177,7 @@ angular.module('clockInApp', ['angular-loading-bar']).controller('CollectedDataC
         $scope.hour01 = { time: new Date(1970, 0, 1, 9, 0, 0) };
         $scope.hour02 = { time: new Date(1970, 0, 1, 12, 0, 0) };
         $scope.hour03 = { time: new Date(1970, 0, 1, 13, 00, 0) };
-        $scope.hour04 = { time: new Date(1970, 0, 1, 19, 00, 0) };
+        $scope.hour04 = { time: new Date(1970, 0, 1, 18, 00, 0) };
     };
 
     $scope.updateCount = () => {
