@@ -5,7 +5,7 @@ momentDurationFormatSetup(moment);
 const WEEKEND_DAYS = ['sábado', 'domingo', 'saturday', 'sunday'];
 const workedHours = new Map();
 workedHours.set('6', { clocks: ['09:00', '12:00', '13:30', '16:30'], minutes: 360 });
-workedHours.set('8', { clocks: ['08:00', '12:00', '13:30', '17:30'], minutes: 480 });
+workedHours.set('8', { clocks: ['09:00', '12:00', '13:00', '18:00'], minutes: 480 });
 
 class ClockIn {
 
@@ -32,7 +32,7 @@ class ClockIn {
                 const date = this.divergence.date;
                 const is8Clock = this.divergence.worked_hours === '8';
                 const now = moment();
-                const endWork = moment(`${date.format('YYYY-MM-DD')} ${is8Clock ? '17:30' : '16:30'}`);
+                const endWork = moment(`${date.format('YYYY-MM-DD')} ${is8Clock ? '18:00' : '16:30'}`);
                 const endDay = date.endOf('day');
                 const hour = now.format('HH:mm');
                 hours.push(hour);
@@ -82,9 +82,9 @@ class ClockIn {
     }
 
     _normalizeHour(hour) {
-        const init = this.divergence.worked_hours === '8' ? '08' : '09';
-        const end = this.divergence.worked_hours === '8' ? '17' : '16';
-        const initTolerance = this.divergence.worked_hours === '8' ? '07' : '08';
+        const init = this.divergence.worked_hours === '8' ? '09' : '09';
+        const end = this.divergence.worked_hours === '8' ? '18' : '16';
+        const initTolerance = '08';
 
         const hrs = hour.split(':');
         if ((hrs[0] === initTolerance && Number(hrs[1]) >= 55) || (hrs[0] === init && Number(hrs[1]) <= 5)) {
@@ -93,12 +93,12 @@ class ClockIn {
         } else if ((hrs[0] === '11' && Number(hrs[1]) >= 55) || (hrs[0] === '12' && Number(hrs[1]) <= 5)) {
             hrs[0] = '12';
             hrs[1] = '00';
-        } else if (hrs[0] === '13' && Number(hrs[1]) >= 25 && Number(hrs[1]) <= 35) {
+        } else if ((hrs[0] === '12' && Number(hrs[1]) >= 55) || (hrs[0] === '13' && Number(hrs[1]) <= 5)) {
             hrs[0] = '13';
-            hrs[1] = '30';
-        } else if (hrs[0] === end && Number(hrs[1]) >= 25 && Number(hrs[1]) <= 35) {
+            hrs[1] = '00';
+        } else if ((hrs[0] === '17' && Number(hrs[1]) >= 55) || (hrs[0] === '18' && Number(hrs[1]) <= 5)) {
             hrs[0] = end;
-            hrs[1] = '30';
+            hrs[1] = '00';
         }
         return hrs;
     }
@@ -210,8 +210,8 @@ class ClockIn {
             });
         }
         else {
-            const init = this.divergence.worked_hours === '8' ? '08' : '09';
-            const end = this.divergence.worked_hours === '8' ? '17' : '16';
+            const init = '08';
+            const end = this.divergence.worked_hours === '8' ? '18' : '16';
 
             this.balanceHours.push({
                 sum: this._getDuration([init, '00'], h01),
@@ -222,11 +222,11 @@ class ClockIn {
                 type: this._getType(h02)
             });
             this.balanceHours.push({
-                sum: this._getDuration(['13', '30'], h03),
+                sum: this._getDuration(['13', '00'], h03),
                 type: this._getType(h03)
             });
             this.balanceHours.push({
-                sum: this._getDuration(h04, [end, '30']),
+                sum: this._getDuration(h04, [end, '00']),
                 type: this._getType(h04)
             });
         }
