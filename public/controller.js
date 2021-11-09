@@ -174,10 +174,10 @@ angular.module('clockInApp', ['angular-loading-bar']).controller('CollectedDataC
     $('input[name="daterange"]').daterangepicker({ autoApply: true, locale: { format: 'DD/MM/YYYY' } });
 
     $scope.normalDay = () => {
-        $scope.hour01 = { time: new Date(1970, 0, 1, 8, 0, 0) };
+        $scope.hour01 = { time: new Date(1970, 0, 1, 9, 0, 0) };
         $scope.hour02 = { time: new Date(1970, 0, 1, 12, 0, 0) };
-        $scope.hour03 = { time: new Date(1970, 0, 1, 13, 30, 0) };
-        $scope.hour04 = { time: new Date(1970, 0, 1, 17, 30, 0) };
+        $scope.hour03 = { time: new Date(1970, 0, 1, 13, 00, 0) };
+        $scope.hour04 = { time: new Date(1970, 0, 1, 19, 00, 0) };
     };
 
     $scope.updateCount = () => {
