@@ -1,6 +1,6 @@
 angular.module('clockInApp', ['angular-loading-bar']).controller('CollectedDataController', ($scope, $http, $filter) => {
 
-    const INITIAL_BALANCE = -95;
+    const INITIAL_BALANCE = 0;
     const eightHoursInMinutes = 480;
     const sixHourInMinutes = 360;
     let totalToWork = eightHoursInMinutes;
@@ -183,8 +183,8 @@ angular.module('clockInApp', ['angular-loading-bar']).controller('CollectedDataC
     $scope.updateCount = () => {
         $scope.count = {};
         if ($scope.divergence.worked_hours === '8') {
-            $scope.count.hour01 = '08:00';
-            $scope.count.hour04 = '17:30';
+            $scope.count.hour01 = '09:00';
+            $scope.count.hour04 = '18:00';
         } else {
             totalToWork = sixHourInMinutes;
             $scope.count.hour01 = '09:00';
@@ -195,7 +195,7 @@ angular.module('clockInApp', ['angular-loading-bar']).controller('CollectedDataC
         if ($scope.clockSaved.hour02 && !$scope.clockSaved.hour03) {
             $scope.count.hour03 = moment(`1970-01-01 ${$scope.clockSaved.hour02}`).add(1, 'h').format('HH:mm');
         } else {
-            $scope.count.hour03 = '13:30';
+            $scope.count.hour03 = '13:00';
         }
 
         if (!$scope.clockSaved.hour04) {
