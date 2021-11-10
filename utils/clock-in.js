@@ -82,12 +82,11 @@ class ClockIn {
     }
 
     _normalizeHour(hour) {
-        const init = this.divergence.worked_hours === '8' ? '09' : '09';
+        const init = '09';
         const end = this.divergence.worked_hours === '8' ? '18' : '16';
-        const initTolerance = '08';
 
         const hrs = hour.split(':');
-        if ((hrs[0] === initTolerance && Number(hrs[1]) >= 55) || (hrs[0] === init && Number(hrs[1]) <= 5)) {
+        if ((hrs[0] === '09' && Number(hrs[1]) >= 55) || (hrs[0] === init && Number(hrs[1]) <= 5)) {
             hrs[0] = init;
             hrs[1] = '00';
         } else if ((hrs[0] === '11' && Number(hrs[1]) >= 55) || (hrs[0] === '12' && Number(hrs[1]) <= 5)) {
@@ -210,7 +209,7 @@ class ClockIn {
             });
         }
         else {
-            const init = '08';
+            const init = '09';
             const end = this.divergence.worked_hours === '8' ? '18' : '16';
 
             this.balanceHours.push({
