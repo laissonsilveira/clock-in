@@ -17,7 +17,10 @@ function serializer(data) {
 }
 
 function _getUri() {
-    return `mongodb+srv://${MONGODB_USER}:${MONGODB_PWD}@${CONFIG_DATABASE.host}/${CONFIG_DATABASE.dbName}?retryWrites=true&w=majority`;
+    return `mongodb+srv://${escape(MONGODB_USER)}`
+        + `:${escape(MONGODB_PWD)}`
+        + `@${CONFIG_DATABASE.host}`
+        + `/${CONFIG_DATABASE.dbName}?retryWrites=true&w=majority`;
 }
 
 // CONNECTION EVENTS
