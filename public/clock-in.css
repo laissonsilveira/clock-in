@@ -70,3 +70,15 @@ dl.inline-flex dd {
 .text-gray {
     color: gainsboro;
 }
+
+.btn-clockin {
+    color: #fff;
+    background-color: #5ea3d7;
+    border-color: #5ea3d7;
+}
+
+.btn-clockin:hover {
+    color: #fff;
+    background-color: #3d93d4;
+    border-color: #3d93d4;
+}
