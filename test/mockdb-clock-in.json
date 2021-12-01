@@ -4,24 +4,19 @@
         "test": {
             "in": [
                 {
-                    "date_created": "2019-01-02 00:00:00",
-                    "divergences": [
-                        {
-                            "date": "Quarta, 01/01/2019",
-                            "hours": "8:30 12:00 13:00 18:00",
-                            "negative": [
-                                "8:30"
-                            ],
-                            "positive": [
-                                "13:00",
-                                "18:00"
-                            ]
-                        }
+                    "date": "Quarta, 01/01/2019",
+                    "hours": "8:30 12:00 13:00 18:00",
+                    "negative": [
+                        "8:30"
+                    ],
+                    "positive": [
+                        "13:00",
+                        "18:00"
                     ]
                 }
             ],
             "out": {
-                "calc": [
+                "divergences": [
                     {
                         "extraHour": 0,
                         "extraHourAceleration": 0,
@@ -32,14 +27,8 @@
                         "hoursWorked": "08:30"
                     }
                 ],
-                "total": {
-                    "totalMinutes": 30,
-                    "totalExtra": 0,
-                    "totalExtraAceleration": 0,
-                    "totalMinutesFormated": "00:30",
-                    "totalExtraFormated": "00:00",
-                    "totalExtraAcelerationFormated": "00:00"
-                }
+                "totalMinutes": 30,
+                "totalExtra": 0
             }
         }
     },
@@ -48,43 +37,32 @@
         "test": {
             "in": [
                 {
-                    "date_created": "2019-01-02 00:00:00",
-                    "divergences": [
-                        {
-                            "date": "Quarta, 01/01/2019",
-                            "hours": "8:30 12:00 13:00 18:00",
-                            "worked_hours": "6",
-                            "negative": [
-                                "8:30"
-                            ],
-                            "positive": [
-                                "13:00",
-                                "18:00"
-                            ]
-                        }
+                    "date": "Quarta, 01/01/2019",
+                    "hours": "8:30 12:00 13:00 18:00",
+                    "worked_hours": "6",
+                    "negative": [
+                        "8:30"
+                    ],
+                    "positive": [
+                        "13:00",
+                        "18:00"
                     ]
                 }
             ],
             "out": {
-                "calc": [
+                "divergences": [
                     {
                         "extraHour": 0,
                         "extraHourAceleration": 0,
-                        "minutes": 150,
+                        "minutes": 30,
                         "extraHourFormated": "00:00",
                         "extraHourAcelerationFormated": "00:00",
-                        "minutesFormated": "02:30",
-                        "hoursWorked": "08:30"
+                        "minutesFormated": "00:30",
+                        "hoursWorked": "06:30"
                     }
                 ],
-                "total": {
-                    "totalMinutes": 150,
-                    "totalExtra": 0,
-                    "totalExtraAceleration": 0,
-                    "totalMinutesFormated": "02:30",
-                    "totalExtraFormated": "00:00",
-                    "totalExtraAcelerationFormated": "00:00"
-                }
+                "totalMinutes": 30,
+                "totalExtra": 0
             }
         }
     },
@@ -93,27 +71,22 @@
         "test": {
             "in": [
                 {
-                    "date_created": "2019-01-02 00:00:00",
-                    "divergences": [
-                        {
-                            "date": "Quarta, 01/01/2019",
-                            "hours": "8:30 12:00 13:00 01:30",
-                            "negative": [
-                                "8:30"
-                            ],
-                            "positive": [
-                                "13:00",
-                                "01:30"
-                            ],
-                            "nextDay": [
-                                "01:30"
-                            ]
-                        }
+                    "date": "Quarta, 01/01/2019",
+                    "hours": "8:30 12:00 13:00 01:30",
+                    "negative": [
+                        "8:30"
+                    ],
+                    "positive": [
+                        "13:00",
+                        "01:30"
+                    ],
+                    "nextDay": [
+                        "01:30"
                     ]
                 }
             ],
             "out": {
-                "calc": [
+                "divergences": [
                     {
                         "extraHour": 0,
                         "extraHourAceleration": 0,
@@ -124,14 +97,8 @@
                         "hoursWorked": "16:00"
                     }
                 ],
-                "total": {
-                    "totalMinutes": 480,
-                    "totalExtra": 0,
-                    "totalExtraAceleration": 0,
-                    "totalMinutesFormated": "08:00",
-                    "totalExtraFormated": "00:00",
-                    "totalExtraAcelerationFormated": "00:00"
-                }
+                "totalMinutes": 480,
+                "totalExtra": 0
             }
         }
     },
@@ -140,26 +107,21 @@
         "test": {
             "in": [
                 {
-                    "date_created": "2019-01-02 00:00:00",
-                    "divergences": [
-                        {
-                            "date": "Quarta, 01/01/2019",
-                            "hours": "8:30 12:02 13:00 18:00 19:00 20:00",
-                            "negative": [
-                                "8:30"
-                            ],
-                            "positive": [
-                                "13:00",
-                                "18:00",
-                                "19:00",
-                                "20:00"
-                            ]
-                        }
+                    "date": "Quarta, 01/01/2019",
+                    "hours": "8:30 12:02 13:00 18:00 19:00 20:00",
+                    "negative": [
+                        "8:30"
+                    ],
+                    "positive": [
+                        "13:00",
+                        "18:00",
+                        "19:00",
+                        "20:00"
                     ]
                 }
             ],
             "out": {
-                "calc": [
+                "divergences": [
                     {
                         "extraHour": 0,
                         "extraHourAceleration": 0,
@@ -170,14 +132,8 @@
                         "hoursWorked": "09:30"
                     }
                 ],
-                "total": {
-                    "totalMinutes": 90,
-                    "totalExtra": 0,
-                    "totalExtraAceleration": 0,
-                    "totalMinutesFormated": "01:30",
-                    "totalExtraFormated": "00:00",
-                    "totalExtraAcelerationFormated": "00:00"
-                }
+                "totalMinutes": 90,
+                "totalExtra": 0
             }
         }
     },
@@ -186,40 +142,17 @@
         "test": {
             "in": [
                 {
-                    "date_created": "2019-01-02 00:00:00",
-                    "divergences": [
-                        {
-                            "date": "Sábado, 01/01/2019",
-                            "hours": "09:00 10:00",
-                            "negative": [],
-                            "positive": [
-                                "09:00",
-                                "10:00"
-                            ]
-                        },
-                        {
-                            "date": "Domingo, 01/01/2019",
-                            "hours": "14:00 15:00",
-                            "negative": [],
-                            "positive": [
-                                "14:00",
-                                "15:00"
-                            ]
-                        }
+                    "date": "Domingo, 01/01/2019",
+                    "hours": "14:00 15:00",
+                    "negative": [],
+                    "positive": [
+                        "14:00",
+                        "15:00"
                     ]
                 }
             ],
             "out": {
-                "calc": [
-                    {
-                        "extraHour": 0,
-                        "extraHourAceleration": 0,
-                        "minutes": 120,
-                        "extraHourFormated": "00:00",
-                        "extraHourAcelerationFormated": "00:00",
-                        "minutesFormated": "02:00",
-                        "hoursWorked": "01:00"
-                    },
+                "divergences": [
                     {
                         "extraHour": 0,
                         "extraHourAceleration": 0,
@@ -230,14 +163,8 @@
                         "hoursWorked": "01:00"
                     }
                 ],
-                "total": {
-                    "totalMinutes": 240,
-                    "totalExtra": 0,
-                    "totalExtraAceleration": 0,
-                    "totalMinutesFormated": "04:00",
-                    "totalExtraFormated": "00:00",
-                    "totalExtraAcelerationFormated": "00:00"
-                }
+                "totalMinutes": 120,
+                "totalExtra": 0
             }
         }
     },
@@ -246,40 +173,17 @@
         "test": {
             "in": [
                 {
-                    "date_created": "2019-01-02 00:00:00",
-                    "divergences": [
-                        {
-                            "date": "Saturday, 01/01/2019",
-                            "hours": "09:00 10:00",
-                            "negative": [],
-                            "positive": [
-                                "09:00",
-                                "10:00"
-                            ]
-                        },
-                        {
-                            "date": "Sunday, 01/01/2019",
-                            "hours": "14:00 15:00",
-                            "negative": [],
-                            "positive": [
-                                "14:00",
-                                "15:00"
-                            ]
-                        }
+                    "date": "Saturday, 01/01/2019",
+                    "hours": "09:00 10:00",
+                    "negative": [],
+                    "positive": [
+                        "09:00",
+                        "10:00"
                     ]
                 }
             ],
             "out": {
-                "calc": [
-                    {
-                        "extraHour": 0,
-                        "extraHourAceleration": 0,
-                        "minutes": 120,
-                        "extraHourFormated": "00:00",
-                        "extraHourAcelerationFormated": "00:00",
-                        "minutesFormated": "02:00",
-                        "hoursWorked": "01:00"
-                    },
+                "divergences": [
                     {
                         "extraHour": 0,
                         "extraHourAceleration": 0,
@@ -290,14 +194,8 @@
                         "hoursWorked": "01:00"
                     }
                 ],
-                "total": {
-                    "totalMinutes": 240,
-                    "totalExtra": 0,
-                    "totalExtraAceleration": 0,
-                    "totalMinutesFormated": "04:00",
-                    "totalExtraFormated": "00:00",
-                    "totalExtraAcelerationFormated": "00:00"
-                }
+                "totalMinutes": 120,
+                "totalExtra": 0
             }
         }
     },
@@ -306,24 +204,19 @@
         "test": {
             "in": [
                 {
-                    "date_created": "2019-01-02 00:00:00",
-                    "divergences": [
-                        {
-                            "date": "Saturday, 01/01/2019",
-                            "hours": "09:00 10:00 13:00 14:00",
-                            "negative": [],
-                            "positive": [
-                                "09:00",
-                                "10:00",
-                                "13:00",
-                                "14:00"
-                            ]
-                        }
+                    "date": "Saturday, 01/01/2019",
+                    "hours": "09:00 10:00 13:00 14:00",
+                    "negative": [],
+                    "positive": [
+                        "09:00",
+                        "10:00",
+                        "13:00",
+                        "14:00"
                     ]
                 }
             ],
             "out": {
-                "calc": [
+                "divergences": [
                     {
                         "extraHour": 0,
                         "extraHourAceleration": 0,
@@ -334,14 +227,8 @@
                         "hoursWorked": "02:00"
                     }
                 ],
-                "total": {
-                    "totalMinutes": 240,
-                    "totalExtra": 0,
-                    "totalExtraAceleration": 0,
-                    "totalMinutesFormated": "04:00",
-                    "totalExtraFormated": "00:00",
-                    "totalExtraAcelerationFormated": "00:00"
-                }
+                "totalMinutes": 240,
+                "totalExtra": 0
             }
         }
     },
@@ -350,23 +237,18 @@
         "test": {
             "in": [
                 {
-                    "date_created": "2019-01-02 00:00:00",
-                    "divergences": [
-                        {
-                            "date": "Segunda, 01/01/2019",
-                            "hours": "09:00 10:00",
-                            "negative": [],
-                            "positive": [
-                                "09:00",
-                                "10:00"
-                            ],
-                            "isHoliday": true
-                        }
-                    ]
+                    "date": "Segunda, 01/01/2019",
+                    "hours": "09:00 10:00",
+                    "negative": [],
+                    "positive": [
+                        "09:00",
+                        "10:00"
+                    ],
+                    "isHoliday": true
                 }
             ],
             "out": {
-                "calc": [
+                "divergences": [
                     {
                         "extraHour": 0,
                         "extraHourAceleration": 0,
@@ -377,14 +259,8 @@
                         "hoursWorked": "01:00"
                     }
                 ],
-                "total": {
-                    "totalMinutes": 120,
-                    "totalExtra": 0,
-                    "totalExtraAceleration": 0,
-                    "totalMinutesFormated": "02:00",
-                    "totalExtraFormated": "00:00",
-                    "totalExtraAcelerationFormated": "00:00"
-                }
+                "totalMinutes": 120,
+                "totalExtra": 0
             }
         }
     },
@@ -393,42 +269,31 @@
         "test": {
             "in": [
                 {
-                    "date_created": "2019-01-02 00:00:00",
-                    "divergences": [
-                        {
-                            "date": "Segunda, 01/01/2019",
-                            "hours": "07:00 11:00 13:30 17:30",
-                            "negative": [
-                                "11:00"
-                            ],
-                            "positive": [
-                                "07:00"
-                            ],
-                            "middayOff": true
-                        }
-                    ]
+                    "date": "Segunda, 01/01/2019",
+                    "hours": "07:00 11:00 13:30 17:30",
+                    "negative": [
+                        "11:00"
+                    ],
+                    "positive": [
+                        "07:00"
+                    ],
+                    "middayOff": true
                 }
             ],
             "out": {
-                "calc": [
+                "divergences": [
                     {
                         "extraHour": 0,
                         "extraHourAceleration": 0,
-                        "minutes": -240,
+                        "minutes": -180,
                         "extraHourFormated": "00:00",
                         "extraHourAcelerationFormated": "00:00",
-                        "minutesFormated": "-04:00",
-                        "hoursWorked": "04:00"
+                        "minutesFormated": "-03:00",
+                        "hoursWorked": "05:00"
                     }
                 ],
-                "total": {
-                    "totalMinutes": -240,
-                    "totalExtra": 0,
-                    "totalExtraAceleration": 0,
-                    "totalMinutesFormated": "-04:00",
-                    "totalExtraFormated": "00:00",
-                    "totalExtraAcelerationFormated": "00:00"
-                }
+                "totalMinutes": -180,
+                "totalExtra": 0
             }
         }
     },
@@ -437,20 +302,15 @@
         "test": {
             "in": [
                 {
-                    "date_created": "2019-01-02 00:00:00",
-                    "divergences": [
-                        {
-                            "date": "Segunda, 01/01/2019",
-                            "hours": "08:00 12:00 13:30 17:30",
-                            "negative": [],
-                            "positive": [],
-                            "dayOff": true
-                        }
-                    ]
+                    "date": "Segunda, 01/01/2019",
+                    "hours": "08:00 12:00 13:30 17:30",
+                    "negative": [],
+                    "positive": [],
+                    "dayOff": true
                 }
             ],
             "out": {
-                "calc": [
+                "divergences": [
                     {
                         "extraHour": 0,
                         "extraHourAceleration": 0,
@@ -461,14 +321,8 @@
                         "hoursWorked": "00:00"
                     }
                 ],
-                "total": {
-                    "totalMinutes": -480,
-                    "totalExtra": 0,
-                    "totalExtraAceleration": 0,
-                    "totalMinutesFormated": "-08:00",
-                    "totalExtraFormated": "00:00",
-                    "totalExtraAcelerationFormated": "00:00"
-                }
+                "totalMinutes": -480,
+                "totalExtra": 0
             }
         }
     },
@@ -477,45 +331,34 @@
         "test": {
             "in": [
                 {
-                    "date_created": "2019-01-02 00:00:00",
-                    "divergences": [
-                        {
-                            "date": "Quarta, 01/01/2019",
-                            "hours": "8:30 12:02 13:00 18:00 19:00 20:00",
-                            "negative": [
-                                "8:30"
-                            ],
-                            "positive": [],
-                            "extra": [
-                                "13:00",
-                                "18:00",
-                                "19:00",
-                                "20:00"
-                            ]
-                        }
+                    "date": "Quarta, 01/01/2019",
+                    "hours": "8:30 12:02 13:00 18:00 19:00 20:00",
+                    "negative": [
+                        "8:30"
+                    ],
+                    "positive": [],
+                    "extra": [
+                        "13:00",
+                        "18:00",
+                        "19:00",
+                        "20:00"
                     ]
                 }
             ],
             "out": {
-                "calc": [
+                "divergences": [
                     {
-                        "extraHour": 120,
+                        "extraHour": 60,
                         "extraHourAceleration": 0,
-                        "minutes": -30,
-                        "extraHourFormated": "02:00",
+                        "minutes": 30,
+                        "extraHourFormated": "01:00",
                         "extraHourAcelerationFormated": "00:00",
-                        "minutesFormated": "-00:30",
+                        "minutesFormated": "00:30",
                         "hoursWorked": "09:30"
                     }
                 ],
-                "total": {
-                    "totalMinutes": -30,
-                    "totalExtra": 120,
-                    "totalExtraAceleration": 0,
-                    "totalMinutesFormated": "-00:30",
-                    "totalExtraFormated": "02:00",
-                    "totalExtraAcelerationFormated": "00:00"
-                }
+                "totalMinutes": 30,
+                "totalExtra": 60
             }
         }
     },
@@ -524,42 +367,18 @@
         "test": {
             "in": [
                 {
-                    "date_created": "2019-01-02 00:00:00",
-                    "divergences": [
-                        {
-                            "date": "Sábado, 01/01/2019",
-                            "hours": "19:00 20:00",
-                            "negative": [],
-                            "positive": [],
-                            "extra": [
-                                "19:00",
-                                "20:00"
-                            ]
-                        },
-                        {
-                            "date": "Domingo, 02/01/2019",
-                            "hours": "10:00 11:00",
-                            "negative": [],
-                            "positive": [],
-                            "extra": [
-                                "10:00",
-                                "11:00"
-                            ]
-                        }
+                    "date": "Sábado, 01/01/2019",
+                    "hours": "19:00 20:00",
+                    "negative": [],
+                    "positive": [],
+                    "extra": [
+                        "19:00",
+                        "20:00"
                     ]
                 }
             ],
             "out": {
-                "calc": [
-                    {
-                        "extraHour": 60,
-                        "extraHourAceleration": 0,
-                        "minutes": 0,
-                        "extraHourFormated": "01:00",
-                        "extraHourAcelerationFormated": "00:00",
-                        "minutesFormated": "00:00",
-                        "hoursWorked": "01:00"
-                    },
+                "divergences": [
                     {
                         "extraHour": 60,
                         "extraHourAceleration": 0,
@@ -570,14 +389,8 @@
                         "hoursWorked": "01:00"
                     }
                 ],
-                "total": {
-                    "totalMinutes": 0,
-                    "totalExtra": 120,
-                    "totalExtraAceleration": 0,
-                    "totalMinutesFormated": "00:00",
-                    "totalExtraFormated": "02:00",
-                    "totalExtraAcelerationFormated": "00:00"
-                }
+                "totalMinutes": 0,
+                "totalExtra": 60
             }
         }
     },
@@ -586,45 +399,21 @@
         "test": {
             "in": [
                 {
-                    "date_created": "2019-01-02 00:00:00",
-                    "divergences": [
-                        {
-                            "date": "Sábado, 01/01/2019",
-                            "hours": "13:00 14:00 19:00 20:00",
-                            "negative": [],
-                            "positive": [
-                                "13:00",
-                                "14:00"
-                            ],
-                            "extra": [
-                                "19:00",
-                                "20:00"
-                            ]
-                        },
-                        {
-                            "date": "Domingo, 02/01/2019",
-                            "hours": "10:00 11:00",
-                            "negative": [],
-                            "positive": [],
-                            "extra": [
-                                "10:00",
-                                "11:00"
-                            ]
-                        }
+                    "date": "Sábado, 01/01/2019",
+                    "hours": "13:00 14:00 19:00 20:00",
+                    "negative": [],
+                    "positive": [
+                        "13:00",
+                        "14:00"
+                    ],
+                    "extra": [
+                        "19:00",
+                        "20:00"
                     ]
                 }
             ],
             "out": {
-                "calc": [
-                    {
-                        "extraHour": 60,
-                        "extraHourAceleration": 0,
-                        "minutes": 0,
-                        "extraHourFormated": "01:00",
-                        "extraHourAcelerationFormated": "00:00",
-                        "minutesFormated": "00:00",
-                        "hoursWorked": "01:00"
-                    },
+                "divergences": [
                     {
                         "extraHour": 60,
                         "extraHourAceleration": 0,
@@ -635,14 +424,8 @@
                         "hoursWorked": "02:00"
                     }
                 ],
-                "total": {
-                    "totalMinutes": 120,
-                    "totalExtra": 120,
-                    "totalExtraAceleration": 0,
-                    "totalMinutesFormated": "02:00",
-                    "totalExtraFormated": "02:00",
-                    "totalExtraAcelerationFormated": "00:00"
-                }
+                "totalMinutes": 120,
+                "totalExtra": 60
             }
         }
     },
@@ -651,24 +434,19 @@
         "test": {
             "in": [
                 {
-                    "date_created": "2019-01-02 00:00:00",
-                    "divergences": [
-                        {
-                            "date": "Segunda, 01/01/2019",
-                            "hours": "13:00 14:00 19:00 20:00",
-                            "isHoliday": true,
-                            "negative": [],
-                            "positive": [],
-                            "extra": [
-                                "19:00",
-                                "20:00"
-                            ]
-                        }
+                    "date": "Segunda, 01/01/2019",
+                    "hours": "13:00 14:00 19:00 20:00",
+                    "isHoliday": true,
+                    "negative": [],
+                    "positive": [],
+                    "extra": [
+                        "19:00",
+                        "20:00"
                     ]
                 }
             ],
             "out": {
-                "calc": [
+                "divergences": [
                     {
                         "extraHour": 60,
                         "extraHourAceleration": 0,
@@ -679,14 +457,8 @@
                         "hoursWorked": "01:00"
                     }
                 ],
-                "total": {
-                    "totalMinutes": 0,
-                    "totalExtra": 60,
-                    "totalExtraAceleration": 0,
-                    "totalMinutesFormated": "00:00",
-                    "totalExtraFormated": "01:00",
-                    "totalExtraAcelerationFormated": "00:00"
-                }
+                "totalMinutes": 0,
+                "totalExtra": 60
             }
         }
     }

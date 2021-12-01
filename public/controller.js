@@ -150,7 +150,7 @@ angular.module('clockInApp', ['angular-loading-bar']).controller('CollectedDataC
     };
 
     const getClocks = () => {
-        return $http.get('clocks')
+        return $http.get(`clocks?tolerance=${$scope.toUseTolerance}`)
             .then(response => {
                 $scope.items = response.data.divergences;
                 totalBalanceCalc(response.data);
@@ -369,6 +369,17 @@ angular.module('clockInApp', ['angular-loading-bar']).controller('CollectedDataC
                 });
         }
     };
+
+    $scope.getBalanceByDayInMonth = (index, itens) => {
+        let balance = 0;
+        for (let i = itens.length - 1; i >= 0; i--) {
+            if (i >= index)
+                balance += itens[i].minutes;
+            else
+                break;
+        }
+        return moment.duration(balance, 'minutes').format('HH:mm', { trim: false });
+    }
 
     clearHours();
     // $scope.isLogged = true;

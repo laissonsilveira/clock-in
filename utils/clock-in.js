@@ -9,8 +9,9 @@ workedHours.set('8', { clocks: ['09:00', '12:00', '13:00', '18:00'], minutes: 48
 
 class ClockIn {
 
-    constructor(clockIn) {
+    constructor(clockIn, tolerance = 'true') {
         this.clockIn = clockIn;
+        this.toUseTolerance = tolerance;
     }
 
     hoursCalculate() {
@@ -86,18 +87,20 @@ class ClockIn {
         const end = this.divergence.worked_hours === '8' ? '18' : '16';
 
         const hrs = hour.split(':');
-        if ((hrs[0] === '09' && Number(hrs[1]) >= 55) || (hrs[0] === init && Number(hrs[1]) <= 5)) {
-            hrs[0] = init;
-            hrs[1] = '00';
-        } else if ((hrs[0] === '11' && Number(hrs[1]) >= 55) || (hrs[0] === '12' && Number(hrs[1]) <= 5)) {
-            hrs[0] = '12';
-            hrs[1] = '00';
-        } else if ((hrs[0] === '12' && Number(hrs[1]) >= 55) || (hrs[0] === '13' && Number(hrs[1]) <= 5)) {
-            hrs[0] = '13';
-            hrs[1] = '00';
-        } else if ((hrs[0] === '17' && Number(hrs[1]) >= 55) || (hrs[0] === '18' && Number(hrs[1]) <= 5)) {
-            hrs[0] = end;
-            hrs[1] = '00';
+        if (this.toUseTolerance === 'true') {
+            if ((hrs[0] === '09' && Number(hrs[1]) >= 55) || (hrs[0] === init && Number(hrs[1]) <= 5)) {
+                hrs[0] = init;
+                hrs[1] = '00';
+            } else if ((hrs[0] === '11' && Number(hrs[1]) >= 55) || (hrs[0] === '12' && Number(hrs[1]) <= 5)) {
+                hrs[0] = '12';
+                hrs[1] = '00';
+            } else if ((hrs[0] === '12' && Number(hrs[1]) >= 55) || (hrs[0] === '13' && Number(hrs[1]) <= 5)) {
+                hrs[0] = '13';
+                hrs[1] = '00';
+            } else if ((hrs[0] === '17' && Number(hrs[1]) >= 55) || (hrs[0] === '18' && Number(hrs[1]) <= 5)) {
+                hrs[0] = end;
+                hrs[1] = '00';
+            }
         }
         return hrs;
     }
@@ -114,7 +117,7 @@ class ClockIn {
             const initialTime = moment({ hour: h_1[0], minute: h_1[1] });
             const endTime = moment({ hour: h_2[0], minute: h_2[1] });
 
-            if (this.divergence.nextDay.length) {
+            if (this.divergence.nextDay?.length) {
                 if (this.divergence.nextDay.includes(h_1.join(':'))) initialTime.add(1, 'd');
                 if (this.divergence.nextDay.includes(h_2.join(':'))) endTime.add(1, 'd');
             }

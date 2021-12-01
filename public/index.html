@@ -271,6 +271,19 @@
 			<div class="row">
 				<div class="col-12">
 					<button type="button" ng-click="onSaveHours()" class="btn btn-outline-dark btn-block">Save</button>
+				</div>
+			</div>
+			<hr>
+			<div class="row">
+				<div class="col-md-3 col-xs-12">
+					<div class="form-check">
+						<input type="checkbox" class="form-check-input" id="tolerace" value="true"
+							ng-model="toUseTolerance">
+						<label class="form-check-label" for="tolerace">Considerar 5min de tolerância na
+							listagem</label>
+					</div>
+				</div>
+				<div class="col-md-9 col-xs-12">
 					<button type="button" class="btn btn-outline-dark btn-block" data-toggle="modal"
 						data-target="#modal_list_hours">Clock-in List</button>
 				</div>
@@ -371,6 +384,7 @@
 										<th scope="col">Date</th>
 										<th class="text-center" scope="col">Hours worked</th>
 										<th class="text-center" scope="col">Day Balance</th>
+										<th class="text-center" scope="col">Balance</th>
 										<th class="text-center" scope="col">Extra Balance</th>
 										<!-- <th scope="col">Aceleration Balance</th> -->
 										<th scope="col">Hours</th>
@@ -393,6 +407,9 @@
 										<td class="text-center"
 											ng-class="{'negative': div.minutes < 0, 'positive': div.minutes > 0}">
 											{{ div.minutesFormated }}
+										</td>
+										<td class="text-center">
+											<i>{{ getBalanceByDayInMonth($index, items) }}</i>
 										</td>
 										<td class="text-center"
 											ng-class="{'negative': div.extraHour < 0, 'positive': div.extraHour > 0}">

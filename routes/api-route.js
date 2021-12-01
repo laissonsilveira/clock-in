@@ -58,7 +58,7 @@ router.delete('/clocks/:id', authentication, async (req, res, next) => {
 
 router.get('/clocks', authentication, async (req, res, next) => {
     try {
-        let { date } = req.query;
+        let { date, tolerance } = req.query;
         let docs;
         LOGGER.info(`Recuperando batidas salvas ${date ? date : ''}`);
         const db = new DBHelper('clock-in');
@@ -67,7 +67,7 @@ router.get('/clocks', authentication, async (req, res, next) => {
         } else {
             docs = await db.listDocs();
         }
-        const clockIn = new ClockIn(docs);
+        const clockIn = new ClockIn(docs, tolerance);
         res.json(clockIn.hoursCalculate());
     } catch (err) {
         next(err);
