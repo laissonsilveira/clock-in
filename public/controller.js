@@ -150,6 +150,7 @@ angular.module('clockInApp', ['angular-loading-bar']).controller('CollectedDataC
     };
 
     const getClocks = () => {
+        $scope.items = [];
         return $http.get(`clocks?tolerance=${$scope.toUseTolerance}`)
             .then(response => {
                 $scope.items = response.data.divergences;
@@ -374,7 +375,7 @@ angular.module('clockInApp', ['angular-loading-bar']).controller('CollectedDataC
         let balance = 0;
         for (let i = itens.length - 1; i >= 0; i--) {
             if (i >= index)
-                balance += itens[i].minutes;
+                balance += itens[i].minutes + (itens[i].fixed || 0);
             else
                 break;
         }

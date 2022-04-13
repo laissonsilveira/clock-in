@@ -6,7 +6,7 @@
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<title>clock-in</title>
 	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<link rel="apple-touch-icon" href="favicon.png" />
+	<link rel="apple-touch-icon" href="favicon_ios.png" />
 	<link rel="shortcut icon" type="image/png" href="favicon.png" />
 	<link rel="stylesheet" href="lib/bootstrap/bootstrap.min.css">
 	<link rel="stylesheet" href="lib/datarangepicker/daterangepicker.min.css">
@@ -349,7 +349,7 @@
 					</div>
 					<hr>
 					<div class="row">
-						<div class="col-md-6">
+						<div class="col-md-5">
 							<input class="form-control" ng-model="query" name="daterange" placeholder="Date Filter"
 								ng-change="search">
 						</div>
@@ -359,14 +359,17 @@
 						<div class="col-md-1 table-success text-center">
 							<i style="font-size: x-small;">Feriado</i>
 						</div>
-						<div class="col-md-1 table-clockin text-center">
+						<div class="col-md-1 table-primary text-center">
 							<i style="font-size: x-small;">Final de Semana</i>
 						</div>
-						<div class="col-md-1 table-danger text-center">
+						<div class="col-md-1 table-warning text-center">
 							<i style="font-size: x-small;">Folga</i>
 						</div>
-						<div class="col-md-1 table-warning text-center">
+						<div class="col-md-1 table-info text-center">
 							<i style="font-size: x-small;">Hr.Extra</i>
+						</div>
+						<div class="col-md-1 table-danger text-center">
+							<i style="font-size: x-small;">Fixed</i>
 						</div>
 					</div>
 				</div>
@@ -393,12 +396,13 @@
 										<th scope="col">Extra Hours</th>
 										<!-- <th scope="col">Extra Aceleration</th> -->
 										<th scope="col">Next Day Hours</th>
+										<th class="text-center tab" scope="col">Fixed (Min)</th>
 										<th scope="col"></th>
 									</tr>
 								</thead>
 								<tbody>
 									<tr scope="row" ng-repeat="div in items | filter:search as itemsFiltered"
-										ng-class="{ 'table-danger': div.middayOff || div.dayOff, 'table-primary': div.isWeekend, 'table-success': div.isHoliday, 'table-warning': div.extra && div.extra.length }">
+										ng-class="{ 'table-warning': div.middayOff || div.dayOff, 'table-primary': div.isWeekend, 'table-success': div.isHoliday, 'table-info': div.extra && div.extra.length, 'table-danger': div.fixed }">
 										<td>{{ div.date | date: 'EEE, dd/MM/yyyy' }}</td>
 										<td class="text-center"
 											ng-class="{'negative': (div.minutes + div.extraHour + div.extraHourAceleration) < 0, 'positive': (div.minutes + div.extraHour + div.extraHourAceleration) > 0}">
@@ -424,6 +428,8 @@
 										<td>{{ div.extra.join(' ') }}</td>
 										<!-- <td>{{ div.extraAceleration.join(' ') }}</td> -->
 										<td>{{ div.nextDay.join(' ') }}</td>
+										<td class="text-center">{{ div.fixed }}</td>
+										</td>
 										<td>
 											<img style="cursor: pointer" role="button" src="icon_del.png" alt="Delete"
 												ng-click="onDelete(div._id)">
