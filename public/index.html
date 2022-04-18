@@ -326,20 +326,32 @@
 						<!-- <div class="col-md-3">
 							<strong>19/08/2018: <span class="negative">{{ initialBalance }}</span></strong><br>
 						</div> -->
-						<div class="col-md-4">
-							<strong>FILTRO: <span
-									ng-class="{'negative': balanceFilter < 0, 'positive': balanceFilter > 0}">{{
-									balanceFilterLabel }}</span></strong>
+						<div class="col-md-3">
+							<strong>FILTRO:
+								<span ng-class="{'negative': balanceFilter < 0, 'positive': balanceFilter > 0}">
+									{{ balanceFilterLabel }}
+								</span>
+							</strong>
 						</div>
-						<div class="col-md-4">
-							<strong>BANCO: <span ng-class="{'negative': balance < 0, 'positive': balance > 0}">{{
-									balanceLabel }}</span></strong>
+						<div class="col-md-3">
+							<strong>BANCO: <span ng-class="{'negative': balance < 0, 'positive': balance > 0}">
+									{{ balanceLabel }}
+								</span>
+							</strong>
 						</div>
-						<div class="col-md-4">
-							<strong>EXTRA: <span
-									ng-class="{'negative': extraBalance < 0, 'positive': extraBalance > 0}">{{
-									extraBalanceLabel
-									}}</span></strong>
+						<div class="col-md-3">
+							<strong>EXTRA:
+								<span ng-class="{'negative': extraBalance < 0, 'positive': extraBalance > 0}">
+									{{ extraBalanceLabel }}
+								</span>
+							</strong>
+						</div>
+						<div class="col-md-3">
+							<strong>PAY:
+								<span ng-class="{'positive': payments.length > 0}">
+									{{ paymentsLabel }}
+								</span>
+							</strong>
 						</div>
 						<!-- <div class="col-md-2">
 							<strong>ACELERAÇÃO: <span

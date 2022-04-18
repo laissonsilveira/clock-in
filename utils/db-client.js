@@ -61,6 +61,7 @@ mongoose.set('debug', (coll, method, query, doc) => {
 });
 
 require('../model/users-model');
+require('../model/payments-model');
 require('../model/clock-in-model');
 
 // Connect BD

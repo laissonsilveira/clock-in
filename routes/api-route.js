@@ -61,14 +61,16 @@ router.get('/clocks', authentication, async (req, res, next) => {
         let { date, tolerance } = req.query;
         let docs;
         LOGGER.info(`Recuperando batidas salvas ${date ? date : ''}`);
-        const db = new DBHelper('clock-in');
-        if (date) {
-            docs = await db.listDocs({ date });
-        } else {
-            docs = await db.listDocs();
-        }
+        const clockInDB = new DBHelper('clock-in');
+        const paymentsDB = new DBHelper('payments');
+        if (date)
+            docs = await clockInDB.listDocs({ date });
+        else
+            docs = await clockInDB.listDocs();
+
         const clockIn = new ClockIn(docs, tolerance);
-        res.json(clockIn.hoursCalculate());
+        const payments = await paymentsDB.listDocs() || [];
+        res.json({ clockIn: clockIn.hoursCalculate(), payments });
     } catch (err) {
         next(err);
     }

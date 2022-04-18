@@ -12,31 +12,51 @@ angular.module('clockInApp', ['angular-loading-bar']).controller('CollectedDataC
     $scope.remainingFormatted = '08:00';
     $scope.remaining = 0;
 
-    const totalBalanceCalc = (clockIn, isFilter) => {
-        if (clockIn) {
-            $scope.initialBalance = $scope.formatDuration(INITIAL_BALANCE, 'h [hours], m [minutes]');
+    const formatBalance = () => {
+        $scope.balanceLabel = $scope.formatDuration($scope.balance, 'h [hrs], m [min]');
+        $scope.balanceFilterLabel = $scope.formatDuration($scope.balanceFilter, 'h [hrs], m [min]');
+        $scope.extraBalanceLabel = $scope.formatDuration($scope.extraBalance, 'h [hrs], m [min]');
+    };
 
-            if (isFilter) {
-                $scope.balance = clockIn.reduce((previousVal, currentVal) => previousVal + currentVal.minutes, 0) + INITIAL_BALANCE;
-                $scope.balanceFilter = $scope.balance - INITIAL_BALANCE;
-                $scope.extraBalance = clockIn.reduce((previousVal, currentVal) => previousVal + currentVal.extraHour, 0);
+    const calcAndFormatPayments = payments => {
+        $scope.totalMinutesPayed = payments.reduce((previousVal, currentVal) => previousVal + currentVal.minutes, 0)
+        $scope.paymentsLabel = $scope.formatDuration($scope.totalMinutesPayed, 'HH:mm')
+            + ' | R$ ' + Number(payments.reduce((previousVal, currentVal) => previousVal + currentVal.value, 0)).toFixed(2);
+    };
 
-            } else {
-                $scope.balance = (clockIn.totalMinutes || 0) + INITIAL_BALANCE;
-                $scope.balanceFilter = $scope.balance - INITIAL_BALANCE;
-                $scope.extraBalance = clockIn.totalExtra || 0;
-            }
+    const totalBalanceCalc = data => {
+        if (!data) return;
 
-            $scope.balanceLabel = $scope.formatDuration($scope.balance, 'h [hours], m [minutes]');
-            $scope.balanceFilterLabel = $scope.formatDuration($scope.balanceFilter, 'h [hours], m [minutes]');
-            $scope.extraBalanceLabel = $scope.formatDuration($scope.extraBalance, 'h [hours], m [minutes]');
+        const { clockIn = {}, payments = [] } = data;
 
-            // $scope.extraAcelerationBalance = items.reduce((previousVal, currentVal) => previousVal + currentVal.totalExtraAceleration, 0);
-            // $scope.extraAcelerationBalanceLabel = $scope.formatDuration($scope.extraAcelerationBalance, 'h [hours], m [minutes]');
-            // //8(hrs)*5(dias)*4(semanas)*8(meses)=1280(hrs)*20%=256(hrs) = 15360min[20%] -> 76800min[100%]
-            // const resultPercent = $scope.extraAcelerationBalance * 100 / 76800;
-            // $scope.extraPercent = Number(resultPercent).toFixed(parseInt(resultPercent) === 0 ? 1 : 0);
-        }
+        $scope.payments = payments;
+        calcAndFormatPayments(payments);
+
+        // $scope.initialBalance = $scope.formatDuration(INITIAL_BALANCE, 'h [hours], m [minutes]');
+
+        $scope.balance = (clockIn.totalMinutes || 0) + INITIAL_BALANCE;
+        $scope.balanceFilter = $scope.balance - INITIAL_BALANCE;
+        $scope.extraBalance = clockIn.totalExtra || 0;
+
+        formatBalance();
+
+        // $scope.extraAcelerationBalance = items.reduce((previousVal, currentVal) => previousVal + currentVal.totalExtraAceleration, 0);
+        // $scope.extraAcelerationBalanceLabel = $scope.formatDuration($scope.extraAcelerationBalance, 'h [hours], m [minutes]');
+        // //8(hrs)*5(dias)*4(semanas)*8(meses)=1280(hrs)*20%=256(hrs) = 15360min[20%] -> 76800min[100%]
+        // const resultPercent = $scope.extraAcelerationBalance * 100 / 76800;
+        // $scope.extraPercent = Number(resultPercent).toFixed(parseInt(resultPercent) === 0 ? 1 : 0);
+    };
+
+    const totalFilterBalanceCalc = (clockIn = []) => {
+        if (!clockIn) return;
+
+        $scope.balance = clockIn.reduce((previousVal, currentVal) => previousVal + currentVal.minutes, 0) + INITIAL_BALANCE;
+        $scope.balanceFilter = $scope.balance - INITIAL_BALANCE;
+        $scope.extraBalance = clockIn.reduce((previousVal, currentVal) => previousVal + currentVal.extraHour, 0);
+
+        formatBalance();
+
+        // calcAndFormatPayments($scope.payments.filter(p => new Date(p.date));
     };
 
     const clearHours = () => {
@@ -153,7 +173,7 @@ angular.module('clockInApp', ['angular-loading-bar']).controller('CollectedDataC
         $scope.items = [];
         return $http.get(`clocks?tolerance=${$scope.toUseTolerance}`)
             .then(response => {
-                $scope.items = response.data.divergences;
+                $scope.items = response.data.clockIn.divergences;
                 totalBalanceCalc(response.data);
             })
             .catch(err => {
@@ -218,7 +238,7 @@ angular.module('clockInApp', ['angular-loading-bar']).controller('CollectedDataC
         const today = $filter('date')($scope.date, 'EEEE, dd/MM/yyyy');
         return $http.get(`clocks?date=${today}`)
             .then(response => {
-                let clockIn = response.data;
+                let { clockIn } = response.data;
                 if (clockIn && clockIn.divergences.length) {
                     $scope.clockIn = clockIn;
                     $scope.divergence = clockIn.divergences[0];
@@ -259,6 +279,15 @@ angular.module('clockInApp', ['angular-loading-bar']).controller('CollectedDataC
             });
     };
 
+    const separeDateFilter = () => {
+        const filterDate = angular.copy($scope.query);
+        const dataChangedReplace = filterDate.replace(new RegExp(' ', 'g'), '');
+        const dateChanged = dataChangedReplace.split('-');
+        const dateFrom = dateChanged[0];
+        const dateTo = dateChanged[1];
+        return { dateFrom, dateTo };
+    };
+
     $scope.search = divergence => {
         if (angular.isDefined($scope.query)) {
 
@@ -285,8 +314,9 @@ angular.module('clockInApp', ['angular-loading-bar']).controller('CollectedDataC
         }
     };
 
-    $scope.$watchCollection('itemsFiltered', () => {
-        totalBalanceCalc($scope.itemsFiltered, true);
+    $scope.$watchCollection('itemsFiltered', (newList, oldList) => {
+        if (!newList || !oldList || oldList.length === 0 || newList.length === oldList.length) return;
+        totalFilterBalanceCalc(newList);
     });
 
     $scope.login = auth => {
