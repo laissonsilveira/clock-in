@@ -396,7 +396,7 @@
 										<th scope="col">Extra Hours</th>
 										<!-- <th scope="col">Extra Aceleration</th> -->
 										<th scope="col">Next Day Hours</th>
-										<th class="text-center tab" scope="col">Fixed (Min)</th>
+										<th class="text-center tab" scope="col">Fixed Hours</th>
 										<th scope="col"></th>
 									</tr>
 								</thead>
@@ -428,7 +428,7 @@
 										<td>{{ div.extra.join(' ') }}</td>
 										<!-- <td>{{ div.extraAceleration.join(' ') }}</td> -->
 										<td>{{ div.nextDay.join(' ') }}</td>
-										<td class="text-center">{{ div.fixed }}</td>
+										<td class="text-center">{{ div.fixed && formatDuration(div.fixed) }}</td>
 										</td>
 										<td>
 											<img style="cursor: pointer" role="button" src="icon_del.png" alt="Delete"

@@ -55,14 +55,16 @@ class ClockIn {
                 this._calculateFourOrSixHours(hours);
             }
 
-            if (this.divergence.dayOff) this.balanceHours.push({
-                sum: -workedHours.get(this.divergence.worked_hours).minutes,
-                type: 'P'
-            });
-            if (this.divergence.middayOff) this.balanceHours.push({
-                sum: -(workedHours.get(this.divergence.worked_hours).minutes / 2),
-                type: 'P'
-            });
+            if (this.divergence.dayOff)
+                this.balanceHours.push({
+                    sum: -workedHours.get(this.divergence.worked_hours).minutes,
+                    type: 'P'
+                });
+            if (this.divergence.middayOff)
+                this.balanceHours.push({
+                    sum: -(workedHours.get(this.divergence.worked_hours).minutes / 2),
+                    type: 'P'
+                });
 
             this._setHours();
             this._setFormatedHours();
@@ -244,14 +246,18 @@ class ClockIn {
     _calculateTwoHours(hours) {
         const h01 = this._normalizeHour(hours[0]);
         const h02 = this._normalizeHour(hours[1]);
-        const morning = this._getDuration(h02, h01);
+        const duration = this._getDuration(h02, h01);
         let type = this._getType(h01);
         if (!type) type = this._getType(h02);
-        this.balanceHours.push({
-            sum: this._getDuration(h02, h01),
-            type
-        });
-        this.divergence.totalWorked = morning || 0;
+        this.divergence.totalWorked = duration || 0;
+
+        if (this._isDouble() || this.divergence.dayOff || this.divergence.middayOff)
+            this.balanceHours.push({ sum: duration, type });
+        else
+            this.balanceHours.push({
+                sum: -(workedHours.get(this.divergence.worked_hours).minutes - duration),
+                type: 'P'
+            });
     }
 
     _isDouble() {

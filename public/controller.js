@@ -14,7 +14,7 @@ angular.module('clockInApp', ['angular-loading-bar']).controller('CollectedDataC
 
     const totalBalanceCalc = (clockIn, isFilter) => {
         if (clockIn) {
-            $scope.initialBalance = moment.duration(INITIAL_BALANCE, 'minutes').format('h [hours], m [minutes]');
+            $scope.initialBalance = $scope.formatDuration(INITIAL_BALANCE, 'h [hours], m [minutes]');
 
             if (isFilter) {
                 $scope.balance = clockIn.reduce((previousVal, currentVal) => previousVal + currentVal.minutes, 0) + INITIAL_BALANCE;
@@ -27,12 +27,12 @@ angular.module('clockInApp', ['angular-loading-bar']).controller('CollectedDataC
                 $scope.extraBalance = clockIn.totalExtra || 0;
             }
 
-            $scope.balanceLabel = moment.duration($scope.balance, 'minutes').format('h [hours], m [minutes]');
-            $scope.balanceFilterLabel = moment.duration($scope.balanceFilter, 'minutes').format('h [hours], m [minutes]');
-            $scope.extraBalanceLabel = moment.duration($scope.extraBalance, 'minutes').format('h [hours], m [minutes]');
+            $scope.balanceLabel = $scope.formatDuration($scope.balance, 'h [hours], m [minutes]');
+            $scope.balanceFilterLabel = $scope.formatDuration($scope.balanceFilter, 'h [hours], m [minutes]');
+            $scope.extraBalanceLabel = $scope.formatDuration($scope.extraBalance, 'h [hours], m [minutes]');
 
             // $scope.extraAcelerationBalance = items.reduce((previousVal, currentVal) => previousVal + currentVal.totalExtraAceleration, 0);
-            // $scope.extraAcelerationBalanceLabel = moment.duration($scope.extraAcelerationBalance, 'minutes').format('h [hours], m [minutes]');
+            // $scope.extraAcelerationBalanceLabel = $scope.formatDuration($scope.extraAcelerationBalance, 'h [hours], m [minutes]');
             // //8(hrs)*5(dias)*4(semanas)*8(meses)=1280(hrs)*20%=256(hrs) = 15360min[20%] -> 76800min[100%]
             // const resultPercent = $scope.extraAcelerationBalance * 100 / 76800;
             // $scope.extraPercent = Number(resultPercent).toFixed(parseInt(resultPercent) === 0 ? 1 : 0);
@@ -177,8 +177,8 @@ angular.module('clockInApp', ['angular-loading-bar']).controller('CollectedDataC
     $scope.normalDay = () => {
         $scope.hour01 = { time: new Date(1970, 0, 1, 9, 0, 0) };
         $scope.hour02 = { time: new Date(1970, 0, 1, 12, 0, 0) };
-        $scope.hour03 = { time: new Date(1970, 0, 1, 13, 00, 0) };
-        $scope.hour04 = { time: new Date(1970, 0, 1, 18, 00, 0) };
+        $scope.hour03 = { time: new Date(1970, 0, 1, 13, 0, 0) };
+        $scope.hour04 = { time: new Date(1970, 0, 1, 18, 0, 0) };
     };
 
     $scope.updateCount = () => {
@@ -209,8 +209,8 @@ angular.module('clockInApp', ['angular-loading-bar']).controller('CollectedDataC
         }
 
         $scope.remaining = totalToWork - ($scope.divergence.totalWorked || 0);
-        $scope.totalWorkedFormatted = moment.duration($scope.divergence.totalWorked || 0, 'minutes').format('HH:mm', { trim: false });
-        $scope.remainingFormatted = moment.duration($scope.remaining < 0 ? 0 : $scope.remaining, 'minutes').format('HH:mm', { trim: false });
+        $scope.totalWorkedFormatted = $scope.formatDuration($scope.divergence.totalWorked || 0);
+        $scope.remainingFormatted = $scope.formatDuration($scope.remaining < 0 ? 0 : $scope.remaining);
     };
 
     $scope.getClockByDate = () => {
@@ -379,8 +379,10 @@ angular.module('clockInApp', ['angular-loading-bar']).controller('CollectedDataC
             else
                 break;
         }
-        return moment.duration(balance, 'minutes').format('HH:mm', { trim: false });
-    }
+        return $scope.formatDuration(balance);
+    };
+
+    $scope.formatDuration = (min, formatter = 'HH:mm') => moment.duration(min, 'minutes').format(formatter, { trim: false });
 
     clearHours();
     // $scope.isLogged = true;
