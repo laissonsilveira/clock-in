@@ -3,7 +3,7 @@
  *
  * Created on 24/11/2019
  */
-const LOGGER = require('./logger');
+const LOGGER = require('../utils/logger');
 const mongoose = require('mongoose');
 mongoose.Promise = require('bluebird');
 mongoose.set('useCreateIndex', true);
@@ -60,9 +60,9 @@ mongoose.set('debug', (coll, method, query, doc) => {
     }
 });
 
-require('../model/users-model');
-require('../model/payments-model');
-require('../model/clock-in-model');
+require('./users-model');
+require('./payments-model');
+require('./clock-in-model');
 
 // Connect BD
 mongoose.connect(_getUri(), { useNewUrlParser: true, useUnifiedTopology: true });

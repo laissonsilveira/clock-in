@@ -1,7 +1,7 @@
 {
     "database": {
         "host": "cluster0-uvqh7.mongodb.net",
-        "dbName": "clocks-acct",
+        "dbName": "clocks",
         "authdb": "admin",
         "isDebug": true,
         "max_row": 10000

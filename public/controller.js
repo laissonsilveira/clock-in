@@ -11,6 +11,14 @@ angular.module('clockInApp', ['angular-loading-bar']).controller('CollectedDataC
     $scope.clockSaved = {};
     $scope.remainingFormatted = '08:00';
     $scope.remaining = 0;
+    $scope.companies = {
+        availableOptions: [
+            { id: 1, name: 'Dígitro Tecnologia' },
+            { id: 2, name: 'Accenture' },
+            { id: 3, name: 'Mercado Livre' }
+        ],
+        selectedOption: { id: 2 }
+    }
 
     const formatBalance = () => {
         $scope.balanceLabel = $scope.formatDuration($scope.balance, 'h [hrs], m [min]');
@@ -21,7 +29,7 @@ angular.module('clockInApp', ['angular-loading-bar']).controller('CollectedDataC
     const calcAndFormatPayments = payments => {
         $scope.totalMinutesPayed = payments.reduce((previousVal, currentVal) => previousVal + currentVal.minutes, 0)
         $scope.paymentsLabel = $scope.formatDuration($scope.totalMinutesPayed, 'HH:mm')
-            + ' | R$ ' + Number(payments.reduce((previousVal, currentVal) => previousVal + currentVal.value, 0)).toFixed(2);
+            + ' | R$' + Number(payments.reduce((previousVal, currentVal) => previousVal + currentVal.value, 0)).toFixed(2);
     };
 
     const totalBalanceCalc = data => {
@@ -56,7 +64,11 @@ angular.module('clockInApp', ['angular-loading-bar']).controller('CollectedDataC
 
         formatBalance();
 
-        // calcAndFormatPayments($scope.payments.filter(p => new Date(p.date));
+        const filterDate = angular.copy($scope.query);
+        if (filterDate)
+            calcAndFormatPayments($scope.payments.filter(p => containsByDate(new Date(p.date), filterDate)));
+        else
+            calcAndFormatPayments($scope.payments);
     };
 
     const clearHours = () => {
@@ -171,7 +183,7 @@ angular.module('clockInApp', ['angular-loading-bar']).controller('CollectedDataC
 
     const getClocks = () => {
         $scope.items = [];
-        return $http.get(`clocks?tolerance=${$scope.toUseTolerance}`)
+        return $http.get(`clocks?tolerance=${$scope.toUseTolerance}&company=${$scope.companies.selectedOption.id}`)
             .then(response => {
                 $scope.items = response.data.clockIn.divergences;
                 totalBalanceCalc(response.data);
@@ -236,7 +248,7 @@ angular.module('clockInApp', ['angular-loading-bar']).controller('CollectedDataC
     $scope.getClockByDate = () => {
         clearHours();
         const today = $filter('date')($scope.date, 'EEEE, dd/MM/yyyy');
-        return $http.get(`clocks?date=${today}`)
+        return $http.get(`clocks?date=${today}&company=${$scope.companies.selectedOption.id}`)
             .then(response => {
                 let { clockIn } = response.data;
                 if (clockIn && clockIn.divergences.length) {
@@ -279,39 +291,28 @@ angular.module('clockInApp', ['angular-loading-bar']).controller('CollectedDataC
             });
     };
 
-    const separeDateFilter = () => {
-        const filterDate = angular.copy($scope.query);
-        const dataChangedReplace = filterDate.replace(new RegExp(' ', 'g'), '');
-        const dateChanged = dataChangedReplace.split('-');
-        const dateFrom = dateChanged[0];
-        const dateTo = dateChanged[1];
-        return { dateFrom, dateTo };
-    };
-
     $scope.search = divergence => {
-        if (angular.isDefined($scope.query)) {
-
+        if ($scope.query) {
             const filterDate = angular.copy($scope.query);
-
-            let resultFilterDate;
-            if (angular.isDefined(filterDate)) {
-                const dataChangedReplace = filterDate.replace(new RegExp(' ', 'g'), '');
-                const dateChanged = dataChangedReplace.split('-');
-                const dateFrom = dateChanged[0];
-                const dateTo = dateChanged[1];
-                const d1 = dateFrom.split('/');
-                const d2 = dateTo.split('/');
-                const from = new Date(d1[2], d1[1] - 1, d1[0]);
-                const to = new Date(d2[2], d2[1] - 1, d2[0]);
-                const dateCheck = $filter('date')(moment(divergence.date).format('DD/MM/YYYY'), 'dd/MM/yyyy');
-                const c = dateCheck.split('/');
-                const check = new Date(c[2], c[1] - 1, c[0]);
-                return check >= from && check <= to;
-            }
-            return resultFilterDate;
+            const dateCheck = $filter('date')(moment(divergence.date).format('DD/MM/YYYY'), 'dd/MM/yyyy');
+            const c = dateCheck.split('/');
+            const check = new Date(c[2], c[1] - 1, c[0]);
+            return containsByDate(check, filterDate);
         } else {
             return divergence;
         }
+    };
+
+    const containsByDate = (dateToCompare, filter) => {
+        const dataChangedReplace = filter.replace(new RegExp(' ', 'g'), '');
+        const dateChanged = dataChangedReplace.split('-');
+        const dateFrom = dateChanged[0];
+        const dateTo = dateChanged[1];
+        const d1 = dateFrom.split('/');
+        const d2 = dateTo.split('/');
+        const from = new Date(d1[2], d1[1] - 1, d1[0]);
+        const to = new Date(d2[2], d2[1] - 1, d2[0]);
+        return dateToCompare >= from && dateToCompare <= to;
     };
 
     $scope.$watchCollection('itemsFiltered', (newList, oldList) => {
@@ -341,6 +342,13 @@ angular.module('clockInApp', ['angular-loading-bar']).controller('CollectedDataC
             });
     };
 
+    $scope.logout = () => {
+        $scope.isLogged = false;
+        delete sessionStorage.user;
+        delete sessionStorage.password;
+        $('#modal_login').modal('show');
+    }
+
     $scope.onSaveHours = () => {
         const times = [];
         const { isHoliday, dayOff, middayOff } = $scope.divergence;
@@ -365,7 +373,7 @@ angular.module('clockInApp', ['angular-loading-bar']).controller('CollectedDataC
         $scope.divergence.date = $filter('date')($scope.date, 'EEEE, dd/MM/yyyy');
         $scope.divergence.hours = times.join(' ').trim();
 
-        $http.post('clocks', $scope.divergence)
+        $http.post(`clocks?company=${$scope.companies.selectedOption.id}`, $scope.divergence)
             .then(response => {
                 if (response.status === 200) {
                     $scope.getClockByDate();

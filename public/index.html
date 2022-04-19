@@ -26,14 +26,17 @@
 	<div class="container-fluid" ng-show="isLogged">
 		<form>
 			<div class="row">
-				<div class="col-6 text-center">
+				<div class="col-4 text-center">
 					Remaining hours
 					<br>
 					<label style="font-size: 25px;" class="negative number" ng-class="{'positive': remaining === 0 }">
 						{{ remainingFormatted }}
 					</label>
 				</div>
-				<div class="col-6 text-center">
+				<div class="col-4 text-center">
+					<img ng-src="companies/{{companies.selectedOption.id}}.png" alt="Company" width="100px">
+				</div>
+				<div class="col-4 text-center">
 					Worked hours
 					<br>
 					<label style="font-size: 25px;" class="negative number"
@@ -283,9 +286,12 @@
 							listagem</label>
 					</div>
 				</div>
-				<div class="col-md-9 col-xs-12">
+				<div class="col-md-7 col-xs-12">
 					<button type="button" class="btn btn-outline-dark btn-block" data-toggle="modal"
 						data-target="#modal_list_hours">Clock-in List</button>
+				</div>
+				<div class="col-md-2 col-xs-12">
+					<button type="button" class="btn btn-outline-danger btn-block" ng-click="logout()">Logout</button>
 				</div>
 			</div>
 		</form>
@@ -302,6 +308,12 @@
 					<img src="icon.png" alt="Clock-in">
 				</div>
 				<form ng-submit="login(auth)">
+					<div class="form-group">
+						<select class="form-control" id="company" name="company"
+							ng-options="option.name for option in companies.availableOptions track by option.id"
+							ng-model="companies.selectedOption">
+						</select>
+					</div>
 					<div class="form-group">
 						<input type="text" class="form-control" ng-model="auth.user" placeholder="User">
 					</div>
@@ -366,7 +378,7 @@
 								ng-change="search">
 						</div>
 						<div class="col-md-2">
-							<button class="form-control btn btn-secondary" ng-click="query='';search=''">Limpar</button>
+							<button class="form-control btn btn-secondary" ng-click="query=''">Limpar</button>
 						</div>
 						<div class="col-md-1 table-success text-center">
 							<i style="font-size: x-small;">Feriado</i>
