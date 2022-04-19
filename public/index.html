@@ -27,7 +27,7 @@
 		<form>
 			<div class="row">
 				<div class="col-4 text-center">
-					Remaining
+					Remaining hours
 					<br>
 					<label style="font-size: 25px;" class="negative number" ng-class="{'positive': remaining === 0 }">
 						{{ remainingFormatted }}
@@ -37,7 +37,7 @@
 					<img ng-src="companies/{{companies.selectedOption.id}}.png" alt="Company" width="100px">
 				</div>
 				<div class="col-4 text-center">
-					Worked
+					Worked hours
 					<br>
 					<label style="font-size: 25px;" class="negative number"
 						ng-class="{'positive': divergence.worked_hours === '8' ? divergence.totalWorked >= 480 : divergence.totalWorked >= 360 }">
@@ -130,12 +130,12 @@
 				</div>
 			</div>
 			<hr>
-			<div class="row">
+			<!-- <div class="row">
 				<div class="col-12 pb-3">
 					<button type="button" ng-click="normalDay()" class="btn btn-outline-dark btn-block">Normal
 						day</button>
 				</div>
-			</div>
+			</div> -->
 			<div class="row">
 				<div class="col-6">
 					<div class="form-check form-check-inline">
@@ -220,10 +220,10 @@
 						<input class="form-check-input" type="radio" value="A" ng-model="hour04.type">
 						<label class="form-check-label">A</label>
 					</div> -->
-					<div class="form-check form-check-inline">
+					<!-- <div class="form-check form-check-inline">
 						<input class="form-check-input" type="checkbox" value="D" ng-model="hour04.isNextDay">
 						<label class="form-check-label">Next Day</label>
-					</div>
+					</div> -->
 					<input class="form-control mb-2 mr-sm-2 number" type="time" ng-model="hour04.time"
 						ng-disabled="divergence.dayOff">
 				</div>
@@ -246,10 +246,10 @@
 						<input class="form-check-input" type="radio" value="A" ng-model="hour05.type">
 						<label class="form-check-label">A</label>
 					</div> -->
-					<div class="form-check form-check-inline">
+					<!-- <div class="form-check form-check-inline">
 						<input class="form-check-input" type="checkbox" value="D" ng-model="hour05.isNextDay">
 						<label class="form-check-label">Next Day</label>
-					</div>
+					</div> -->
 					<input class="form-control mb-2 mr-sm-2 number" type="time" ng-model="hour05.time">
 				</div>
 				<div class="col-6">
@@ -269,10 +269,10 @@
 						<input class="form-check-input" type="radio" value="A" ng-model="hour06.type">
 						<label class="form-check-label">A</label>
 					</div> -->
-					<div class="form-check form-check-inline">
+					<!-- <div class="form-check form-check-inline">
 						<input class="form-check-input" type="checkbox" value="D" ng-model="hour06.isNextDay">
 						<label class="form-check-label">Next Day</label>
-					</div>
+					</div> -->
 					<input class="form-control mb-2 mr-sm-2 number" type="time" ng-model="hour06.time">
 				</div>
 			</div>
