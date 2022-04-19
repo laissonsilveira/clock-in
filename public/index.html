@@ -92,10 +92,10 @@
 				</div>
 			</div>
 			<div class="row">
-				<div class="col-md-7">
+				<div class="col-md-6">
 					<input class="form-control" type="date" ng-model="date" ng-change="getClockByDate()">
 				</div>
-				<div class="col-md-2">
+				<div class="col-md-3">
 					<div class="form-check form-check-inline">
 						<input class="form-check-input" type="radio" value="6" ng-model="divergence.worked_hours"
 							ng-change="updateCount()">
@@ -105,6 +105,11 @@
 						<input class="form-check-input" type="radio" value="8" ng-model="divergence.worked_hours"
 							ng-change="updateCount()">
 						<label class="form-check-label">8 Hours</label>
+					</div>
+					<div class="form-check form-check-inline">
+						<input class="form-check-input" type="radio" value="8.8" ng-model="divergence.worked_hours"
+							ng-change="updateCount()">
+						<label class="form-check-label">8:48 Hours</label>
 					</div>
 				</div>
 				<div class="col-md-3">
@@ -286,7 +291,7 @@
 							listagem</label>
 					</div>
 				</div>
-				<div class="col-md-7 col-xs-12">
+				<div class="col-md-7 col-xs-12" style="margin-bottom:10px;">
 					<button type="button" class="btn btn-outline-dark btn-block" data-toggle="modal"
 						data-target="#modal_list_hours">Clock-in List</button>
 				</div>

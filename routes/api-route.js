@@ -26,6 +26,7 @@ router.post('/clocks', authentication, async (req, res, next) => {
         const divergence = req.body;
         let { company } = req.query;
         company = Number(company);
+        divergence.company = company;
         LOGGER.info(`Salvando batida ${JSON.stringify(divergence)}`);
         const db = new DBHelper('clock-in');
         const filter = { date: divergence.date, company };
@@ -60,20 +61,22 @@ router.delete('/clocks/:id', authentication, async (req, res, next) => {
 
 router.get('/clocks', authentication, async (req, res, next) => {
     try {
-        let docs;
+        let clocks, payments;
         let { date, tolerance, company } = req.query;
         company = Number(company);
         LOGGER.info(`Recuperando batidas salvas ${date ? date : ''}`);
 
         const clockInDB = new DBHelper('clock-in');
-        const paymentsDB = new DBHelper('payments');
         if (date)
-            docs = await clockInDB.listDocs({ date, company });
-        else
-            docs = await clockInDB.listDocs({ company });
+            clocks = await clockInDB.listDocs({ date, company });
+        else {
+            const paymentsDB = new DBHelper('payments');
+            payments = await paymentsDB.listDocs({ company }) || [];
+            
+            clocks = await clockInDB.listDocs({ company });
+        }
 
-        const clockIn = new ClockIn(docs, tolerance);
-        const payments = await paymentsDB.listDocs({ company }) || [];
+        const clockIn = new ClockIn(clocks, tolerance);
         res.json({ clockIn: clockIn.hoursCalculate(), payments });
     } catch (err) {
         next(err);

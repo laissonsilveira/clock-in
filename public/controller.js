@@ -1,9 +1,6 @@
 angular.module('clockInApp', ['angular-loading-bar']).controller('CollectedDataController', ($scope, $http, $filter) => {
 
     const INITIAL_BALANCE = 0;
-    const eightHoursInMinutes = 480;
-    const sixHourInMinutes = 360;
-    let totalToWork = eightHoursInMinutes;
     const keyStr = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/=';
     $scope.isLogged = false;
     $scope.date = new Date();
@@ -58,8 +55,7 @@ angular.module('clockInApp', ['angular-loading-bar']).controller('CollectedDataC
     const totalFilterBalanceCalc = (clockIn = []) => {
         if (!clockIn) return;
 
-        $scope.balance = clockIn.reduce((previousVal, currentVal) => previousVal + currentVal.minutes, 0) + INITIAL_BALANCE;
-        $scope.balanceFilter = $scope.balance - INITIAL_BALANCE;
+        $scope.balanceFilter = clockIn.reduce((previousVal, currentVal) => previousVal + currentVal.minutes, 0) + INITIAL_BALANCE - INITIAL_BALANCE;
         $scope.extraBalance = clockIn.reduce((previousVal, currentVal) => previousVal + currentVal.extraHour, 0);
 
         formatBalance();
@@ -218,8 +214,10 @@ angular.module('clockInApp', ['angular-loading-bar']).controller('CollectedDataC
         if ($scope.divergence.worked_hours === '8') {
             $scope.count.hour01 = '09:00';
             $scope.count.hour04 = '18:00';
+        } else if ($scope.divergence.worked_hours === '8.8') {
+            $scope.count.hour01 = '09:00';
+            $scope.count.hour04 = '18:48';
         } else {
-            totalToWork = sixHourInMinutes;
             $scope.count.hour01 = '09:00';
             $scope.count.hour04 = '16:30';
         }
@@ -236,14 +234,16 @@ angular.module('clockInApp', ['angular-loading-bar']).controller('CollectedDataC
             const h02 = $scope.clockSaved.hour02 || $scope.count.hour02;
             const duration = getDuration(h02.split(':'), h01.split(':'));
             $scope.count.hour04 = moment(`1970-01-01 ${$scope.clockSaved.hour03 || $scope.count.hour03}`)
-                .add($scope.divergence.worked_hours === '8' ? eightHoursInMinutes - duration : sixHourInMinutes - duration, 'm')
+                .add(hoursToMinute($scope.divergence.worked_hours) - duration, 'm')
                 .format('HH:mm');
         }
 
-        $scope.remaining = totalToWork - ($scope.divergence.totalWorked || 0);
+        $scope.remaining = hoursToMinute($scope.divergence.worked_hours) - ($scope.divergence.totalWorked || 0);
         $scope.totalWorkedFormatted = $scope.formatDuration($scope.divergence.totalWorked || 0);
         $scope.remainingFormatted = $scope.formatDuration($scope.remaining < 0 ? 0 : $scope.remaining);
     };
+
+    const hoursToMinute = hours => Number(hours) * 60;
 
     $scope.getClockByDate = () => {
         clearHours();
@@ -272,10 +272,11 @@ angular.module('clockInApp', ['angular-loading-bar']).controller('CollectedDataC
                 } else {
                     const isWeekEnd = moment($scope.date).isoWeekday() > 5;
                     const is8Clock = $scope.divergence.worked_hours === '8';
+                    const is88Clock = $scope.divergence.worked_hours === '8.8';
                     $scope.divergence.hoursWorked = '00:00';
-                    $scope.divergence.minutesFormated = isWeekEnd ? '00:00' : is8Clock ? '-08:00' : '-06:00';
+                    $scope.divergence.minutesFormated = isWeekEnd ? '00:00' : is8Clock ? '-08:00' : is88Clock ? '-08:48' : '-06:00';
                     $scope.divergence.extraHourFormated = '00:00';
-                    $scope.divergence.minutes = isWeekEnd ? 0 : is8Clock ? -eightHoursInMinutes : -sixHourInMinutes;
+                    $scope.divergence.minutes = isWeekEnd ? 0 : -hoursToMinute($scope.divergence.worked_hours);
                     $scope.divergence.extraHour = 0;
                     $scope.divergence.extraHourAceleration = 0;
                 }
@@ -316,7 +317,7 @@ angular.module('clockInApp', ['angular-loading-bar']).controller('CollectedDataC
     };
 
     $scope.$watchCollection('itemsFiltered', (newList, oldList) => {
-        if (!newList || !oldList || oldList.length === 0 || newList.length === oldList.length) return;
+        if (!newList || !oldList || !newList.length || !oldList.length || newList.length === oldList.length) return;
         totalFilterBalanceCalc(newList);
     });
 
@@ -388,6 +389,7 @@ angular.module('clockInApp', ['angular-loading-bar']).controller('CollectedDataC
     };
 
     $('#modal_list_hours').on('show.bs.modal', () => {
+        $scope.query = '';
         getClocks();
         $scope.$apply();
     });

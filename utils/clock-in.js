@@ -6,6 +6,7 @@ const WEEKEND_DAYS = ['sábado', 'domingo', 'saturday', 'sunday'];
 const workedHours = new Map();
 workedHours.set('6', { clocks: ['09:00', '12:00', '13:30', '16:30'], minutes: 360 });
 workedHours.set('8', { clocks: ['09:00', '12:00', '13:00', '18:00'], minutes: 480 });
+workedHours.set('8.8', { clocks: ['09:00', '12:00', '13:00', '18:48'], minutes: 528 });
 
 class ClockIn {
 
@@ -32,8 +33,9 @@ class ClockIn {
             if (hours.length === 1 || hours.length === 3 || hours.length === 5) {
                 const date = this.divergence.date;
                 const is8Clock = this.divergence.worked_hours === '8';
+                const is88Clock = this.divergence.worked_hours === '8.8';
                 const now = moment();
-                const endWork = moment(`${date.format('YYYY-MM-DD')} ${is8Clock ? '18:00' : '16:30'}`);
+                const endWork = moment(`${date.format('YYYY-MM-DD')} ${is8Clock ? '18:00' : is88Clock ? '18:48' : '16:30'}`);
                 const endDay = date.endOf('day');
                 const hour = now.format('HH:mm');
                 hours.push(hour);
@@ -86,7 +88,9 @@ class ClockIn {
 
     _normalizeHour(hour) {
         const init = '09';
-        const end = this.divergence.worked_hours === '8' ? '18' : '16';
+        const is8Clock = this.divergence.worked_hours === '8';
+        const is88Clock = this.divergence.worked_hours === '8.8';
+        const end = is8Clock || is88Clock ? '18' : '16';
 
         const hrs = hour.split(':');
         if (this.toUseTolerance === 'true') {
@@ -101,7 +105,7 @@ class ClockIn {
                 hrs[1] = '00';
             } else if ((hrs[0] === '17' && Number(hrs[1]) >= 55) || (hrs[0] === '18' && Number(hrs[1]) <= 5)) {
                 hrs[0] = end;
-                hrs[1] = '00';
+                hrs[1] = is88Clock ? '48' : '00';
             }
         }
         return hrs;
@@ -214,8 +218,11 @@ class ClockIn {
             });
         }
         else {
+            const is8Clock = this.divergence.worked_hours === '8';
+            const is88Clock = this.divergence.worked_hours === '8.8';
+
             const init = '09';
-            const end = this.divergence.worked_hours === '8' ? '18' : '16';
+            const end = is8Clock || is88Clock ? '18' : '16';
 
             this.balanceHours.push({
                 sum: this._getDuration([init, '00'], h01),
@@ -230,7 +237,7 @@ class ClockIn {
                 type: this._getType(h03)
             });
             this.balanceHours.push({
-                sum: this._getDuration(h04, [end, '00']),
+                sum: this._getDuration(h04, [end, is88Clock ? '48' : '00']),
                 type: this._getType(h04)
             });
         }
