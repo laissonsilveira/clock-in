@@ -27,7 +27,7 @@
 		<form>
 			<div class="row">
 				<div class="col-4 text-center">
-					Remaining hours
+					Remaining
 					<br>
 					<label style="font-size: 25px;" class="negative number" ng-class="{'positive': remaining === 0 }">
 						{{ remainingFormatted }}
@@ -37,7 +37,7 @@
 					<img ng-src="companies/{{companies.selectedOption.id}}.png" alt="Company" width="100px">
 				</div>
 				<div class="col-4 text-center">
-					Worked hours
+					Worked
 					<br>
 					<label style="font-size: 25px;" class="negative number"
 						ng-class="{'positive': divergence.worked_hours === '8' ? divergence.totalWorked >= 480 : divergence.totalWorked >= 360 }">
