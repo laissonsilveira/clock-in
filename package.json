@@ -1,7 +1,7 @@
 {
 	"name": "clock-in",
-	"version": "1.0.0",
-	"description": "Extra Hours Show DGT",
+	"version": "3.0.0",
+	"description": "Extra Hours",
 	"main": "app.js",
 	"scripts": {
 		"start": "node app.js",

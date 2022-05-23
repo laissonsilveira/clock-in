@@ -6,7 +6,7 @@ angular.module('clockInApp', ['angular-loading-bar']).controller('CollectedDataC
     $scope.date = new Date();
     $scope.count = {};
     $scope.clockSaved = {};
-    $scope.remainingFormatted = '08:00';
+    $scope.remainingFormatted = '08:48';
     $scope.remaining = 0;
     $scope.companies = {
         availableOptions: [
@@ -14,7 +14,7 @@ angular.module('clockInApp', ['angular-loading-bar']).controller('CollectedDataC
             { id: 2, name: 'Accenture' },
             { id: 3, name: 'Mercado Livre' }
         ],
-        selectedOption: { id: 2 }
+        selectedOption: { id: 3 }
     }
 
     const formatBalance = () => {
@@ -82,7 +82,7 @@ angular.module('clockInApp', ['angular-loading-bar']).controller('CollectedDataC
             extra: [],
             extraAceleration: [],
             nextDay: [],
-            worked_hours: '8'
+            worked_hours: '8.8'
         };
     };
 
