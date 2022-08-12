@@ -5,8 +5,7 @@
  */
 const LOGGER = require('../utils/logger');
 const mongoose = require('mongoose');
-mongoose.Promise = require('bluebird');
-mongoose.set('useCreateIndex', true);
+// mongoose.Promise = require('bluebird');
 const CONFIG_DATABASE = __CONFIG.database;
 const { MONGODB_USER, MONGODB_PWD } = process.env;
 

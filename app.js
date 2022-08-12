@@ -8,7 +8,6 @@ const PORT = process.env.PORT || 3000;
 const app = express();
 
 app.use(bodyParser.json({ limit: '50mb' }));
-app.use(helmet());
 
 // express-rate-limit
 const limiter = rateLimit({
@@ -20,18 +19,28 @@ const limiter = rateLimit({
 });
 app.use(limiter);
 
-app.use(function (req, res, next) {
-    const allowedOrigins = ['https://clock-in-lrs.herokuapp.com', 'chrome-extension://knemeplbocmccfokehbnmmkcjdcmhbcc'];
-    const origin = req.headers.origin;
-    if (allowedOrigins.includes(origin)) {
+if (process.env.NODE_ENV === 'production') {
+    app.use(helmet());
+    app.use(function (req, res, next) {
+        const allowedOrigins = ['https://clock-in-lrs.herokuapp.com', 'chrome-extension://knemeplbocmccfokehbnmmkcjdcmhbcc'];
+        const origin = req.headers.origin;
+        if (allowedOrigins.includes(origin)) {
+            res.setHeader('Access-Control-Allow-Origin', '*');
+        } else {
+            LOGGER.warn(`Origin ${origin} not allowed!`);
+        }
+        res.setHeader('Access-Control-Allow-Methods', 'POST, GET, DELETE');
+        res.setHeader('Access-Control-Allow-Headers', 'Origin, Content-Type, Accept, Authorization');
+        next();
+    });
+} else {
+    app.use(function (req, res, next) {
         res.setHeader('Access-Control-Allow-Origin', '*');
-    } else {
-        LOGGER.warn(`Origin ${origin} not allowed!`);
-    }
-    res.setHeader('Access-Control-Allow-Methods', 'POST, GET, DELETE');
-    res.setHeader('Access-Control-Allow-Headers', 'Origin, Content-Type, Accept, Authorization');
-    next();
-});
+        res.setHeader('Access-Control-Allow-Methods', 'POST, GET, DELETE');
+        res.setHeader('Access-Control-Allow-Headers', 'Origin, Content-Type, Accept, Authorization');
+        next();
+    });
+}
 
 require('./model/db-factory');
 
