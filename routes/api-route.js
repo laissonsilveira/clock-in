@@ -17,6 +17,11 @@ const ClockIn = require('../utils/clock-in');
 //     }
 // })();
 
+router.get('/ping', async (req, res) => {
+    LOGGER.info('Health check');
+    res.end('pong');
+});
+
 router.post('/login', authentication, async (req, res) => {
     res.end();
 });
@@ -72,7 +77,7 @@ router.get('/clocks', authentication, async (req, res, next) => {
         else {
             const paymentsDB = new DBHelper('payments');
             payments = await paymentsDB.listDocs({ company }) || [];
-            
+
             clocks = await clockInDB.listDocs({ company });
         }
 
