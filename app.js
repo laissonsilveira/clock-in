@@ -22,7 +22,11 @@ app.use(limiter);
 if (process.env.NODE_ENV === 'production') {
     app.use(helmet());
     app.use(function (req, res, next) {
-        const allowedOrigins = ['https://clock-in-lrs.herokuapp.com', 'chrome-extension://knemeplbocmccfokehbnmmkcjdcmhbcc'];
+        const allowedOrigins = [
+            'https://clock-in-lrs.herokuapp.com',
+            'chrome-extension://knemeplbocmccfokehbnmmkcjdcmhbcc',
+            'https://clock-in-lrs.onrender.com'
+        ];
         const origin = req.headers.origin;
         if (allowedOrigins.includes(origin)) {
             res.setHeader('Access-Control-Allow-Origin', '*');
