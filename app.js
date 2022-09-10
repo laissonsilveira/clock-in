@@ -30,7 +30,7 @@ if (process.env.NODE_ENV === 'production') {
         const origin = req.headers.origin;
         if (allowedOrigins.includes(origin)) {
             res.setHeader('Access-Control-Allow-Origin', '*');
-        } else {
+        } else if (!req.originalUrl.startsWith('/ping')) {
             LOGGER.warn(`Origin ${origin} not allowed!`);
         }
         res.setHeader('Access-Control-Allow-Methods', 'POST, GET, DELETE');

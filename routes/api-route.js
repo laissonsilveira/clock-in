@@ -18,7 +18,6 @@ const ClockIn = require('../utils/clock-in');
 // })();
 
 router.get('/ping', async (req, res) => {
-    LOGGER.info('Health check');
     res.end('pong');
 });
 
