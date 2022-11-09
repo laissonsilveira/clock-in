@@ -103,7 +103,7 @@ class ClockIn {
             } else if ((hrs[0] === '12' && Number(hrs[1]) >= 55) || (hrs[0] === '13' && Number(hrs[1]) <= 5)) {
                 hrs[0] = '13';
                 hrs[1] = '00';
-            } else if ((hrs[0] === '17' && Number(hrs[1]) >= 55) || (hrs[0] === '18' && Number(hrs[1]) <= 5)) {
+            } else if ((hrs[0] === '18' && Number(hrs[1]) >= 43) || (hrs[0] === '18' && Number(hrs[1]) <= 53)) {
                 hrs[0] = end;
                 hrs[1] = is88Clock ? '48' : '00';
             }
