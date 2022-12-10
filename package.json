@@ -14,7 +14,7 @@
 	"author": "Laisson R. Silveira",
 	"license": "ISC",
 	"dependencies": {
-		"express": "^4.17.1",
+		"express": "^4.17.3",
 		"express-rate-limit": "^6.5.1",
 		"helmet": "^5.0.2",
 		"moment": "^2.29.4",
