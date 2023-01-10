@@ -2,7 +2,7 @@ global.__CONFIG = require('./cfg');
 const bodyParser = require('body-parser');
 const express = require('express');
 const helmet = require('helmet');
-const rateLimit = require('express-rate-limit');
+// const rateLimit = require('express-rate-limit');
 const LOGGER = require('./utils/logger');
 const PORT = process.env.PORT || 3000;
 const app = express();
@@ -10,14 +10,14 @@ const app = express();
 app.use(bodyParser.json({ limit: '50mb' }));
 
 // express-rate-limit
-const limiter = rateLimit({
-    windowMs: 15 * 60 * 1000, // 15 minutes
-    max: 100, // limit each IP to 100 requests per windowMs
-    standardHeaders: true,
-    message:
-        'Too many accounts created from this IP, please try again after an hour'
-});
-app.use(limiter);
+// const limiter = rateLimit({
+//     windowMs: 15 * 60 * 1000, // 15 minutes
+//     max: 100, // limit each IP to 100 requests per windowMs
+//     standardHeaders: true,
+//     message:
+//         'Too many accounts created from this IP, please try again after an hour'
+// });
+// app.use(limiter);
 
 if (process.env.NODE_ENV === 'production') {
     app.use(helmet());
