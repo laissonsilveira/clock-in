@@ -174,7 +174,7 @@ class ClockIn {
     }
 
     _setDate() {
-        this.divergence.date = moment(this.divergence.date.split(',')[1], ['DD-MM-YYYY']);
+        this.divergence.date = moment(this.divergence.date.split(',')[1], ['DD/MM/YYYY']);
     }
 
     _setFormatedHours() {

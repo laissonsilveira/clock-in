@@ -15,7 +15,7 @@ angular.module('clockInApp', ['angular-loading-bar']).controller('CollectedDataC
             { id: 3, name: 'Mercado Livre' }
         ],
         selectedOption: { id: 3 }
-    }
+    };
 
     const formatBalance = () => {
         $scope.balanceLabel = $scope.formatDuration($scope.balance, 'h [hrs], m [min]');
@@ -24,7 +24,7 @@ angular.module('clockInApp', ['angular-loading-bar']).controller('CollectedDataC
     };
 
     const calcAndFormatPayments = payments => {
-        $scope.totalMinutesPayed = payments.reduce((previousVal, currentVal) => previousVal + currentVal.minutes, 0)
+        $scope.totalMinutesPayed = payments.reduce((previousVal, currentVal) => previousVal + currentVal.minutes, 0);
         $scope.paymentsLabel = $scope.formatDuration($scope.totalMinutesPayed, 'HH:mm')
             + ' | R$' + Number(payments.reduce((previousVal, currentVal) => previousVal + currentVal.value, 0)).toFixed(2);
     };
@@ -348,7 +348,7 @@ angular.module('clockInApp', ['angular-loading-bar']).controller('CollectedDataC
         delete sessionStorage.user;
         delete sessionStorage.password;
         $('#modal_login').modal('show');
-    }
+    };
 
     $scope.onSaveHours = () => {
         const times = [];
