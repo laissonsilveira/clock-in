@@ -39,8 +39,8 @@
 				<div class="col-4 text-center">
 					Worked
 					<br>
-					<label style="font-size: 25px;" class="negative number"
-						ng-class="{'positive': divergence.worked_hours === '8' ? divergence.totalWorked >= 480 : divergence.totalWorked >= 360 }">
+					<label style="font-size: 25px;" class="negative number" ng-class="{'positive': divergence.worked_hours === '6' ? divergence.totalWorked >= 360 :
+						divergence.worked_hours === '8' ? divergence.totalWorked >= 480 : divergence.totalWorked >= 528 }">
 						{{ totalWorkedFormatted }}
 					</label>
 				</div>
