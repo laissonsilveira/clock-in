@@ -432,7 +432,7 @@
 								<tbody>
 									<tr scope="row" ng-repeat="div in items | filter:search as itemsFiltered"
 										ng-class="{ 'table-warning': div.middayOff || div.dayOff, 'table-primary': div.isWeekend, 'table-success': div.isHoliday, 'table-info': div.extra && div.extra.length, 'table-danger': div.fixed }">
-										<td>{{ div.date | date: 'EEE, dd/MM/yyyy' }}</td>
+										<td>{{ div.date | date: 'EEE, dd/MM/yyyy' : '-0300'}}</td>
 										<td class="text-center"
 											ng-class="{'negative': (div.minutes + div.extraHour + div.extraHourAceleration) < 0, 'positive': (div.minutes + div.extraHour + div.extraHourAceleration) > 0}">
 											<strong>{{ div.hoursWorked }}</strong>
